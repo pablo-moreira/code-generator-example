@@ -1,0 +1,13 @@
+package ${app.pkgs.manager};
+
+import ${app.pkgs.manager}.AppManager;
+import br.com.atos.core.Repository;
+import ${app.pkgs.dao}.${entity.name}DAO;
+import ${app.pkgs.model}.${entity.name};
+
+public class ${entity.name}Manager extends AppManager<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}> {
+
+	public ${entity.name}Manager(Repository repository) {
+		super(${entity.name}DAO.class, repository);
+	}
+}
