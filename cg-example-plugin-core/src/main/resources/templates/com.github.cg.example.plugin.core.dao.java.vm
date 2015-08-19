@@ -1,0 +1,11 @@
+package ${app.pkgs.dao};
+
+import com.github.cg.example.core.dao.DAO;
+import ${app.pkgs.model}.${entity.name};
+
+public class ${entity.name}DAO extends DAO<${entity.name}, ${entity.attributeIdClass}> {
+
+	public ${entity.name}DAO() {
+		super(${entity.name}.class);
+	}
+}

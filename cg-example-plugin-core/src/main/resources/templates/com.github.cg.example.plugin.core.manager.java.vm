@@ -1,0 +1,14 @@
+package ${app.pkgs.manager};
+
+import javax.inject.Inject;
+import com.github.cg.example.core.manager.Manager;
+import ${app.pkgs.dao}.${entity.name}DAO;
+import ${app.pkgs.model}.${entity.name};
+
+public class ${entity.name}Manager extends Manager<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}> {
+
+	@Inject
+	public ${entity.name}Manager(${entity.name}DAO dao) {
+		super(dao);
+	}
+}

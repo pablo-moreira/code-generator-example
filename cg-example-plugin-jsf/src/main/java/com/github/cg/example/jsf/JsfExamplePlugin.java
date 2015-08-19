@@ -13,8 +13,8 @@ import com.github.cg.task.FrmEntityTask;
 		@Target(
 				name = "Grid.xhtml", 
 				description = "Generate Grid component",
-				filenameTemplate = "${app.dirs.base}/${app.dirs.web}/resources/app/grid${entity.name}.xhtml", 
-				template = "br.com.atos.faces.cg.grid.xhtml.vm",
+				filename = "${app.dirs.base}/${app.dirs.web}/resources/app/grid${entity.name}.xhtml", 
+				template = "/templates/br.com.atos.faces.cg.grid.xhtml.vm",
 				allowOverwrite = true,
 				tasksToExecuteBefore={
 						@TargetTask(

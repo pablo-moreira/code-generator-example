@@ -3,10 +3,10 @@ package com.github.cg.example.core.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.cg.example.core.dao.BaseDAO;
+import com.github.cg.example.core.dao.DAO;
 import com.github.cg.example.core.model.IBaseEntity;
 
-abstract public class Manager<D extends BaseDAO<E,I>,E extends IBaseEntity<I>,I> {
+abstract public class Manager<D extends DAO<E,I>,E extends IBaseEntity<I>,I> {
 	
 	private D dao;
 	

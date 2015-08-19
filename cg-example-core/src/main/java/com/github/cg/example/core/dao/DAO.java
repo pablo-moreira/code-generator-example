@@ -1,6 +1,5 @@
 package com.github.cg.example.core.dao;
 
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.List;
@@ -17,16 +16,14 @@ import org.hibernate.internal.SessionImpl;
 import com.github.cg.example.core.model.IBaseEntity;
 import com.github.cg.example.core.util.HibernateUtils;
 
-abstract public class BaseDAO<E extends IBaseEntity<I>,I> implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
+abstract public class DAO<E extends IBaseEntity<I>,I> {
+		
 	private Class<E> entityClass;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public BaseDAO(Class<E> entityClass) {
+	public DAO(Class<E> entityClass) {
 		this.entityClass = entityClass;
 	}
 
