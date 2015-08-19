@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite="http://java.sun.com/jsf/composite"
+    xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" encoding="UTF-8">
+		<h:head>
+			<f:facet name="first">
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />		  
+		    	<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+			</f:facet>
+			<title>CG Example JSF - #{pageTitle}</title>
+			<h:outputStylesheet library="css" name="app.css" />
+			<ui:insert name="head"/>			
+		</h:head>
+		<h:body>
+			<p:layout fullPage="true">
+				<p:layoutUnit id="luNorth" position="north" style="border: none; padding: 0" size="56">
+					<h:form>
+						<h:panelGrid columns="2" style="width: 100%" columnClasses="logo,menu">
+							<h:outputLink value="#{request.contextPath}/pages/user/userDesktop.jsf">
+								<h:graphicImage value="/resources/img/logo.jpg" height="40" />
+							</h:outputLink>
+							<p:outputPanel layout="block">
+								<ui:include src="menu.xhtml" />
+					        </p:outputPanel>
+						</h:panelGrid>
+					</h:form>
+					
+				</p:layoutUnit>
+				
+				<p:layoutUnit id="luWest" position="west" size="1" style="border: none"></p:layoutUnit>
+				<p:layoutUnit id="luEast" position="east" size="1" style="border: none"></p:layoutUnit>
+				
+				<p:layoutUnit id="luCenter" position="center" header="#{pageTitle}">
+
+					<ui:debug hotkey="k"></ui:debug>
+
+					<h:form>
+						<p:growl autoUpdate="true" sticky="true" showDetail="true" globalOnly="true" />
+
+						<p:ajaxStatus onstart="PF('dlgStatus').show()" oncomplete="PF('dlgStatus').hide()" />
+
+						<p:dialog modal="true" widgetVar="dlgStatus" header="Loading..." draggable="false" closable="false" appendTo="@(body)" width="300" height="60" resizable="false">
+							<h:panelGrid columns="1" width="100%" style="margin-top: 5px; text-align:center">
+								<h:outputText value="Wait a moment please..." />  
+			  					<h:graphicImage value="/resources/img/loadingbar.gif" width="200" />
+			  				</h:panelGrid>  
+						</p:dialog>
+					</h:form>
+					
+					<ui:insert name="content"/>
+					
+				</p:layoutUnit>			
+	
+				<p:layoutUnit id="luSouth" position="south" size="26">
+        			<ui:include src="footer.xhtml"/>
+				</p:layoutUnit>
+        	</p:layout>
+        	
+	   		<h:outputScript	library="js" name="app.js" />
+			<h:outputScript	library="js" name="primefaces-locale.pt_BR.js" />
+		</h:body>
+	</f:view>
+</html>

@@ -1,0 +1,58 @@
+body
+{
+	padding:0;
+	margin:0;
+	background-color:#DDCC88;
+	font-size:12px;
+	font-family: geneva, arial, helvetica, sans-serif; 
+	background: #fff;
+}
+#luNorth {
+    z-index:20 !important;
+    overflow:visible !important;
+    background-color: #FFF;
+}
+#luNorth .ui-layout-unit-content {
+    overflow:visible !important;
+    margin: 0;
+    padding: 6px 6px 0px 6px;
+    background-color: #FFF;
+}
+.logo {
+	vertical-align: middle;
+	width: 65px;
+}
+.menu {
+	vertical-align: middle;
+	padding: 0px;
+	margin: 0;
+	padding-left: 6px;
+}
+.menu {
+	vertical-align: middle;
+	padding: 0px;
+	margin: 0;
+	padding-left: 6px;
+}
+#luWest, #luEast {
+	width: 0px;
+	padding: 0px;
+	margin:0px;
+}
+#luCenter .ui-layout-unit-content {
+	padding: 6px;
+}
+#luSouth {
+	overflow:visible !important;
+	padding: 0;	
+	border: none;
+	font-size: 10px !important;
+	color:#333333;	
+}
+#luSouth .ui-layout-unit-content {
+	overflow:visible !important;
+	border-top: 1px solid #CCC;
+	background: #fff url("#{resource['img:footer.jpg']}") repeat-x;
+    margin: 0;
+    padding: 1px 6px 6px 6px;	
+}
