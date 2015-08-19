@@ -2,7 +2,6 @@ package com.github.cg.example.core.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
 
@@ -35,8 +32,8 @@ public class Model extends BaseEntity<Long> {
 	private Long id;
 	
 	@ManyToOne(optional=false)
-	@ForeignKey(name="fk_model_manufacturer_id")
 	@JoinColumn(name="manufacturer_id")
+	@ForeignKey(name="fk_model_manufacturer_id")
 	private Manufacturer manufacturer;
 	
 	@Column(nullable=false)
@@ -50,10 +47,6 @@ public class Model extends BaseEntity<Long> {
 	
 	@Column(nullable=false)
 	private BigDecimal price;
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name="data_arquisicao")
-	private Date dataAquisicao;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false)
@@ -110,14 +103,6 @@ public class Model extends BaseEntity<Long> {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
-	}
-
-	public Date getDataAquisicao() {
-		return dataAquisicao;
-	}
-
-	public void setDataAquisicao(Date dataAquisicao) {
-		this.dataAquisicao = dataAquisicao;
 	}
 
 	public Classification getClassification() {
