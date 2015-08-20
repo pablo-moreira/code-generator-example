@@ -1,10 +1,10 @@
 package com.github.cg.example.jsf.component;
 
+import br.com.atos.utils.StringUtils;
+
 import com.github.cg.annotation.Component;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeOneToMany;
-
-import br.com.atos.utils.StringUtils;
 
 @Component
 public class ViewXhtmlComponent extends BaseComponent {
@@ -13,13 +13,13 @@ public class ViewXhtmlComponent extends BaseComponent {
 
 		StringBuilder sb = new StringBuilder();
 		
-		String ctrl = getCg().getAttributeValue("EntityName") + getCg().getAttributeValue("page.view.suffix") + "Ctrl.";
+		String ctrl = getTargetContext().getEntity().getNameFlc() + "ViewCtrl.";
 		String path = ctrl + "entity";
 		
-		println(sb, "\t\t\t\t\t<p:tab title=\"{0}\">", getCg().getAttributeValue("EntityLabel"));		
+		println(sb, "\t\t\t\t\t<p:tab title=\"{0}\">", getTargetContext().getEntity().getLabel());		
 		println(sb, "\t\t\t\t\t\t<h:panelGrid columns=\"2\" cellpadding=\"5\">");
 		
-		for (Attribute attribute : getCg().getEntity().getAttributes()) {
+		for (Attribute attribute : getTargetContext().getEntity().getAttributes()) {
 			
 			// Ignora as associacoes OneToMany
 			if (!AttributeOneToMany.class.isInstance(attribute)) {
@@ -33,7 +33,7 @@ public class ViewXhtmlComponent extends BaseComponent {
 		println(sb, "\t\t\t\t\t\t</h:panelGrid>");		
 		println(sb, "\t\t\t\t\t</p:tab>");
 		
-		for (AttributeOneToMany attribute : getCg().getEntity().getAttributesOneToMany()) {
+		for (AttributeOneToMany attribute : getTargetContext().getEntity().getAttributesOneToMany()) {
 			
 			println(sb, "\t\t\t\t\t<p:tab title=\"{0}\">", attribute.getLabel());
 			

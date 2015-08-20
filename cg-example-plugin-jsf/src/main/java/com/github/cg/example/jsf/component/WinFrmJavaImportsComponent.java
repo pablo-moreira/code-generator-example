@@ -2,8 +2,6 @@ package com.github.cg.example.jsf.component;
 
 import java.util.List;
 
-import br.com.atos.cg.CodeGenerator;
-
 import com.github.cg.annotation.Component;
 import com.github.cg.model.AttributeFormType;
 import com.github.cg.model.AttributeOneToMany;
@@ -15,7 +13,7 @@ public class WinFrmJavaImportsComponent extends BaseComponent {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		List<AttributeOneToMany> atributosOneToMany = getCg().getEntity().getAttributesOneToMany();
+		List<AttributeOneToMany> atributosOneToMany = getTargetContext().getEntity().getAttributesOneToMany();
 		
 		if (atributosOneToMany.size() > 0) {
 		
@@ -31,10 +29,10 @@ public class WinFrmJavaImportsComponent extends BaseComponent {
 				}
 				else {
 					temTipoFormularioEmbutido = true;
-					println(sb, "import {0}.{1}Manager;", getCg().getAttributeValue(CodeGenerator.PACKAGE_MANAGER), atributo.getAssociationClassSimpleName());
+					println(sb, "import {0}.{1}Manager;", getTargetContext().getCg().getApp().get("pkgs.manager"), atributo.getAssociationClassSimpleName());
 				}
 
-				println(sb, "import {0}.{1};", getCg().getAttributeValue(CodeGenerator.PACKAGE_MODEL), atributo.getAssociationClassSimpleName());
+				println(sb, "import {0}.{1};", getTargetContext().getCg().getApp().get("pkgs.model"), atributo.getAssociationClassSimpleName());
 			}
 			
 			if (temTipoFormularioExterno) {

@@ -24,11 +24,11 @@ public class WinFrmXhtmlComponent extends BaseComponent {
 		
 		gerarTabEntidade(sb);
 		
-		for (AttributeOneToMany attribute : getCg().getEntity().getAttributesOneToMany()) {
+		for (AttributeOneToMany attribute : getTargetContext().getEntity().getAttributesOneToMany()) {
 			
 			if (attribute.isRenderForm()) {						
 			
-				String dataTableId = "dt" + StringUtils.firstToUpperCase(attribute.getName());
+				String dataTableId = "dt" + attribute.getNameFuc();
 				
 				println(sb, "\t\t\t\t<p:tab title=\"{0}\">", attribute.getLabel());
 				
@@ -131,7 +131,7 @@ public class WinFrmXhtmlComponent extends BaseComponent {
 
 		String path = "cc.attrs.winFrm.entity";
 		
-		println(sb, "\t\t\t\t<p:tab title=\"{0}\">", getCg().getAttributeValue("EntityLabel"));
+		println(sb, "\t\t\t\t<p:tab title=\"{0}\">", getTargetContext().getEntity().getLabel());
 		println(sb, "\t\t\t\t\t<h:panelGrid columns=\"3\" cellpadding=\"5\" style=\"width: 100%\">");
 		println(sb, "\t\t\t\t\t\t<h:outputLabel value=\"Id:\" for=\"id\" />");
 		println(sb, "\t\t\t\t\t\t<p:inputText id=\"id\" label=\"Id.\" value=\"#'{'{0}.id'}'\" disabled=\"true\" />", path);
@@ -139,7 +139,7 @@ public class WinFrmXhtmlComponent extends BaseComponent {
 		
 		List<Attribute> attributes = new ArrayList<Attribute>();
 		
-		for (Attribute attribute : getCg().getEntity().getAttributes()) {
+		for (Attribute attribute : getTargetContext().getEntity().getAttributes()) {
 			
 			if (attribute.isRenderForm() && !AttributeId.class.isInstance(attribute) && !AttributeOneToMany.class.isInstance(attribute)) {
 					

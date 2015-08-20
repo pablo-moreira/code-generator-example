@@ -13,10 +13,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.github.cg.component.Component;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeManyToOne;
 
-import br.com.atos.cg.component.Component;
 import br.com.atos.core.model.BaseEnum;
 import br.com.atos.core.model.IBaseEntity;
 import br.com.atos.core.util.JpaReflectionUtils;

@@ -11,10 +11,10 @@ import com.github.cg.task.FrmEntityTask;
 @Plugin(
 	targets = { 
 		@Target(
-				name = "Grid.xhtml", 
-				description = "Generate Grid component",
-				filename = "${app.dirs.base}/${app.dirs.web}/resources/app/grid${entity.name}.xhtml", 
-				template = "/templates/br.com.atos.faces.cg.grid.xhtml.vm",
+				name = "Manager.xhtml",
+				description = "Generate View Manager.xhtml",
+				filename = "${app.dirs.base}/${app.dirs.web}/pages/${entity.name}/${entity.nameFlc}Manager.xhtml", 
+				template = "/templates/com.github.cg.example.jsf.manager.xhtml.vm",
 				allowOverwrite = true,
 				tasksToExecuteBefore={
 						@TargetTask(
@@ -29,6 +29,6 @@ import com.github.cg.task.FrmEntityTask;
 								}
 						)
 				}
-		)	
+		)
 })
 public interface JsfExamplePlugin {}
