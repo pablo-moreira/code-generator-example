@@ -1,0 +1,71 @@
+<ui:composition template="/templates/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite="http://java.sun.com/jsf/composite"
+    xmlns:p="http://primefaces.org/ui">
+   	<ui:param name="pageTitle" value="List of Cars" />		
+	<ui:define name="content">		
+		<h:form id="frm">			
+			<p:dataTable
+				id="dtCars" 
+				var="entity"
+				lazy="true"
+				value="#{carListCtrl.dmCars}"
+				paginator="true"
+				paginatorPosition="bottom"
+				paginatorTemplate="Items for page: {RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}  Page:  {JumpToPageDropdown} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+				currentPageReportTemplate="[ Showing {startRecord} - {endRecord} of {totalRecords} - Page: {currentPage}/{totalPages} ]"
+				rows="10"
+		        rowsPerPageTemplate="5,10,15,20,25,50">
+								
+				<p:column sortBy="#{entity.id}">
+					<f:facet name="header"><h:outputText value="Id" /></f:facet>
+					<h:outputText value="#{entity.id}" />
+				</p:column>
+				
+				<p:column sortBy="#{entity.model.name}">
+					<f:facet name="header"><h:outputText value="Model" /></f:facet>
+					<h:outputText value="#{entity.model.name}" />
+				</p:column>
+				
+				<p:column sortBy="#{entity.licensePlate}">
+					<f:facet name="header"><h:outputText value="License Plate" /></f:facet>
+					<h:outputText value="#{entity.licensePlate}" />
+				</p:column>
+				
+				<p:column sortBy="#{entity.fabricationDate}">
+					<f:facet name="header"><h:outputText value="Fabrication Date" /></f:facet>
+					<h:outputText value="#{entity.fabricationDate}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+				</p:column>
+
+				
+				<p:column exportable="false">
+					<f:facet name="header"><h:outputText value="-" /></f:facet>
+					
+<!-- 					<p:button outcome="/pages/car/carView.jsf" title="View" icon="ui-icon-zoomin"> -->
+<!-- 						<f:param name="id" value="#{entity.id}" /> -->
+<!-- 					</p:button> -->
+					
+					<p:button outcome="/pages/car/carEdit.jsf" title="View" icon="ui-icon-pencil">
+						<f:param name="id" value="#{entity.id}" />
+					</p:button>
+		        	
+					<p:commandLink action="#{cc.attrs.winFrm.startDelete}" title="Excluir o objeto">
+						<h:graphicImage value="/resources/img/s.gif" styleClass="link-icone ui-icon-trash" />
+		        		<f:setPropertyActionListener target="#{cc.attrs.winFrm.entity}" value="#{entity}" />
+		        	</p:commandLink>
+		        </p:column>
+				
+				<f:facet name="footer">
+		        	<p:outputPanel layout="block" styleClass="action-left">
+						<p:button icon="ui-icon-document" value="New" outcome="/pages/car/carEdit.jsf" />
+					</p:outputPanel>
+		        </f:facet>				
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

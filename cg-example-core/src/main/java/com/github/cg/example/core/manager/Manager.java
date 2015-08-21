@@ -1,19 +1,23 @@
 package com.github.cg.example.core.manager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import com.github.cg.example.core.dao.DAO;
 import com.github.cg.example.core.model.IBaseEntity;
 
-abstract public class Manager<D extends DAO<E,I>,E extends IBaseEntity<I>,I> {
-	
+abstract public class Manager<D extends DAO<E,I>,E extends IBaseEntity<I>,I> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Inject
 	private D dao;
 	
-	protected Manager(D dao) {
-		this.dao = dao;
-	}
-
+	public Manager() {}
+	
 	public D getDAO() {
 		return dao;
 	}

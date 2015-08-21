@@ -16,7 +16,7 @@ import com.github.cg.model.AttributeManyToOne;
 import com.github.cg.model.AttributeOneToMany;
 
 @Component
-public class ManagerXhtmlComponent extends BaseComponent {
+public class ListXhtmlComponent extends BaseComponent {
 
 	public String renderFilters() {
 
@@ -69,12 +69,13 @@ public class ManagerXhtmlComponent extends BaseComponent {
 			println(sb, "\t\t\t<atos:filterString operatorDefault=\"contains\" attribute=\"{0}\" label=\"{1}\" />", attributePath, attribute.getLabel());
 		}
 	}
-	
-	public String renderColumns() {
+		
+	public String renderColumns(int tabs) {
 		
 		StringBuilder sb = new StringBuilder();
 		
 		String path = "entity";
+		String tab = tab(tabs);
 		
 		for (Attribute attribute : getTargetContext().getEntity().getAttributes()) {
 			
@@ -83,11 +84,11 @@ public class ManagerXhtmlComponent extends BaseComponent {
 			
 				// Ignora as associacoes OneToMany
 				if (!AttributeOneToMany.class.isInstance(attribute)) {
-					println(sb, "\t\t\t");
-					println(sb, "\t\t\t<p:column sortBy=\"#'{'{0}.{1}'}'\">", path, getValue(attribute));
-					println(sb, "\t\t\t\t<f:facet name=\"header\"><h:outputText value=\"{0}\" /></f:facet>", attribute.getLabel());
-					printot(sb, "\t\t\t\t", path, attribute);
-					println(sb, "\t\t\t</p:column>");
+					println(sb, tab);
+					println(sb, tab + "<p:column sortBy=\"#'{'{0}.{1}'}'\">", path, getValue(attribute));
+					println(sb, tab + "\t<f:facet name=\"header\"><h:outputText value=\"{0}\" /></f:facet>", attribute.getLabel());
+					printot(sb, tab + "\t", path, attribute);
+					println(sb, tab + "</p:column>");
 				}
 			}
 		}

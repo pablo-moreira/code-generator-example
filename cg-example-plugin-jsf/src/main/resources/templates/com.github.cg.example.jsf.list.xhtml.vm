@@ -1,0 +1,55 @@
+<ui:composition template="/templates/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:cc="http://xmlns.jcp.org/jsf/composite"    
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+   	<ui:param name="pageTitle" value="List of ${entity.plural}" />
+	<ui:define name="content">
+		<h:form id="frm">			
+			<p:dataTable
+				id="dt${entity.plural}" 
+				var="entity"
+				lazy="true"
+				value="#{${entity.nameFlc}ListCtrl.dm${entity.plural}}"
+				paginator="true"
+				paginatorPosition="bottom"
+				paginatorTemplate="Items for page: {RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} Page: {JumpToPageDropdown} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+				currentPageReportTemplate="[ Show {startRecord} - {endRecord} of {totalRecords} - Page: {currentPage}/{totalPages} ]"
+				rows="10"
+		        rowsPerPageTemplate="5,10,15,20,25,50">
+				${listXhtmlComponent.renderColumns(4)}
+				
+				<p:column exportable="false">
+					<f:facet name="header"><h:outputText value="-" /></f:facet>
+					<p:button outcome="/pages/${entity.nameFlc}/${entity.nameFlc}View.jsf" title="View" icon="ui-icon-zoomin">
+						<f:param name="id" value="#{entity.id}" />
+					</p:button>
+					
+					<p:button outcome="/pages/${entity.nameFlc}/${entity.nameFlc}View.jsf" title="View" icon="ui-icon-zoomin">
+						<f:param name="id" value="#{entity.id}" />
+					</p:button>
+		        	
+		        	<p:commandLink action="#{cc.attrs.winFrm.startUpdate}" title="Alterar o objeto">
+		        		<h:graphicImage value="/resources/img/s.gif" styleClass="link-icone ui-icon-pencil" />
+		        		<f:setPropertyActionListener target="#{cc.attrs.winFrm.entity}" value="#{entity}" />
+		        	</p:commandLink>
+					<p:commandLink action="#{cc.attrs.winFrm.startDelete}" title="Excluir o objeto">
+						<h:graphicImage value="/resources/img/s.gif" styleClass="link-icone ui-icon-trash" />
+		        		<f:setPropertyActionListener target="#{cc.attrs.winFrm.entity}" value="#{entity}" />
+		        	</p:commandLink>
+		        </p:column>
+				
+				<f:facet name="footer">
+		        	<p:outputPanel layout="block" styleClass="action-left">
+						<p:button icon="ui-icon-document" value="New" outcome="/pages/${entity.nameFlc}/${entity.nameFlc}Edit.jsf">
+							<f:param name="id" value="new" />
+						</p:button>
+					</p:outputPanel>
+		        </f:facet>				
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

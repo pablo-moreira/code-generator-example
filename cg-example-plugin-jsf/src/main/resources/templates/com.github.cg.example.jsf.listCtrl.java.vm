@@ -1,0 +1,53 @@
+package ${app.pkgs.controller};
+
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import ${app.pkgs.model}.${entity.name};
+import ${app.pkgs.manager}.${entity.name}Manager;
+
+import br.com.atos.faces.view.FacesMessageUtil;
+import br.com.atos.faces.view.interceptors.annotations.HandlesError;
+
+@Named
+@ConversationScoped
+@HandlesError
+public class ${entity.name}ListCtrl implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private Conversation conversation;
+	
+	@Inject
+	private ${entity.name}Manager ${entity.nameFlc}Manager;
+	
+	private ${entity.name} ${entity.nameFlc}Selected;
+		
+	@PostConstruct
+    public void initConversation() {
+        if (this.conversation.isTransient()) {
+        	this.conversation.begin();
+        }
+    }
+    
+	public void delete() throws Exception {
+		
+		this.${entity.nameFlc}Manager.delete(this.${entity.nameFlc}Selected);
+		
+		FacesMessageUtil.addInfo("The ${entity.name} was deleted successfully!");
+	}
+	
+	public ${entity.name} get${entity.name}Selected() {
+		return ${entity.nameFlc}Selected;
+	}
+
+	public void set${entity.name}Selected(${entity.name} ${entity.nameFlc}Selected) {
+		this.${entity.nameFlc}Selected = ${entity.nameFlc}Selected;
+	}
+}

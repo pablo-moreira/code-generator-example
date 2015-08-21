@@ -1,13 +1,12 @@
 package com.github.cg.example.jsf.manager;
-import javax.inject.Inject;
+import javax.ejb.Stateless;
 import com.github.cg.example.core.manager.Manager;
 import com.github.cg.example.jsf.dao.ModelDAO;
 import com.github.cg.example.core.model.Model;
 
+@Stateless
 public class ModelManager extends Manager<ModelDAO, Model, Long> {
 
-	@Inject
-	public ModelManager(ModelDAO dao) {
-		super(dao);
-	}
+	private static final long serialVersionUID = 1L;
+	
 }

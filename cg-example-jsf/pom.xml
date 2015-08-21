@@ -52,25 +52,14 @@
 			<artifactId>primefaces</artifactId>
 			<version>5.2</version>			
 		</dependency>
-		
-		<!-- JBoss Weld -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.jboss.weld</groupId> -->
-<!-- 			<artifactId>weld-api</artifactId> -->
-<!-- 			<version>1.1.Final</version> -->
-<!-- 		</dependency> -->
-		
-		<!-- JSF 2.2 -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.sun.faces</groupId> -->
-<!-- 		    <artifactId>jsf-api</artifactId> -->
-<!-- 		    <version>2.2.4</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.sun.faces</groupId> -->
-<!-- 		    <artifactId>jsf-impl</artifactId> -->
-<!-- 		    <version>2.2.4</version> -->
-<!-- 		</dependency> -->
+
+		<!-- J2EE -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>cg-example-jsf</finalName>

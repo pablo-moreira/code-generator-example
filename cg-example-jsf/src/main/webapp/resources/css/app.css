@@ -56,3 +56,62 @@ body
     margin: 0;
     padding: 1px 6px 6px 6px;	
 }
+
+
+.noborder .ui-datalist-content { border: none; }
+.noborder .ui-datalist-content .ui-datalist-data { margin: 0; padding: 0px; padding-left: 5px; list-style: none; }
+.ui-datatable-footer .noborder,
+.ui-datatable-footer .noborder td,
+.ui-datatable table.noborder,
+.ui-datatable .ui-datatable-data .noborder td,
+.ui-datatable .ui-datatable-data .noborder td,
+.ui-datatable .ui-datatable-data-empty .noborder td 
+.ui-datatable .ui-datatable-data-empty .noborder td{ border-style: none; border-width: 0px; padding: 0; width: inherit; }
+
+.form-menu {
+	width: 100%;	
+	padding: 0 0 5px 0;
+	text-align: left;
+}
+.form-menu input {	
+	margin-right: 5px;
+}
+.form-action, 
+.form-action-border {
+	width: 100%;
+	text-align: right;			
+}
+.form-action button, .form-action input, .form-action form, 
+.form-action-border button, .form-action-border input, .form-action-border form {
+	margin-left: 5px;	
+}
+.form-action-border {
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px solid #CCC;
+}
+.action-left {
+	padding: 0px;
+	text-align: left;
+}
+.action-left button, 
+.action-left input {
+	margin-right: 5px;
+}
+.datatable-menu {
+	width: 100%;	
+	padding: 0 0 5px 0;
+	text-align: left;
+}
+.datatable-menu input {	
+	margin-right: 5px;
+}
+.col-label {
+	font-weight: bold;
+}
+.col-action { width: 100px; text-align: center; margin: 0; padding: 0; }
+.col-action input {
+	vertical-align: bottom;
+	margin: 0px 2px;
+	padding: 0;	
+}
