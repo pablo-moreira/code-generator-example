@@ -8,14 +8,14 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.atos.faces.view.interceptors.annotations.HandlesError;
-
+import com.github.cg.example.jsf.annotations.HandlesError;
 import com.github.cg.example.core.model.Car;
-import com.github.cg.example.core.model.Model;
 import com.github.cg.example.jsf.dao.CarDAO;
-import com.github.cg.example.jsf.dao.ModelDAO;
 import com.github.cg.example.jsf.manager.CarManager;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
+
+import com.github.cg.example.core.model.Model;
+import com.github.cg.example.jsf.dao.ModelDAO;
 
 @Named
 @ConversationScoped
@@ -23,19 +23,19 @@ import com.github.cg.example.jsf.util.FacesMessageUtils;
 public class CarEditCtrl extends AppConversationCtrl implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private Long id;
+	
+	private Car entity;
 	
 	@Inject
 	private CarManager carManager;
 	
 	@Inject
 	private CarDAO carDAO;
-	
+
 	@Inject
 	private ModelDAO modelDAO;
-	
-	private Long id;
-	
-	private Car entity;
 	
 	public void start(ComponentSystemEvent evt) {
 		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
@@ -53,7 +53,7 @@ public class CarEditCtrl extends AppConversationCtrl implements Serializable {
 	
 	public void reset() {		
 		if (getId() != null) { 
-			entity = this.carDAO.retrieveById(Long.valueOf(getId()));			
+			entity = this.carDAO.retrieveById(getId());			
 		}
 		else {
 			entity = new Car();
@@ -71,7 +71,7 @@ public class CarEditCtrl extends AppConversationCtrl implements Serializable {
 	public Car getEntity() {
 		return entity;
 	}
-	
+
 	public List<Model> onCompleteModel(String suggest) {
 		return this.modelDAO.retrieveBySuggestOrderByDescription(suggest);
 	}

@@ -11,7 +11,7 @@ public class AppCodeGenerator {
 		CodeGenerator cg = new CodeGenerator();
 		//cg.start();
 		//cg.executeTargetByName("List.xhtml", Car.class);
-		cg.executeTargetByName("ViewCtrl.java", Car.class);
+		cg.executeTargetByName("EditCtrl.java", Car.class);
 //		System.exit(0);
 	}
 }
