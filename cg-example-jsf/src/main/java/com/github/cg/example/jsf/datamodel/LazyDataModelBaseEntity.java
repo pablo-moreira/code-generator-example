@@ -5,11 +5,11 @@ import com.github.cg.example.core.model.IBaseEntity;
 
 
 
-abstract public class PgLazyDataModelBaseEntity<E extends IBaseEntity<?>,D extends DAO<E,?>> extends PgLazyDataModelDAO<E,D> {
+abstract public class LazyDataModelBaseEntity<D extends DAO<E,I>,E extends IBaseEntity<I>,I> extends LazyDataModelDAO<D,E> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public PgLazyDataModelBaseEntity(D dao) {
+	public LazyDataModelBaseEntity(D dao) {
 		super(dao);
 	}
 	

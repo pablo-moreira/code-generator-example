@@ -166,7 +166,8 @@ public class CriteriaQueryUtils {
 		return null;
 	}
 	
-	public static Path<?> getPathByStringPath(CriteriaQuery<?> cq, String stringPath) {
+	@SuppressWarnings("unchecked")
+	public static <T> Path<T> getPathByStringPath(CriteriaQuery<?> cq, String stringPath) {
 		
 		String[] pathItens = stringPath.split("\\.");
 		
@@ -195,7 +196,7 @@ public class CriteriaQueryUtils {
 			path = root.get(pathItens[0]);
 		}
 		
-		return path;
+		return (Path<T>) path;
 	}
 	
 	@SuppressWarnings("unchecked")

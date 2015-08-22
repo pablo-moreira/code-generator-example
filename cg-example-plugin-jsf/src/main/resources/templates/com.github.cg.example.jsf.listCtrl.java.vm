@@ -1,53 +1,51 @@
 package ${app.pkgs.controller};
 
-import java.io.Serializable;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ${app.pkgs.model}.${entity.name};
+import com.github.cg.example.jsf.annotations.HandlesError;
+import ${app.pkgs.dao}.${entity.name}DAO;
+import com.github.cg.example.jsf.datamodel.LazyDataModelDefault;
 import ${app.pkgs.manager}.${entity.name}Manager;
-
-import br.com.atos.faces.view.FacesMessageUtil;
-import br.com.atos.faces.view.interceptors.annotations.HandlesError;
+import com.github.cg.example.jsf.util.FacesMessageUtils;
 
 @Named
 @ConversationScoped
 @HandlesError
-public class ${entity.name}ListCtrl implements Serializable {
+public class CarListCtrl extends AppConversationCtrl {
 
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private Conversation conversation;
-	
 	@Inject
 	private ${entity.name}Manager ${entity.nameFlc}Manager;
 	
 	private ${entity.name} ${entity.nameFlc}Selected;
 		
-	@PostConstruct
-    public void initConversation() {
-        if (this.conversation.isTransient()) {
-        	this.conversation.begin();
-        }
+	private LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}> dm${entity.plural}; 
+
+	@Inject
+    public void init(${entity.name}DAO ${entity.nameFlc}DAO) {
+		dmCars = new LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}>(${entity.nameFlc}DAO);
     }
     
 	public void delete() throws Exception {
 		
 		this.${entity.nameFlc}Manager.delete(this.${entity.nameFlc}Selected);
 		
-		FacesMessageUtil.addInfo("The ${entity.name} was deleted successfully!");
+		FacesMessageUtils.addInfo("The ${entity.name} was deleted successfully!");
 	}
 	
-	public ${entity.name} get${entity.name}Selected() {
+	public Car get${entity.name}Selected() {
 		return ${entity.nameFlc}Selected;
 	}
 
 	public void set${entity.name}Selected(${entity.name} ${entity.nameFlc}Selected) {
 		this.${entity.nameFlc}Selected = ${entity.nameFlc}Selected;
+	}
+
+	public LazyDataModelDefault<${entity.name}DAO,${entity.name},${entity.attributeIdClass}> getDm${entity.plural}() {
+		return dm${entity.plural};
 	}
 }

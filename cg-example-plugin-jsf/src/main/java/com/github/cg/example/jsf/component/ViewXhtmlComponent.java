@@ -9,12 +9,13 @@ import com.github.cg.model.AttributeOneToMany;
 @Component
 public class ViewXhtmlComponent extends BaseComponent {
 
-	public String render() {
+	public String render(int tabs) {
 
 		StringBuilder sb = new StringBuilder();
-		
+				
 		String ctrl = getTargetContext().getEntity().getNameFlc() + "ViewCtrl.";
 		String path = ctrl + "entity";
+		String tab = tab(tabs);
 		
 		println(sb, "\t\t\t\t\t<p:tab title=\"{0}\">", getTargetContext().getEntity().getLabel());		
 		println(sb, "\t\t\t\t\t\t<h:panelGrid columns=\"2\" cellpadding=\"5\">");
@@ -65,9 +66,8 @@ public class ViewXhtmlComponent extends BaseComponent {
 			
 			println(sb, "\t\t\t\t\t\t</p:dataTable>");
 			println(sb, "\t\t\t\t\t</p:tab>");
-			
-			
 		}
+		
 		return sb.toString();
 	}
 }

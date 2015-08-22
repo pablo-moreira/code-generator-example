@@ -41,4 +41,8 @@ public class PagedQuery {
 	public List<Sort> getSorts() {
 		return sorts;
 	}
+
+	public void addSort(Sort sort) {
+		getSorts().add(sort);		
+	}
 }

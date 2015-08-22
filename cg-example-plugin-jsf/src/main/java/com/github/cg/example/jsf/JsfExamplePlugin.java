@@ -11,6 +11,28 @@ import com.github.cg.task.FrmEntityTask;
 @Plugin(
 	targets = { 
 		@Target(
+				name = "ViewCtrl.java",
+				description = "Generate Class EntityViewCtrl.java",
+				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}ViewCtrl.java", 
+				template = "/templates/com.github.cg.example.jsf.viewCtrl.java.vm",
+				allowOverwrite = true,
+				tasksToExecuteBefore={
+						@TargetTask(
+								task=FrmEntityTask.class,
+								configs={
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "false"),
+								}
+						)
+				}
+		),
+			
+			
+		@Target(
 				name = "ListCtrl.java",
 				description = "Generate Class EntityListCtrl.java",
 				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}ListCtrl.java", 

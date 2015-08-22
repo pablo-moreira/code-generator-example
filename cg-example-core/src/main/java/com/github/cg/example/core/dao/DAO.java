@@ -16,7 +16,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CompoundSelection;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -24,7 +23,11 @@ import javax.persistence.criteria.Selection;
 
 import org.hibernate.internal.SessionImpl;
 
+import com.github.cg.example.core.dao.query.Expression;
+import com.github.cg.example.core.dao.query.PagedQuery;
+import com.github.cg.example.core.dao.query.PagedQueryResult;
 import com.github.cg.example.core.dao.query.QueryProcessor;
+import com.github.cg.example.core.dao.query.Sort;
 import com.github.cg.example.core.model.IBaseEntity;
 import com.github.cg.example.core.util.HibernateUtils;
 import com.github.cg.example.core.util.NumericoUtils;
@@ -179,7 +182,6 @@ abstract public class DAO<E extends IBaseEntity<I>,I> implements Serializable {
 		return query.getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected CriteriaQuery<E> getCriteriaQueryRetrieveLightBySuggestionOrderByDescription(String suggestion, String attributeId, String attributeDescription, String ... attributes) {
 
 		Set<String> attributesList = new HashSet<String>();
@@ -200,21 +202,21 @@ abstract public class DAO<E extends IBaseEntity<I>,I> implements Serializable {
 		getQueryProcessor().processAttributesJoins(e, attributesList);
 		
 		Path<?> pathAttributeId = CriteriaQueryUtils.getPathByStringPath(q, getQueryProcessor().processAttributePath(attributeId));
-		Path<?> pathAttributeDescription = CriteriaQueryUtils.getPathByStringPath(q, getQueryProcessor().processAttributePath(attributeDescription));
+		Path<String> pathAttributeDescription = CriteriaQueryUtils.getPathByStringPath(q, getQueryProcessor().processAttributePath(attributeDescription));
 		
 		if (!StringUtils.isNullOrEmpty(suggestion)) {
 			
-			Predicate rotuloLike = cb.like(cb.lower((Expression<String>) pathAttributeDescription), "%" + suggestion.toLowerCase() + "%");
+			Predicate descriptionLike = cb.like(cb.lower(pathAttributeDescription), "%" + suggestion.toLowerCase() + "%");
 
 			// Verifica se a sugestao e um numero			
 			if (NumericoUtils.isInteger(suggestion)) {				
 				q.where(cb.or(
 						cb.equal(pathAttributeId, suggestion),
-						rotuloLike
+						descriptionLike
 				));
 			}
 			else {
-				q.where(rotuloLike);
+				q.where(descriptionLike);
 			}
 		}
 		
@@ -250,4 +252,40 @@ abstract public class DAO<E extends IBaseEntity<I>,I> implements Serializable {
 		}	
 		return this.queryProcessor;
 	}
-}	
+	
+	protected CriteriaQuery<E> getCriteriaQueryRetrieveEntities(Expression where, List<Sort> sorts) {
+		
+		CriteriaBuilder cb = this.getCriteriaBuilder();
+		
+		CriteriaQuery<E> cq = cb.createQuery(this.entityClass);
+		
+		Root<E> e = cq.from(this.entityClass);
+		e.alias("e");
+		
+		getQueryProcessor().processAttributesJoins(e, where, sorts);		
+		Predicate predicate = getQueryProcessor().processWhere(cb, cq, where);
+		getQueryProcessor().processSort(cb, cq, sorts);
+		
+		cq.where(predicate);
+		
+		cq.select(e);
+
+		return cq;
+	}
+
+	public PagedQueryResult<E> retrieveEntitiesPaged(PagedQuery pagedQuery) {
+		
+		CriteriaQuery<E> cq = getCriteriaQueryRetrieveEntities(pagedQuery.getWhere(), pagedQuery.getSorts());
+				
+		Long count = CriteriaQueryUtils.count(getEntityManager(), cq);
+		
+		TypedQuery<E> query = createQuery(cq);
+		
+		query.setFirstResult(pagedQuery.getFirstResult());
+		query.setMaxResults(pagedQuery.getMaxResult());
+		
+		List<E> entities = query.getResultList();
+		
+		return new PagedQueryResult<E>(count, entities);
+	}
+}
