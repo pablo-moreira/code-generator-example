@@ -2,7 +2,6 @@ package com.github.cg.example.jsf.component;
 
 import static br.com.atos.utils.StringUtils.firstToLowerCase;
 
-import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,27 +13,27 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.github.cg.component.Component;
+import com.github.cg.example.core.model.BaseEnum;
+import com.github.cg.example.core.model.IBaseEntity;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeManyToOne;
 
-import br.com.atos.core.model.BaseEnum;
-import br.com.atos.core.model.IBaseEntity;
-import br.com.atos.core.util.JpaReflectionUtils;
-
 abstract public class BaseComponent extends Component {
-		
-	protected void printot(StringBuilder sb, String indentation, String path, Attribute attribute) {
+
+	protected void printot(StringBuilder sb, String tab, String path, Attribute attribute) {
+		printot(sb, tab, path, attribute, true);		
+	}
+	
+	protected void printot(StringBuilder sb, String tab, String path, Attribute attribute, boolean renderTabOnFirst) {
 
 		Class<?> type = getType(attribute);
 		String value = path + "." + getValue(attribute);
 
 		if (BaseEnum.class.isAssignableFrom(type)) {
-			println(sb, "{0}<h:outputText value=\"#'{'{1}.description'}'\" />", indentation, value);
+			print(sb, "{0}<h:outputText value=\"#'{'{1}.description'}'\" />", renderTabOnFirst ? tab : "", value);
 		}
 		else if (Date.class.isAssignableFrom(type)) {
-			
-			println(sb, "{0}<h:outputText value=\"#'{'{1}'}'\">", indentation, value);
-			
+							
 			Temporal annotation;
 			
 			if (AttributeManyToOne.class.isInstance(attribute)) {
@@ -44,21 +43,25 @@ abstract public class BaseComponent extends Component {
 				annotation = attribute.getAnnotation(Temporal.class);
 			}
 
-			if (annotation == null || annotation.value() == TemporalType.TIMESTAMP) {
-				println(sb, "{0}\t<f:convertDateTime locale=\"pt_BR\" type=\"both\" />", indentation);
+			String temporalType;
+			
+			if (annotation != null && annotation.value() == TemporalType.DATE) {
+				temporalType = "date";
 			}
-			else if (annotation.value() == TemporalType.DATE) {
-				println(sb, "{0}\t<f:convertDateTime locale=\"pt_BR\" type=\"date\" />", indentation);
+			else if (annotation != null && annotation.value() == TemporalType.TIME) {
+				temporalType = "type";
 			}
-			else if (annotation.value() == TemporalType.TIME) {
-				println(sb, "{0}\t<f:convertDateTime locale=\"pt_BR\" type=\"time\" />", indentation);
+			else {
+				temporalType = "both";
 			}
 			
-			println(sb, "{0}</h:outputText>", indentation);
+			println(sb, "{0}<h:outputText value=\"#'{'{1}'}'\">", renderTabOnFirst ? tab : "", value);
+			println(sb, "{0}\t<f:convertDateTime locale=\"#'{'localeCtrl.locale'}'\" type=\"{1}\" />", tab, temporalType);			
+			print(sb, "{0}</h:outputText>", tab);
 		}
 		else {
-			println(sb, "{0}<h:outputText value=\"#'{'{1}'}'\" />", indentation, value);
-		}
+			print(sb, "{0}<h:outputText value=\"#'{'{1}'}'\" />", renderTabOnFirst ? tab : "", value);
+		}	
 	}
 	
 	protected void printin(StringBuilder sb, String indentation, String path, Attribute attribute) {
@@ -110,8 +113,6 @@ abstract public class BaseComponent extends Component {
 			
 			AttributeManyToOne atributoManyToOne = (AttributeManyToOne) attribute;
 		
-			Field associacaoFieldId = JpaReflectionUtils.getFieldId(type);
-
 			// Imprime um autocomplete
 			println(sb, indentation + "<p:autoComplete id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" forceSelection=\"true\"", id, label, value, required);
 
@@ -122,7 +123,7 @@ abstract public class BaseComponent extends Component {
 			println(sb, indentation + "\tcompleteMethod=\"#'{'autoCompleteCtrl.onComplete{0}'}'\" dropdown=\"true\" converter=\"lazyEntityConverter\"", type.getSimpleName());
 			println(sb, indentation + "\tvar=\"{0}\" itemValue=\"#'{'{0}'}'\" itemLabel=\"#'{'{0}.{1}'}'\"", firstToLowerCase(type.getSimpleName()), atributoManyToOne.getDescriptionAttributeOfAssociation());
 			println(sb, indentation + "\tsize=\"{0}\" scrollHeight=\"200\">", entityTab ? "40" : "35");
-			println(sb, indentation + "\t<p:column><h:outputText value=\"#'{'{0}.{1}'}'\" /></p:column>", firstToLowerCase(type.getSimpleName()), associacaoFieldId.getName());
+			println(sb, indentation + "\t<p:column><h:outputText value=\"#'{'{0}.{1}'}'\" /></p:column>", firstToLowerCase(type.getSimpleName()), atributoManyToOne.getEntity().getAttributeId().getNameFuc());
 			println(sb, indentation + "\t<p:column><h:outputText value=\"#'{'{0}.{1}'}'\" /></p:column>", firstToLowerCase(type.getSimpleName()), atributoManyToOne.getDescriptionAttributeOfAssociation());
 			println(sb, indentation + "\t<p:ajax event=\"query\" global=\"false\" />");
 			println(sb, indentation + "</p:autoComplete>");

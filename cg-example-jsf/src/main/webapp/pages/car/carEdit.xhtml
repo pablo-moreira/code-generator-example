@@ -1,45 +1,18 @@
-<ui:composition template="/templates/default.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"    
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:composite="http://java.sun.com/jsf/composite"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
 		<f:viewParam name="id" value="#{carEditCtrl.id}" />
 		<f:event type="preRenderView" listener="#{carEditCtrl.start}" />
 	</f:metadata>
-   	<ui:param name="pageTitle" value="Edir Car" />
+   	<ui:param name="pageTitle" value="Edit Car" />
 	<ui:define name="content">		
-		<h:form id="frm">			
-			<p:tabView id="tbView">
-				<p:tab title="Car">
-					<h:panelGrid columns="3" cellpadding="5" style="width: 100%">
-						<p:outputLabel value="Id:" for="id" />
-						<p:inputText id="id" label="Id." value="#{carEditCtrl.entity.id}" readonly="true" />
-						<p:message for="id" display="icon" />
-
-						<p:outputLabel value="Model:" for="model" />
-						<p:autoComplete id="model" label="Model" value="#{carEditCtrl.entity.model}" required="true" forceSelection="true"
-							completeMethod="#{carEditCtrl.onCompleteModel}" dropdown="true" converter="smartEntityConverter"
-							var="model" itemValue="#{model}" itemLabel="#{model.name}"
-							size="40" scrollHeight="200">
-							<p:column><h:outputText value="#{model.id}" /></p:column>
-							<p:column><h:outputText value="#{model.name}" /></p:column>
-						</p:autoComplete>
-						<p:message for="model" display="icon" />
-						
-						<p:outputLabel value="License Plate:" for="licensePlate" />
-						<p:inputMask id="licensePlate" label="License Plate" value="#{carEditCtrl.entity.licensePlate}" style="width: 300px" required="true" mask="#{maskCtrl.licensePlate}" />
-						<p:message for="licensePlate" display="icon" />
-						
-						<p:outputLabel value="Fabrication Date:" for="fabricationDate" />
-						<p:calendar id="fabricationDate" label="Fabrication Date:" value="#{carEditCtrl.entity.fabricationDate}" showOn="button" locale="#{localeCtrl.locale}" required="true" mask="true" pattern="#{localeCtrl.datePattern}" />
-						<p:message for="fabricationDate" display="icon" />
-					</h:panelGrid>
-				</p:tab>
-			</p:tabView>
-			
+		<h:form id="frm">
+			${editXhtmlComponent.render(3)}
 			<p:outputPanel layout="block" styleClass="form-action-border">
 				<p:commandButton value="Save" icon="ui-icon-disk" action="#{carEditCtrl.save}" process="frm" update="frm" />
 				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{carEditCtrl.reset}" process="frm" update="frm" />
