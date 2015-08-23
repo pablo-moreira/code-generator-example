@@ -7,21 +7,21 @@ import com.github.cg.annotation.TargetGroup;
 @Plugin(
 	targetsGroups = {
 		@TargetGroup(
-				name="DAO e Manager",
-				targets={"DAO","Manager"}				
+				name="EntityDAO.java and EntityManager.java",
+				targets={"EntityDAO.java","EntityManager.java"}				
 		)	
 	},
 	targets = { 
 		@Target(
-				name = "DAO", 
-				description = "Generate DAO class",								 
+				name = "EntityDAO.java", 
+				description = "Generate class EntityDAO.java",								 
 				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.dao)}/${entity.name}DAO.java",
 				template = "/templates/com.github.cg.example.plugin.core.dao.java.vm",
 				allowOverwrite = false				
 		),
 		@Target(				
-				name = "Manager",
-				description = "Generate Manager class", 
+				name = "EntityManager.java",
+				description = "Generate class EntityManager.java", 
 				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.manager)}/${entity.name}Manager.java", 
 				template = "/templates/com.github.cg.example.plugin.core.manager.java.vm",
 				allowOverwrite = false

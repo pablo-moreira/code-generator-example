@@ -4,11 +4,34 @@ import br.com.atos.cg.gui.DlgFrmEntity;
 
 import com.github.cg.annotation.Plugin;
 import com.github.cg.annotation.Target;
+import com.github.cg.annotation.TargetGroup;
 import com.github.cg.annotation.TargetTask;
 import com.github.cg.annotation.TaskConfig;
 import com.github.cg.task.FrmEntityTask;
 
 @Plugin(
+	targetsGroups = {
+		@TargetGroup(
+				name="View EntityEdit",
+				targets={"entityEdit.xhtml","EntityEditCtrl.java"}				
+		),
+		@TargetGroup(
+				name="View EntityList",
+				targets={"entityList.xhtml","EntityListCtrl.java"}				
+		),
+		@TargetGroup(
+				name="View EntityView",
+				targets={"entityView.xhtml","EntityViewCtrl.java"}				
+		),
+		@TargetGroup(
+				name="All views",
+				targets={"entityEdit.xhtml","EntityEditCtrl.java", "entityView.xhtml","EntityViewCtrl.java", "entityList.xhtml","EntityListCtrl.java"}				
+		),
+		@TargetGroup(
+				name="All",
+				targets={"EntityDAO.java", "EntityManager.java", "entityEdit.xhtml","EntityEditCtrl.java", "entityView.xhtml","EntityViewCtrl.java", "entityList.xhtml","EntityListCtrl.java"}				
+		)
+	},
 	targets = {
 		@Target(
 				name = "entityEdit.xhtml",
