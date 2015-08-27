@@ -6,14 +6,14 @@
     xmlns:cc="http://java.sun.com/jsf/composite"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui"> 
-   	<ui:param name="pageTitle" value="List of ${entity.plural}" />
+   	<ui:param name="pageTitle" value="List of ${entity.pluralFvm}" />
 	<ui:define name="content">
 		<h:form id="frm">			
 			<p:dataTable
-				id="dt${entity.plural}" 
+				id="dt${entity.pluralFvm}" 
 				var="entity"
 				lazy="true"
-				value="#{${entity.nameFlc}ListCtrl.dm${entity.plural}}"
+				value="#{${entity.nameFlc}ListCtrl.dm${entity.pluralFvm}}"
 				paginator="true"
 				paginatorPosition="bottom"
 				paginatorTemplate="Items for page: {RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} Page: {JumpToPageDropdown} {NextPageLink} {LastPageLink} {CurrentPageReport}"
@@ -26,22 +26,22 @@
 				<p:column exportable="false" styleClass="col-action">
 					<f:facet name="header"><h:outputText value="Action" /></f:facet>
 					
-					<p:button outcome="/pages/${entity.nameFlc}/${entity.nameFlc}View.jsf" title="View ${entity.nameFlc}" icon="ui-icon-zoomin">
+					<p:button outcome="/pages/${entity.nameFlc}/${entity.nameFlc}View.jsf" title="View ${entity.label}" icon="ui-icon-zoomin">
 						<f:param name="id" value="#{entity.id}" />
 					</p:button>
 					
-					<p:button outcome="/pages/${entity.nameFlc}/${entity.nameFlc}Edit.jsf" title="Edit ${entity.nameFlc}" icon="ui-icon-pencil">
+					<p:button outcome="/pages/${entity.nameFlc}/${entity.nameFlc}Edit.jsf" title="Edit ${entity.label}" icon="ui-icon-pencil">
 						<f:param name="id" value="#{entity.id}" />
 					</p:button>
 		        	
-					<p:commandButton process="@this" oncomplete="PF('dlg${entity.name}Delete').show()" title="Delete ${entity.nameFlc}" icon="ui-icon-trash">
+					<p:commandButton process="@this" oncomplete="PF('dlg${entity.name}Delete').show()" title="Delete ${entity.label}" icon="ui-icon-trash">
 						<f:setPropertyActionListener target="#{${entity.nameFlc}ListCtrl.${entity.nameFlc}Selected}" value="#{entity}" />
 		    		</p:commandButton>
 		        </p:column>
 				
 				<f:facet name="footer">
 		        	<p:outputPanel layout="block" styleClass="action-left">
-		        		<p:button icon="ui-icon-document" value="New" outcome="/pages/car/carEdit.jsf" title="New Car" />
+		        		<p:button icon="ui-icon-document" value="New" outcome="/pages/${entity.nameFlc}/${entity.nameFlc}Edit.jsf" title="New ${entity.label}" />
 					</p:outputPanel>
 		        </f:facet>				
 			</p:dataTable>
@@ -55,7 +55,7 @@
 			severity="alert"
 			widgetVar="dlg${entity.name}Delete">
 			<h:form id="frmDelete">
-				<p:commandButton value="Yes" icon="ui-icon-check" action="#{${entity.nameFlc}ListCtrl.delete}" process="@this" update=":frm:dt${entity.plural}" oncomplete="PF('dlg${entity.name}Delete').hide()" />
+				<p:commandButton value="Yes" icon="ui-icon-check" action="#{${entity.nameFlc}ListCtrl.delete}" process="@this" update=":frm:dt${entity.pluralFvm}" oncomplete="PF('dlg${entity.name}Delete').hide()" />
 				<p:commandButton value="No" icon="ui-icon-close" onclick="PF('dlg${entity.name}Delete').hide();" type="button" />
 			</h:form>
 		</p:confirmDialog>

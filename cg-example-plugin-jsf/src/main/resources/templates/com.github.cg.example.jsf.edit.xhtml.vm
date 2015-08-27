@@ -13,7 +13,7 @@
    	<ui:param name="pageTitle" value="Edit ${entity.label}" />
 	<ui:define name="content">		
 		<h:form id="frm">
-			${editXhtmlComponent.render}
+			${editXhtmlComponent.render(3)}
 			<p:outputPanel layout="block" styleClass="form-action-border">
 				<p:commandButton value="Save" icon="ui-icon-disk" action="#{${entity.nameFlc}EditCtrl.save}" process="frm" update="frm" />
 				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{${entity.nameFlc}EditCtrl.reset}" process="frm" update="frm" />

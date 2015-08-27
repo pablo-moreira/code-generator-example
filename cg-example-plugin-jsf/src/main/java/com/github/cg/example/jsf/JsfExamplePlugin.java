@@ -1,5 +1,6 @@
 package com.github.cg.example.jsf;
 
+import br.com.atos.cg.gui.DlgAttributeOneToMany;
 import br.com.atos.cg.gui.DlgFrmEntity;
 
 import com.github.cg.annotation.Plugin;
@@ -7,6 +8,7 @@ import com.github.cg.annotation.Target;
 import com.github.cg.annotation.TargetGroup;
 import com.github.cg.annotation.TargetTask;
 import com.github.cg.annotation.TaskConfig;
+import com.github.cg.task.FrmAttributeOneToManyTask;
 import com.github.cg.task.FrmEntityTask;
 
 @Plugin(
@@ -54,7 +56,7 @@ import com.github.cg.task.FrmEntityTask;
 				}
 		),
 		@Target(
-				name = "EditCtrl.java",
+				name = "EntityEditCtrl.java",
 				description = "Generate Class EntityEditCtrl.java",
 				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}EditCtrl.java", 
 				template = "/templates/com.github.cg.example.jsf.editCtrl.java.vm",
@@ -65,10 +67,20 @@ import com.github.cg.task.FrmEntityTask;
 								configs={
 									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "false"),
 									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "true"),
+								}
+						),
+						@TargetTask(
+								task=FrmAttributeOneToManyTask.class,
+								configs={
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_COLUMN, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FILTER, value = "false"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM, value = "false"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM_TYPE, value = "false")
 								}
 						)
 				}

@@ -8,7 +8,6 @@ public class AppCodeGenerator {
 		
 		CodeGenerator cg = new CodeGenerator();
 		cg.start();
-		//cg.executeTargetByName("List.xhtml", Car.class);
 //		cg.executeTargetByName("entityEdit.xhtml", Car.class);
 //		System.exit(0);
 	}

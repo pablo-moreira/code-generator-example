@@ -1,0 +1,43 @@
+<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"    
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+	<f:metadata>
+		<f:viewParam name="id" value="#{manufacturerViewCtrl.id}" />
+		<f:event type="preRenderView" listener="#{manufacturerViewCtrl.start}" />
+	</f:metadata>
+   	<ui:param name="pageTitle" value="View Manufacturer" />
+	<ui:define name="content">		
+		<h:form id="frm">			
+			<p:tabView id="tbView">
+				<p:tab title="Manufacturer">
+					<h:panelGrid columns="2" cellpadding="5">
+						
+						<h:outputText value="Id:" />
+						<h:outputText value="#{manufacturerViewCtrl.entity.id}" />
+						
+						<h:outputText value="Name:" />
+						<h:outputText value="#{manufacturerViewCtrl.entity.name}" />
+						
+						<h:outputText value="E-Mail:" />
+						<h:outputText value="#{manufacturerViewCtrl.entity.email}" />
+						
+						<h:outputText value="Phone:" />
+						<h:outputText value="#{manufacturerViewCtrl.entity.phone}" />
+						
+						<h:outputText value="Version:" />
+						<h:outputText value="#{manufacturerViewCtrl.entity.version}" />
+						
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+			
+			<p:outputPanel layout="block" styleClass="form-action-border">
+				<p:button value="Back" icon="ui-icon-arrowreturnthick-1-w" outcome="/pages/manufacturer/manufacturerList.jsf" />
+			</p:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

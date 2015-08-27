@@ -14,7 +14,7 @@ import com.github.cg.example.jsf.util.FacesMessageUtils;
 @Named
 @ConversationScoped
 @HandlesError
-public class CarListCtrl extends AppConversationCtrl {
+public class ${entity.name}ListCtrl extends AppConversationCtrl {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class CarListCtrl extends AppConversationCtrl {
 	
 	private ${entity.name} ${entity.nameFlc}Selected;
 		
-	private LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}> dm${entity.plural}; 
+	private LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}> dm${entity.pluralFvm}; 
 
 	@Inject
     public void init(${entity.name}DAO ${entity.nameFlc}DAO) {
@@ -45,7 +45,7 @@ public class CarListCtrl extends AppConversationCtrl {
 		this.${entity.nameFlc}Selected = ${entity.nameFlc}Selected;
 	}
 
-	public LazyDataModelDefault<${entity.name}DAO,${entity.name},${entity.attributeIdClass}> getDm${entity.plural}() {
-		return dm${entity.plural};
+	public LazyDataModelDefault<${entity.name}DAO,${entity.name},${entity.attributeIdClass}> getDm${entity.pluralFvm}() {
+		return dm${entity.pluralFvm};
 	}
 }
