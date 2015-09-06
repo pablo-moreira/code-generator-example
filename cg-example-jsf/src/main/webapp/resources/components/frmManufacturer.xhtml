@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite="http://java.sun.com/jsf/composite"
+    xmlns:app="http://java.sun.com/jsf/composite/components"
+    xmlns:p="http://primefaces.org/ui">
+   
+	<composite:interface>
+		<composite:attribute name="frm" required="true" type="com.github.cg.example.jsf.controller.frm.FrmModel" />
+	</composite:interface>
+
+	<composite:implementation>
+		<app:frm frm="#{cc.attrs.frm}">
+			<p:tabView id="tbView">
+				<p:tab title="Model">
+					<h:panelGrid columns="3" cellpadding="5" style="width: 100%">
+						<h:outputLabel value="Id:" for="id" />
+						<p:inputText id="id" label="Id." value="#{cc.attrs.frm.entity.id}" disabled="true" />
+						<p:message for="id" display="icon" />
+						
+						<h:outputLabel value="Version:" for="Version" />
+						<p:inputText id="version" label="Version" value="#{cc.attrs.frm.entity.version}" disabled="true" />
+						<p:message for="version" display="icon" />
+						
+						<h:outputLabel value="Manufacturer:" for="manufacturer" />
+						<p:autoComplete id="manufacturer" label="Manufacturer" value="#{cc.attrs.frm.entity.manufacturer}" required="true" forceSelection="true"
+							completeMethod="#{autoCompleteCtrl.onCompleteManufacturer}" dropdown="true" converter="lazyEntityConverter"
+							var="manufacturer" itemValue="#{manufacturer}" itemLabel="#{manufacturer.name}"
+							size="40" scrollHeight="200">
+							<p:column><h:outputText value="#{manufacturer.Id}" /></p:column>
+							<p:column><h:outputText value="#{manufacturer.name}" /></p:column>
+							<p:ajax event="query" global="false" />
+						</p:autoComplete>
+						<p:message for="manufacturer" display="icon" />
+						
+						<h:outputLabel value="Name:" for="name" />
+						<p:inputText id="name" label="Name" value="#{cc.attrs.frm.entity.name}" required="true" style="width: 300px" />
+						<p:message for="name" display="icon" />
+						
+						<h:outputLabel value="Description:" for="description" />
+						<p:inputText id="description" label="Description" value="#{cc.attrs.frm.entity.description}" required="true" style="width: 300px" />
+						<p:message for="description" display="icon" />
+						
+						<h:outputLabel value="Year:" for="year" />
+						<p:inputText id="year" label="Year" value="#{cc.attrs.frm.entity.year}" required="true" style="width: 300px" />
+						<p:message for="year" display="icon" />
+						
+						<h:outputLabel value="Price:" for="price" />
+						<p:inputText id="price" label="Price" value="#{cc.attrs.frm.entity.price}" required="true" style="width: 300px" />
+						<p:message for="price" display="icon" />
+						
+						<h:outputLabel value="Classification:" for="classification" />
+						<p:selectOneMenu id="classification" label="Classification" value="#{cc.attrs.frm.entity.classification}" effectDuration="0" required="true">
+							<f:selectItems value="#{selectItems.classificationItens}" />
+						</p:selectOneMenu>
+						<p:message for="classification" display="icon" />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Cars">
+					<p:dataTable
+						id="dtCars"
+						emptyMessage="None Model found."
+						value="#{cc.attrs.frm.entity.cars}"
+						var="association">
+						
+						<p:column headerText="Id" sortBy="#{association.id}" filterBy="#{association.id}">
+							<h:outputText value="#{association.id}" />
+						</p:column>
+						
+						<p:column headerText="License Plate" sortBy="#{association.licensePlate}" filterBy="#{association.licensePlate}">
+							<h:outputText value="#{association.licensePlate}" />
+						</p:column>
+						
+						<p:column headerText="Fabrication Date" sortBy="#{association.fabricationDate}" filterBy="#{association.fabricationDate}">
+							<h:outputText value="#{association.fabricationDate}">
+								<f:convertDateTime locale="#{localeCtrl.locale}" type="date" />
+							</h:outputText>
+						</p:column>
+						
+					</p:dataTable>
+				</p:tab>
+			</p:tabView>		
+		</app:frm>
+	</composite:implementation>
+</html>

@@ -23,7 +23,7 @@ public class EditXhtmlComponent extends BaseComponent {
 		String path = entity.getNameFlc() + "EditCtrl.entity";
 		String tab = tab(tabs);
 		
-		println(sb, "{0}<p:tabView id=\"tbView\">", tab);	
+		println(sb, "<p:tabView id=\"tbView\">");	
 		
 		renderTabEntity(sb, path, tab);
 		
@@ -33,7 +33,7 @@ public class EditXhtmlComponent extends BaseComponent {
 			
 				String dataTableId = "dt" + attribute.getNameFuc();
 				
-				println(sb, "{0}\t<p:tab title=\"{0}\">", attribute.getLabel());
+				println(sb, "{0}\t<p:tab title=\"{1}\">", tab, attribute.getLabel());
 				
 				println(sb, "{0}\t\t<p:dataTable", tab);
 				println(sb, "{0}\t\t\tid=\"{1}\"", tab, dataTableId);
@@ -56,23 +56,23 @@ public class EditXhtmlComponent extends BaseComponent {
 						}
 					}
 
-					println(sb, "{0}\t\t\t<p:column headerText=\"Action\" styleClass=\"col-action\">", tab);
-					println(sb, "{0}\t\t\t\t<p:commandLink action=\"#'{'cc.attrs.winFrm.association{1}.startUpdate'}'\" title=\"Edit {2}\" process=\"@this\">", tab, attribute.getNameFuc(), attribute.getLabel());
-					println(sb, "{0}\t\t\t\t\t<h:graphicImage value=\"/resources/img/s.gif\" styleClass=\"link-icone ui-icon-pencil\" />", tab);
-					println(sb, "{0}\t\t\t\t\t<f:setPropertyActionListener target=\"#'{'cc.attrs.winFrm.association{1}.winFrmAssociation.entity}\" value=\"#'{'association'}'\" />", tab, attribute.getNameFuc());
-					println(sb, "{0}\t\t\t\t</p:commandLink>", tab);
-					println(sb, "{0}\t\t\t\t", tab);
-					println(sb, "{0}\t\t\t\t<p:commandLink action=\"#'{'cc.attrs.winFrm.association{1}.startDelete'}'\" title=\"Delete {2}\" process=\"@this\">", tab, attribute.getNameFuc(), attribute.getLabel());
-					println(sb, "{0}\t\t\t\t\t<h:graphicImage value=\"/resources/img/s.gif\" styleClass=\"link-icone ui-icon-trash\" />", tab);
-					println(sb, "{0}\t\t\t\t\t<f:setPropertyActionListener target=\"#'{'cc.attrs.winFrm.association{1}.winFrmAssociation.entity}\" value=\"#'{'association'}'\" />", tab, attribute.getNameFuc());
-					println(sb, "{0}\t\t\t\t</p:commandLink>", tab);
-					println(sb, "{0}\t\t\t</p:column>", tab);
-					println(sb, "{0}\t\t\t", tab);
-					println(sb, "{0}\t\t\t<f:facet name=\"footer\">", tab);
-					println(sb, "{0}\t\t\t\t<p:outputPanel styleClass=\"datatable-menu\" layout=\"block\">", tab);
-					println(sb, "{0}\t\t\t\t\t<p:commandButton value=\"Add\" action=\"#'{'cc.attrs.winFrm.association{1}.startInsert'}'\" title=\"Add {2}\" icon=\"ui-icon-document\" process=\"@this\" />", tab, attribute.getNameFuc(), attribute.getLabel());
-					println(sb, "{0}\t\t\t\t</p:outputPanel>", tab);
-					println(sb, "{0}\t\t\t</f:facet>", tab);
+//					println(sb, "{0}\t\t\t<p:column headerText=\"Action\" styleClass=\"col-action\">", tab);
+//					println(sb, "{0}\t\t\t\t<p:commandLink action=\"#'{'cc.attrs.winFrm.association{1}.startUpdate'}'\" title=\"Edit {2}\" process=\"@this\">", tab, attribute.getNameFuc(), attribute.getLabel());
+//					println(sb, "{0}\t\t\t\t\t<h:graphicImage value=\"/resources/img/s.gif\" styleClass=\"link-icone ui-icon-pencil\" />", tab);
+//					println(sb, "{0}\t\t\t\t\t<f:setPropertyActionListener target=\"#'{'cc.attrs.winFrm.association{1}.winFrmAssociation.entity}\" value=\"#'{'association'}'\" />", tab, attribute.getNameFuc());
+//					println(sb, "{0}\t\t\t\t</p:commandLink>", tab);
+//					println(sb, "{0}\t\t\t\t", tab);
+//					println(sb, "{0}\t\t\t\t<p:commandLink action=\"#'{'cc.attrs.winFrm.association{1}.startDelete'}'\" title=\"Delete {2}\" process=\"@this\">", tab, attribute.getNameFuc(), attribute.getLabel());
+//					println(sb, "{0}\t\t\t\t\t<h:graphicImage value=\"/resources/img/s.gif\" styleClass=\"link-icone ui-icon-trash\" />", tab);
+//					println(sb, "{0}\t\t\t\t\t<f:setPropertyActionListener target=\"#'{'cc.attrs.winFrm.association{1}.winFrmAssociation.entity}\" value=\"#'{'association'}'\" />", tab, attribute.getNameFuc());
+//					println(sb, "{0}\t\t\t\t</p:commandLink>", tab);
+//					println(sb, "{0}\t\t\t</p:column>", tab);
+//					println(sb, "{0}\t\t\t", tab);
+//					println(sb, "{0}\t\t\t<f:facet name=\"footer\">", tab);
+//					println(sb, "{0}\t\t\t\t<p:outputPanel styleClass=\"datatable-menu\" layout=\"block\">", tab);
+//					println(sb, "{0}\t\t\t\t\t<p:commandButton value=\"Add\" action=\"#'{'cc.attrs.winFrm.association{1}.startInsert'}'\" title=\"Add {2}\" icon=\"ui-icon-document\" process=\"@this\" />", tab, attribute.getNameFuc(), attribute.getLabel());
+//					println(sb, "{0}\t\t\t\t</p:outputPanel>", tab);
+//					println(sb, "{0}\t\t\t</f:facet>", tab);
 					println(sb, "{0}\t\t</p:dataTable>", tab);
 				}
 				else {
@@ -148,7 +148,7 @@ public class EditXhtmlComponent extends BaseComponent {
 				// Verifica se o atributo e anotado com @Version
 				if (attribute.isAnnotedWithVersion()) {
 					println(sb, "{0}\t\t", tab);
-					println(sb, "{0}\t\t<h:outputLabel value=\"{1}:\" for=\"{1}\" />", tab, attribute.getLabel(), attribute.getName());
+					println(sb, "{0}\t\t<h:outputLabel value=\"{1}:\" for=\"{2}\" />", tab, attribute.getLabel(), attribute.getName());
 					println(sb, "{0}\t\t<p:inputText id=\"{1}\" label=\"{2}\" value=\"#'{'{3}.{1}'}'\" disabled=\"true\" />", tab, attribute.getName(), attribute.getLabel(), path);
 					println(sb, "{0}\t\t<p:message for=\"{1}\" display=\"icon\" />", tab, attribute.getName());
 				}
@@ -161,7 +161,7 @@ public class EditXhtmlComponent extends BaseComponent {
 		for (Attribute attribute : attributes) {
 			println(sb, "{0}\t\t", tab);
 			println(sb, "{0}\t\t<h:outputLabel value=\"{1}:\" for=\"{2}\" />", tab, attribute.getLabel(), attribute.getName());			
-			printin(sb, "{0}\t\t", path, attribute, true);
+			printin(sb, tab + "\t\t", path, attribute, true);
 			println(sb, "{0}\t\t<p:message for=\"{1}\" display=\"icon\" />", tab, attribute.getName());
 		}
 

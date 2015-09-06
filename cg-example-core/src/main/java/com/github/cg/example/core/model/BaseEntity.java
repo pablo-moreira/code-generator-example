@@ -45,11 +45,6 @@ public abstract class BaseEntity<I> implements IBaseEntity<I>, Serializable {
 		return result;
 	}
 
-	@Override
-	public boolean isTransient() {
-		return getId() == null;
-	}
-
 	public Integer getVersion() {
 		return version;
 	}

@@ -1,7 +1,10 @@
 package ${app.pkgs.controller};
 
 import java.io.Serializable;
+#if( $entity.getAttributesManyToOne().size() > 0 )
 import java.util.List;
+#end
+
 
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;

@@ -16,7 +16,7 @@ public class HibernateUtils {
 			try {
 				field.setAccessible(true);
 				Object fieldValue = field.get(entidade);
-				if (fieldValue instanceof PersistentBag) {									
+				if (fieldValue instanceof PersistentBag) {
 					Hibernate.initialize(fieldValue);
 				}
 			}

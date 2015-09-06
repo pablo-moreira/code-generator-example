@@ -152,11 +152,11 @@ abstract public class DAO<E extends IBaseEntity<I>,I> implements Serializable {
 	
 	public E retrieveFullById(I id) {
 
-		E entidade = retrieveById(id);
+		E entity = entityManager.find(entityClass, id);
 		
-		HibernateUtils.initializeCollections(entidade);
+		HibernateUtils.initializeCollections(entity);
 		
-		return entidade;
+		return entity;
 	}
 	
 	public CriteriaBuilder getCriteriaBuilder() {

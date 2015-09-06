@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:app="http://java.sun.com/jsf/composite/components"
+    xmlns:p="http://primefaces.org/ui">
+
+	<cc:interface name="dlgAssociationDelete" displayName="dlgAssociationDelete">
+		<cc:attribute name="title" 			required="true" type="java.lang.String" shortDescription="Delete Entity." />
+		<cc:attribute name="message" 		required="true" type="java.lang.String" shortDescription="Are you sure to delete this item?" />		
+		<cc:attribute name="frmAssociation"	required="true" type="com.github.cg.example.jsf.controller.frm.FrmAssociationOneToMany" />
+	</cc:interface>
+
+	<cc:implementation>
+		<p:confirmDialog
+			widgetVar="#{cc.attrs.frmAssociation.dialogDeleteId}"
+			message="#{cc.attrs.message}"  
+			header="#{cc.attrs.title}"
+			modal="true"
+			appendTo="@(body)"
+            severity="alert">
+      		<p:commandButton id="btnConfirm" value="Yes" action="#{cc.attrs.frmAssociation.delete}" process="@this" icon="ui-icon-trash" />
+			<p:commandButton id="btnCancel"	 value="No"  action="#{cc.attrs.frmAssociation.cancelDelete}" process="@this" icon="ui-icon-cancel" />
+   		</p:confirmDialog>
+	</cc:implementation>
+</html>

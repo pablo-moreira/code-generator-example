@@ -5,5 +5,4 @@ public interface IBaseEntity<I> {
 	
 	abstract public I getId();
 	
-	abstract public boolean isTransient();
 }

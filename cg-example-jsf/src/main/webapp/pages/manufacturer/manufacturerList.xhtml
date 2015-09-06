@@ -19,11 +19,11 @@
 				currentPageReportTemplate="[ Showing {startRecord} - {endRecord} of {totalRecords} - Page: {currentPage}/{totalPages} ]"
 				rows="10"
 		        rowsPerPageTemplate="5,10,15,20,25,50">
-
 								
 				<p:column sortBy="#{entity.id}">
 					<f:facet name="header"><h:outputText value="Id" /></f:facet>
-					<h:outputText value="#{entity.id}" />				</p:column>
+					<h:outputText value="#{entity.id}" />
+					</p:column>
 				
 				<p:column sortBy="#{entity.name}">
 					<f:facet name="header"><h:outputText value="Name" /></f:facet>

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.github.cg.example.core.dao.DAO;
+import com.github.cg.example.core.dao.query.PagedQuery;
+import com.github.cg.example.core.dao.query.PagedQueryResult;
 import com.github.cg.example.core.model.IBaseEntity;
 
 abstract public class Manager<D extends DAO<E,I>,E extends IBaseEntity<I>,I> implements Serializable {
@@ -39,7 +41,7 @@ abstract public class Manager<D extends DAO<E,I>,E extends IBaseEntity<I>,I> imp
 						
 		IBaseEntity<?> baseEntity = (IBaseEntity<?>) entity;
 
-		if (baseEntity.isTransient()) {
+		if (baseEntity.getId() == null) {
 			insert(entity);
 		}
 		else {
@@ -58,5 +60,46 @@ abstract public class Manager<D extends DAO<E,I>,E extends IBaseEntity<I>,I> imp
 		}
 		
 		return saveEntities;
+	}
+
+	public E retrieveById(E e) {
+		return dao.retrieveById(e);
+	}
+
+	public E retrieveByIdString(String id) {
+		return dao.retrieveByIdString(id);
+	}
+
+	public E retrieveById(I id) {
+		return dao.retrieveById(id);
+	}
+
+	public E retrieveReferenceById(I id) {
+		return dao.retrieveReferenceById(id);
+	}
+
+	public List<E> retrieveAll() {
+		return dao.retrieveAll();
+	}
+
+	public E retrieveFullById(E entidade) {
+		return dao.retrieveFullById(entidade);
+	}
+
+	public E retrieveFullById(I id) {
+		return dao.retrieveFullById(id);
+	}
+
+	public PagedQueryResult<E> retrieveEntitiesPaged(PagedQuery pagedQuery) {
+		return dao.retrieveEntitiesPaged(pagedQuery);
+	}
+	
+	public E newInstance() {
+		try {
+			return getDAO().getEntityClass().newInstance();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

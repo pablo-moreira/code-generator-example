@@ -4,6 +4,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:cc="http://java.sun.com/jsf/composite"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:app="http://java.sun.com/jsf/composite/components"
     xmlns:p="http://primefaces.org/ui">
 	<f:metadata>
 		<f:viewParam name="id" value="#{carEditCtrl.id}" />
@@ -12,7 +13,9 @@
    	<ui:param name="pageTitle" value="Edit Car" />
 	<ui:define name="content">		
 		<h:form id="frm">
-			${editXhtmlComponent.render(3)}
+			
+			<app:frmCar frm="#{carEditCtrl.frm}" />
+		
 			<p:outputPanel layout="block" styleClass="form-action-border">
 				<p:commandButton value="Save" icon="ui-icon-disk" action="#{carEditCtrl.save}" process="frm" update="frm" />
 				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{carEditCtrl.reset}" process="frm" update="frm" />

@@ -1,6 +1,6 @@
 package com.github.cg.example.jsf.controller;
 import java.io.Serializable;
-import java.util.List;
+
 
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
@@ -48,7 +48,7 @@ public class ManufacturerEditCtrl extends AppConversationCtrl implements Seriali
 	
 	public void reset() {		
 		if (getId() != null) { 
-			entity = this.manufacturerDAO.retrieveById(getId());			
+			entity = this.manufacturerDAO.retrieveFullById(getId());			
 		}
 		else {
 			entity = new Manufacturer();

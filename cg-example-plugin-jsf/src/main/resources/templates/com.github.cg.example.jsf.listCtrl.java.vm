@@ -27,7 +27,7 @@ public class ${entity.name}ListCtrl extends AppConversationCtrl {
 
 	@Inject
     public void init(${entity.name}DAO ${entity.nameFlc}DAO) {
-		dmCars = new LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}>(${entity.nameFlc}DAO);
+		dm${entity.pluralFvm} = new LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}>(${entity.nameFlc}DAO);
     }
     
 	public void delete() throws Exception {
@@ -37,7 +37,7 @@ public class ${entity.name}ListCtrl extends AppConversationCtrl {
 		FacesMessageUtils.addInfo("The ${entity.name} was deleted successfully!");
 	}
 	
-	public Car get${entity.name}Selected() {
+	public ${entity.name} get${entity.name}Selected() {
 		return ${entity.nameFlc}Selected;
 	}
 

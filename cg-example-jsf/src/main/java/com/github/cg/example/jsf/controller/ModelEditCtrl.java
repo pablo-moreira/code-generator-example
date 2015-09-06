@@ -1,6 +1,5 @@
 package com.github.cg.example.jsf.controller;
 import java.io.Serializable;
-import java.util.List;
 
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
@@ -8,14 +7,10 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.github.cg.example.jsf.annotations.HandlesError;
 import com.github.cg.example.core.model.Model;
-import com.github.cg.example.jsf.dao.ModelDAO;
-import com.github.cg.example.jsf.manager.ModelManager;
+import com.github.cg.example.jsf.annotations.HandlesError;
+import com.github.cg.example.jsf.controller.frm.FrmModel;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
-
-import com.github.cg.example.core.model.Manufacturer;
-import com.github.cg.example.jsf.dao.ManufacturerDAO;
 
 @Named
 @ConversationScoped
@@ -25,38 +20,33 @@ public class ModelEditCtrl extends AppConversationCtrl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	
-	private Model entity;
-	
+		
 	@Inject
-	private ModelManager modelManager;
+	private FrmModel frm;
 	
-	@Inject
-	private ModelDAO modelDAO;
-
-	@Inject
-	private ManufacturerDAO manufacturerDAO;
+	private String teste1;
+	private String teste2;
 	
-	public void start(ComponentSystemEvent evt) {
+	public void start(ComponentSystemEvent evt) throws Exception {
 		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
-			reset();			
+			reset();
 		}
 	}
 
 	public void save() throws Exception {
 		
-		this.entity = this.modelManager.save(getEntity());
-		this.id = getEntity().getId();
+		Model entity = getFrm().save();
+		this.id = entity.getId();
 		
-		FacesMessageUtils.addInfo("The ${entity.label} was save successfully!");
+		FacesMessageUtils.addInfo("The Model was save successfully!");
 	}
 	
-	public void reset() {		
-		if (getId() != null) { 
-			entity = this.modelDAO.retrieveById(getId());			
+	public void reset() throws Exception {		
+		if (getId() != null) {
+			getFrm().startUpdateById(getId());			
 		}
 		else {
-			entity = new Model();
+			getFrm().startInsert();
 		}
 	}
 	
@@ -68,11 +58,23 @@ public class ModelEditCtrl extends AppConversationCtrl implements Serializable {
 		this.id = id;
 	}
 
-	public Model getEntity() {
-		return entity;
+	public FrmModel getFrm() {
+		return frm;
 	}
 
-	public List<Manufacturer> onCompleteModel(String suggest) {
-		return this.manufacturerDAO.retrieveBySuggestOrderByDescription(suggest);
+	public String getTeste1() {
+		return teste1;
+	}
+
+	public void setTeste1(String teste1) {
+		this.teste1 = teste1;
+	}
+
+	public String getTeste2() {
+		return teste2;
+	}
+
+	public void setTeste2(String teste2) {
+		this.teste2 = teste2;
 	}
 }
