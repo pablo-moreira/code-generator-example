@@ -98,16 +98,23 @@ abstract public class BaseComponent extends Component {
 		else if (Date.class.isAssignableFrom(type) || Calendar.class.isAssignableFrom(type)) {
 
 			Temporal annotation = attribute.getAnnotation(Temporal.class);
+
+			String locale = "#{localeCtrl.locale}";
+			String pattern;
+			String othersAttributes = "";
 			
-			if (annotation == null || annotation.value() == TemporalType.TIMESTAMP) {
-				println(sb, tab + "<p:calendar id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" showOn=\"button\" locale=\"pt_BR\" pattern=\"dd/MM/yyyy HH:mm\" required=\"{3}\" onkeypress=\"Mask.valid(this, ''dataHorario'')\" />", id, label, value, required);
+			if (annotation != null && annotation.value() == TemporalType.DATE) {
+				pattern = "#{localeCtrl.datePattern}";
 			}
-			else if (annotation.value() == TemporalType.DATE) {
-				println(sb, tab + "<p:calendar id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" showOn=\"button\" locale=\"pt_BR\" pattern=\"dd/MM/yyyy\" required=\"{3}\" onkeypress=\"Mask.valid(this, ''data'')\" />", id, label, value, required);
+			else if (annotation != null && annotation.value() == TemporalType.TIME) {
+				pattern = "#{localeCtrl.timePattern}";
+				othersAttributes = "timeOnly=\"true\" size=\"4\"";
 			}
-			else if (attribute.getAnnotation(Temporal.class).value() == TemporalType.TIME) {
-				println(sb, tab + "<p:calendar id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" size=\"4\" showOn=\"button\" locale=\"pt_BR\" pattern=\"HH:mm\" timeOnly=\"true\" required=\"{3}\" onkeypress=\"Mask.valid(this, ''horario'')\" />", id, label, value, required);
+			else {
+				pattern = "#{localeCtrl.dataTimePattern}";
 			}
+			
+			println(sb, tab + "<p:calendar id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" showOn=\"button\" locale=\"{3}\" pattern=\"{4}\" required=\"{5}\" mask=\"true\" {6} />", id, label, value, locale, pattern, required, othersAttributes);						
 		}
 		else if (IBaseEntity.class.isAssignableFrom(type)) {
 			

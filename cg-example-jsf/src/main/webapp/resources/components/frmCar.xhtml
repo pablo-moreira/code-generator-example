@@ -33,11 +33,11 @@
 						<p:message for="model" display="icon" />
 						
 						<h:outputLabel value="License Plate:" for="licensePlate" />
-						<p:inputText id="licensePlate" label="License Plate" value="#{cc.attrs.frm.entity.licensePlate}" required="true" style="width: 300px" />
+						<p:inputMask id="licensePlate" label="License Plate" value="#{cc.attrs.frm.entity.licensePlate}" required="true" style="width: 300px" mask="#{maskCtrl.licensePlate}" />
 						<p:message for="licensePlate" display="icon" />
 						
 						<h:outputLabel value="Fabrication Date:" for="fabricationDate" />
-						<p:calendar id="fabricationDate" label="Fabrication Date" value="#{cc.attrs.frm.entity.fabricationDate}" showOn="button" locale="pt_BR" pattern="dd/MM/yyyy" required="true" onkeypress="Mask.valid(this, 'data')" />
+						<p:calendar id="fabricationDate" label="Fabrication Date" value="#{cc.attrs.frm.entity.fabricationDate}" showOn="button" locale="#{localeCtrl.locale}" pattern="#{localeCtrl.datePattern}" mask="true" required="true"  />
 						<p:message for="fabricationDate" display="icon" />
 					</h:panelGrid>
 				</p:tab>
