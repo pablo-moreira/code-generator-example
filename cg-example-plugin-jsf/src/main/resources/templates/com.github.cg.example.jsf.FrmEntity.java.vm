@@ -15,9 +15,14 @@ import com.github.cg.example.jsf.annotations.HandlesError;
 import ${app.pkgs.model}.${entity.name};
 import ${app.pkgs.manager}.${entity.name}Manager;
 
-#foreach( $attributeManyToOne in $entity.getAttributesManyToOne() )
-import ${app.pkgs.model}.${attributeManyToOne.typeName};
-import ${app.pkgs.manager}.${attributeManyToOne.typeName}Manager;
+#foreach( $attr in $entity.getAttributesManyToOne() )
+import ${app.pkgs.model}.${attr.typeName};
+import ${app.pkgs.manager}.${attr.typeName}Manager;
+#end
+
+#foreach( $attr in $entity.getAttributesOneToMany() )
+import ${app.pkgs.model}.${attr.associationClassSimpleName};
+import ${app.pkgs.controller}.frm.Frm${attr.associationClassSimpleName};
 #end
 
 @Named
@@ -25,15 +30,45 @@ import ${app.pkgs.manager}.${attributeManyToOne.typeName}Manager;
 public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},${entity.attributeIdClass}> {
 
 	private static final long serialVersionUID = 1L;
-#foreach( $attributeManyToOne in $entity.getAttributesManyToOne() )
+#foreach( $attr in $entity.getAttributesManyToOne() )
 
 	@EJB
-	private ${attributeManyToOne.typeName}Manager ${attributeManyToOne.typeNameFlc}Manager;
+	private ${attr.typeName}Manager ${attr.typeNameFlc}Manager;
+#end
+#foreach( $attr in $entity.getAttributesOneToMany() )
+	private FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassSimpleName},${attr.associationClassSimpleName}> association${attr.nameFuc};
 #end	
-#foreach( $attributeManyToOne in $entity.getAttributesManyToOne() )
+#foreach( $attr in $entity.getAttributesManyToOne() )
 
-	public List<${attributeManyToOne.typeName}> onComplete${attributeManyToOne.typeName}(String suggest) {
-		return this.${attributeManyToOne.typeNameFlc}Manager.retrieveBySuggestOrderByDescription(suggest);
+	public List<${attr.typeName}> onComplete${attr.typeName}(String suggest) {
+		return this.${attr.typeNameFlc}Manager.retrieveBySuggestOrderByDescription(suggest);
+	}
+#end
+#if( $entity.getAttributesOneToMany().size() > 0 )
+
+	@Inject
+	public void initAssociations(#foreach( $attr in $entity.getAttributesOneToMany() )Frm${attr.associationClassSimpleName} frm${attr.associationClassSimpleName}#if( $foreach.hasNext ), #end#end) throws Exception {
+#foreach( $attr in $entity.getAttributesOneToMany() )
+		
+		this.association${attr.nameFuc} = new FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassSimpleName},${attr.associationClassSimpleName}>(this, frm${attr.associationClassSimpleName}, "tbView:dt${attr.nameFuc}") {
+
+			@Override
+			public void connect(${attr.associationClassSimpleName} association, ${entity.name} entity) {
+				association.set${attr.associationMappedByFuc}(entity);
+			}
+
+			@Override
+			public List<${attr.associationClassSimpleName}> getAssociations(${entity.name} entity) {
+				return entity.get${attr.nameFuc}();
+			}
+		};
+#end
+	}
+#end
+#foreach( $attr in $entity.getAttributesOneToMany() )
+	
+	public FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassSimpleName},${attr.associationClassSimpleName}> getAssociation${attr.nameFuc}() {
+		return association${attr.nameFuc};
 	}
 #end
 }

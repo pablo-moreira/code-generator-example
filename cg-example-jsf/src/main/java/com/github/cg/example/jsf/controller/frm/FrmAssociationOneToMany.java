@@ -17,12 +17,11 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 	
 	private FE frmEntity;	
 	private FA frmAssociation;	
-//	private String association; /* TODO - implementar os metodos connect e getAssociations automatically */
 	private String componentToUpdateId;
 	private String dialogDeleteId;
 	private A associationSelected;
 			
-	public FrmAssociationOneToMany(FE frmEntity, FA frmAssociation, String association, String componentToUpdateId) {
+	public FrmAssociationOneToMany(FE frmEntity, FA frmAssociation, String componentToUpdateId) {
 		
 		String id = Integer.valueOf((int) (Math.random() * 10000)).toString();
 		
@@ -30,7 +29,6 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 		
 		this.frmEntity = frmEntity;
 		this.frmAssociation = frmAssociation;
-//		this.association = association;
 		this.componentToUpdateId = componentToUpdateId;
 		this.frmEntity.addFrmAssociationOneToMany(this);
 	}
