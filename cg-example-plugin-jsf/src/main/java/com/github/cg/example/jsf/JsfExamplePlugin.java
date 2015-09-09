@@ -36,6 +36,66 @@ import com.github.cg.task.FrmEntityTask;
 	},
 	targets = {
 		@Target(
+				name = "FrmEntity.java",
+				description = "Generate Component FrmEntity.java",				
+				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/frm/Frm${entity.name}.java",
+				template = "/templates/com.github.cg.example.jsf.FrmEntity.java.vm",
+				allowOverwrite = true,
+				tasksToExecuteBefore={
+						@TargetTask(
+								task=FrmEntityTask.class,
+								configs={
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "true"),
+								}
+						),
+						@TargetTask(
+								task=FrmAttributeOneToManyTask.class,
+								configs={
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_COLUMN, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FILTER, value = "false"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM, value = "false"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM_TYPE, value = "false")
+								}
+						)
+				}
+		),
+		@Target(
+				name = "frmEntity.xhtml",
+				description = "Generate Component frmEntity.xhtml",
+				filename = "${app.dirs.base}/${app.dirs.web}/resources/components/frm${entity.name}.xhtml", 
+				template = "/templates/com.github.cg.example.jsf.frmEntity.xhtml.vm",
+				allowOverwrite = true,
+				tasksToExecuteBefore={
+						@TargetTask(
+								task=FrmEntityTask.class,
+								configs={
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "true"),
+								}
+						),
+						@TargetTask(
+								task=FrmAttributeOneToManyTask.class,
+								configs={
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_COLUMN, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FILTER, value = "false"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM, value = "false"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM_TYPE, value = "false")
+								}
+						)
+				}
+		),
+		@Target(
 				name = "entityEdit.xhtml",
 				description = "Generate View entityEdit.xhtml",
 				filename = "${app.dirs.base}/${app.dirs.web}/pages/${entity.nameFlc}/${entity.nameFlc}Edit.xhtml", 

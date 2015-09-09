@@ -5,10 +5,6 @@ import static br.com.atos.utils.StringUtils.firstToLowerCase;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -75,20 +71,7 @@ abstract public class BaseComponent extends Component {
 		Class<?> type = attribute.getType();
 		String value = path + "." + attribute.getName();
 		
-		String required = "false";
-	
-		if (attribute.getAnnotation(Column.class) != null) {
-			required = attribute.getAnnotation(Column.class).nullable() ? "false" : "true";
-		}
-		else if (attribute.getAnnotation(OneToOne.class) != null) {
-			required = attribute.getAnnotation(OneToOne.class).optional() ? "false" : "true";
-		}
-		else if (attribute.getAnnotation(ManyToOne.class) != null) {
-			required = attribute.getAnnotation(ManyToOne.class).optional() ? "false" : "true";
-		}
-		else if (attribute.getAnnotation(JoinColumn.class) != null) {
-			required = attribute.getAnnotation(JoinColumn.class).nullable() ? "false" : "true";
-		}
+		String required = attribute.isRequired().toString().toLowerCase();
 		
 		if (BaseEnum.class.isAssignableFrom(type)) {
 			println(sb, tab + "<p:selectOneMenu id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" effectDuration=\"0\" required=\"{3}\">", id, label, value, required);
@@ -114,15 +97,15 @@ abstract public class BaseComponent extends Component {
 				pattern = "#{localeCtrl.dataTimePattern}";
 			}
 			
-			println(sb, tab + "<p:calendar id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" showOn=\"button\" locale=\"{3}\" pattern=\"{4}\" required=\"{5}\" mask=\"true\" {6} />", id, label, value, locale, pattern, required, othersAttributes);						
+			println(sb, tab + "<p:calendar id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" showOn=\"button\" locale=\"{3}\" pattern=\"{4}\" required=\"{5}\" mask=\"true\" {6}/>", id, label, value, locale, pattern, required, othersAttributes);						
 		}
 		else if (IBaseEntity.class.isAssignableFrom(type)) {
 			
-			AttributeManyToOne atributoManyToOne = (AttributeManyToOne) attribute;
-		
-			// Imprime um autocomplete
-			println(sb, tab + "<p:autoComplete id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" forceSelection=\"true\"", id, label, value, required);	
-			println(sb, tab + "\tcompleteMethod=\"#'{'{0}.onComplete{1}'}'\" dropdown=\"true\" converter=\"lazyEntityConverter\"", path, type.getSimpleName());
+			AttributeManyToOne atributoManyToOne = (AttributeManyToOne) attribute;		
+			
+			println(sb, tab + "<p:autoComplete id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" forceSelection=\"true\"", id, label, value, required);
+			println(sb, tab + "\tdisabled=\"#'{'cc.attrs.frm.verifyEntityAssociated({0})'}'\"", value);					
+			println(sb, tab + "\tcompleteMethod=\"#'{'cc.attrs.frm.onComplete{1}'}'\" dropdown=\"true\" converter=\"lazyEntityConverter\"", path, type.getSimpleName());
 			println(sb, tab + "\tvar=\"{0}\" itemValue=\"#'{'{0}'}'\" itemLabel=\"#'{'{0}.{1}'}'\"", firstToLowerCase(type.getSimpleName()), atributoManyToOne.getDescriptionAttributeOfAssociation());
 			println(sb, tab + "\tsize=\"{0}\" scrollHeight=\"200\">", entityTab ? "40" : "35");
 			println(sb, tab + "\t<p:column><h:outputText value=\"#'{'{0}.{1}'}'\" /></p:column>", firstToLowerCase(type.getSimpleName()), atributoManyToOne.getEntity().getAttributeId().getName());

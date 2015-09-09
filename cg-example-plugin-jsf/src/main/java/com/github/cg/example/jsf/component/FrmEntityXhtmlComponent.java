@@ -10,17 +10,15 @@ import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeFormType;
 import com.github.cg.model.AttributeId;
 import com.github.cg.model.AttributeOneToMany;
-import com.github.cg.model.Entity;
 
 @Component
-public class EditXhtmlComponent extends BaseComponent {
+public class FrmEntityXhtmlComponent extends BaseComponent {
 
 	public String render(int tabs) {
 		
 		StringBuilder sb = new StringBuilder();
-		
-		Entity entity = getTargetContext().getEntity();		
-		String path = entity.getNameFlc() + "EditCtrl.entity";
+				
+		String path = "cc.attrs.frm.entity";
 		String tab = tab(tabs);
 		
 		println(sb, "<p:tabView id=\"tbView\">");	
@@ -33,11 +31,11 @@ public class EditXhtmlComponent extends BaseComponent {
 			
 				String dataTableId = "dt" + attribute.getNameFuc();
 				
-				println(sb, "{0}\t<p:tab title=\"{1}\">", tab, attribute.getLabel());
+				println(sb, "{0}\t<p:tab id=\"tab{1}\" title=\"{2}\">", tab, attribute.getName(), attribute.getLabel());
 				
 				println(sb, "{0}\t\t<p:dataTable", tab);
 				println(sb, "{0}\t\t\tid=\"{1}\"", tab, dataTableId);
-				println(sb, "{0}\t\t\temptyMessage=\"None {1} found.\"", tab, getTargetContext().getEntity().getLabel());
+				println(sb, "{0}\t\t\temptyMessage=\"None {1} found.\"", tab, attribute.getLabel());
 				println(sb, "{0}\t\t\tvalue=\"#'{'{1}.{2}'}'\"", tab, path, attribute.getName());
 				println(sb, "{0}\t\t\tvar=\"association\">", tab);
 				println(sb, "{0}\t\t\t", tab);
@@ -133,7 +131,7 @@ public class EditXhtmlComponent extends BaseComponent {
 		
 		tab += "\t";
 		
-		println(sb, "{0}<p:tab title=\"{1}\">", tab, getTargetContext().getEntity().getLabel());
+		println(sb, "{0}<p:tab id=\"tab{1}\" title=\"{2}\">", tab, getTargetContext().getEntity().getName(), getTargetContext().getEntity().getLabel());
 		println(sb, "{0}\t<h:panelGrid columns=\"3\" cellpadding=\"5\" style=\"width: 100%\">", tab);
 		println(sb, "{0}\t\t<h:outputLabel value=\"Id:\" for=\"id\" />", tab);
 		println(sb, "{0}\t\t<p:inputText id=\"id\" label=\"Id.\" value=\"#'{'{1}.id'}'\" disabled=\"true\" />", tab, path);
