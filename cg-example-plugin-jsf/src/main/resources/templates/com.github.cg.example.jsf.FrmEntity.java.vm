@@ -1,0 +1,39 @@
+package ${app.pkgs.controller}.frm;
+
+#if( $entity.getAttributesManyToOne().size() > 0 )
+import java.util.List;
+import javax.ejb.EJB;
+#end
+
+#if( $entity.getAttributesOneToMany().size() > 0 )
+import javax.inject.Inject;
+#end
+
+import javax.inject.Named;
+
+import com.github.cg.example.jsf.annotations.HandlesError;
+import ${app.pkgs.model}.${entity.name};
+import ${app.pkgs.manager}.${entity.name}Manager;
+
+#foreach( $attributeManyToOne in $entity.getAttributesManyToOne() )
+import ${app.pkgs.model}.${attributeManyToOne.typeName};
+import ${app.pkgs.manager}.${attributeManyToOne.typeName}Manager;
+#end
+
+@Named
+@HandlesError
+public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},${entity.attributeIdClass}> {
+
+	private static final long serialVersionUID = 1L;
+#foreach( $attributeManyToOne in $entity.getAttributesManyToOne() )
+
+	@EJB
+	private ${attributeManyToOne.typeName}Manager ${attributeManyToOne.typeNameFlc}Manager;
+#end	
+#foreach( $attributeManyToOne in $entity.getAttributesManyToOne() )
+
+	public List<${attributeManyToOne.typeName}> onComplete${attributeManyToOne.typeName}(String suggest) {
+		return this.${attributeManyToOne.typeNameFlc}Manager.retrieveBySuggestOrderByDescription(suggest);
+	}
+#end
+}

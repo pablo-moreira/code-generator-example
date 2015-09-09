@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:app="http://java.sun.com/jsf/composite/components"
+    xmlns:p="http://primefaces.org/ui">
+   
+	<cc:interface>
+		<cc:attribute name="frm" required="true" type="${app.pkgs.controller}.frm.Frm${entity.name}" />
+	</cc:interface>
+
+	<cc:implementation>
+		<app:frm id="frm" frm="#{cc.attrs.frm}">
+			${frmEntityXhtmlComponent.render(3)}
+		</app:frm>
+	</cc:implementation>
+</html>

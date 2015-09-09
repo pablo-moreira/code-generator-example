@@ -2,7 +2,7 @@ package com.github.cg.exmple.jsf;
 
 import br.com.atos.cg.CodeGenerator;
 
-import com.github.cg.example.core.model.Model;
+import com.github.cg.example.core.model.Car;
 
 public class AppCodeGenerator {
 
@@ -10,7 +10,7 @@ public class AppCodeGenerator {
 		
 		CodeGenerator cg = new CodeGenerator();
 		//cg.start();
-		cg.executeTargetByName("entityEdit.xhtml", Model.class);
+		cg.executeTargetByName("FrmEntity.java", Car.class);
 		System.exit(0);
 	}
 }

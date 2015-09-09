@@ -1,20 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:composite="http://java.sun.com/jsf/composite"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:app="http://java.sun.com/jsf/composite/components"
     xmlns:p="http://primefaces.org/ui">
    
-	<composite:interface>
-		<composite:attribute name="frm" required="true" type="com.github.cg.example.jsf.controller.frm.FrmCar" />
-	</composite:interface>
+	<cc:interface>
+		<cc:attribute name="frm" required="true" type="com.github.cg.example.jsf.controller.frm.FrmCar" />
+	</cc:interface>
 
-	<composite:implementation>
+	<cc:implementation>
 		<app:frm id="frm" frm="#{cc.attrs.frm}">
 			<p:tabView id="tbView">
-				<p:tab title="Car">
+				<p:tab id="tabCar" title="Car">
 					<h:panelGrid columns="3" cellpadding="5" style="width: 100%">
 						<h:outputLabel value="Id:" for="id" />
 						<p:inputText id="id" label="Id." value="#{cc.attrs.frm.entity.id}" disabled="true" />
@@ -37,11 +37,11 @@
 						<p:message for="licensePlate" display="icon" />
 						
 						<h:outputLabel value="Fabrication Date:" for="fabricationDate" />
-						<p:calendar id="fabricationDate" label="Fabrication Date" value="#{cc.attrs.frm.entity.fabricationDate}" showOn="button" locale="#{localeCtrl.locale}" pattern="#{localeCtrl.datePattern}" mask="true" required="true"  />
+						<p:calendar id="fabricationDate" label="Fabrication Date" value="#{cc.attrs.frm.entity.fabricationDate}" showOn="button" locale="#{localeCtrl.locale}" pattern="#{localeCtrl.datePattern}" required="true" mask="true" />
 						<p:message for="fabricationDate" display="icon" />
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>
 		</app:frm>
-	</composite:implementation>
+	</cc:implementation>
 </html>
