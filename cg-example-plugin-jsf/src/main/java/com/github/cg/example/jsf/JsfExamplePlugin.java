@@ -225,5 +225,10 @@ import com.github.cg.task.FrmEntityTask;
 						)
 				}
 		)
-})
+	},
+	patterns = {
+			"LICENSE_PLATE",
+			"YEAR"			
+	}
+)
 public interface JsfExamplePlugin {}

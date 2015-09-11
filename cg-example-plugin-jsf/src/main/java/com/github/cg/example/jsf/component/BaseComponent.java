@@ -9,10 +9,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.github.cg.component.Component;
+import com.github.cg.component.StringUtils;
 import com.github.cg.example.core.model.BaseEnum;
 import com.github.cg.example.core.model.IBaseEntity;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeManyToOne;
+import com.github.cg.model.Patterns;
 
 abstract public class BaseComponent extends Component {
 
@@ -114,7 +116,19 @@ abstract public class BaseComponent extends Component {
 			println(sb, tab + "</p:autoComplete>");
 		}
 		else {
-			println(sb, tab + "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" />", id, label, value, required, entityTab ? "300" : "100");
+			
+			String pattern = attribute.getPattern();
+			
+			if (!StringUtils.getInstance().isNullOrEmpty(pattern)) {
+				if (Patterns.CURRENCY.equals(pattern)) {
+					println(sb, tab + "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\">", id, label, value, required, entityTab ? "300" : "100");
+					println(sb, tab + "\t<f:convertNumber type=\"currency\" locale=\"#'{'localeCtrl.locale'}'\" />");
+					println(sb, tab + "</p:inputText>");
+				}
+			}
+			else {
+				println(sb, tab + "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" />", id, label, value, required, entityTab ? "300" : "100");
+			}
 		}
 	}
 }

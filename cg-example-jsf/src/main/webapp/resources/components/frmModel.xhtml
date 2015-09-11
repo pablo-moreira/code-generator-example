@@ -48,7 +48,9 @@
 						<p:message for="year" display="icon" />
 						
 						<h:outputLabel value="Price:" for="price" />
-						<p:inputText id="price" label="Price" value="#{cc.attrs.frm.entity.price}" required="true" style="width: 300px" />
+						<p:inputMask id="price" label="Price" value="#{cc.attrs.frm.entity.price}" required="true" style="width: 300px">
+							<f:convertNumber type="currency" locale="#{localeCtrl.locale}" />
+						</p:inputMask>
 						<p:message for="price" display="icon" />
 						
 						<h:outputLabel value="Classification:" for="classification" />
