@@ -1,13 +1,9 @@
 package com.github.cg.example.jsf.dao;
 import java.util.List;
-
-import javax.ejb.Stateless;
-
 import com.github.cg.example.core.dao.DAO;
 import com.github.cg.example.core.model.Manufacturer;
 
-@Stateless
-public class ManufacturerDAO extends DAO<Manufacturer, Long> {
+public class ManufacturerDAO extends DAO<Manufacturer,Long> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,6 +12,6 @@ public class ManufacturerDAO extends DAO<Manufacturer, Long> {
 	}
 
 	public List<Manufacturer> retrieveBySuggestOrderByDescription(String suggest) {
-		return this.retrieveBySuggestionOrderByDescription(suggest, "id", "${entity.attributeDescription.name}");
+		return this.retrieveBySuggestionOrderByDescription(suggest, "id", "name");
 	}
 }

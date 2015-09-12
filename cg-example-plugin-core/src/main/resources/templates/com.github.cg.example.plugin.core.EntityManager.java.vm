@@ -1,5 +1,6 @@
 package ${app.pkgs.manager};
 
+import java.util.List;
 import javax.ejb.Stateless;
 import com.github.cg.example.core.manager.Manager;
 import ${app.pkgs.dao}.${entity.name}DAO;
@@ -10,4 +11,7 @@ public class ${entity.name}Manager extends Manager<${entity.name}DAO,${entity.na
 
 	private static final long serialVersionUID = 1L;
 	
+	public List<${entity.name}> retrieveBySuggestOrderByDescription(String suggest) {
+		return getDAO().retrieveBySuggestOrderByDescription(suggest);
+	}	
 }

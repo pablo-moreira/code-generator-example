@@ -12,6 +12,6 @@ public class CarDAO extends DAO<Car,Long> {
 	}
 
 	public List<Car> retrieveBySuggestOrderByDescription(String suggest) {
-		return this.retrieveBySuggestionOrderByDescription(suggest, "id", "${entity.attributeDescription.name}");
+		return this.retrieveBySuggestionOrderByDescription(suggest, "id", "licensePlate");
 	}
 }

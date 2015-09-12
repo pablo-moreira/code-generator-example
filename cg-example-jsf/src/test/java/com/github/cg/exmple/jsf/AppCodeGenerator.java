@@ -8,8 +8,8 @@ public class AppCodeGenerator {
 	public static void main(String[] args) throws Exception {
 		
 		CodeGenerator cg = new CodeGenerator();
-		//cg.start();
-		cg.executeTargetByName("FrmEntity.java", Model.class);
-		System.exit(0);
+		cg.start();
+//		cg.executeTargetByName("EntityDAO.java", Model.class);
+//		System.exit(0);
 	}
 }

@@ -13,6 +13,6 @@ public class ${entity.name}DAO extends DAO<${entity.name},${entity.attributeIdCl
 	}
 
 	public List<${entity.name}> retrieveBySuggestOrderByDescription(String suggest) {
-		return this.retrieveBySuggestionOrderByDescription(suggest, "${entity.attributeId.name}", "${entity.attributeDescription.name}");
+		return this.retrieveBySuggestionOrderByDescription(suggest, "${entity.attributeId.name}", "${entity.attributeDescription}");
 	}
 }
