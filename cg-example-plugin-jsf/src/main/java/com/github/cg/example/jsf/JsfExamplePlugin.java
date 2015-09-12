@@ -228,6 +228,13 @@ import com.github.cg.task.FrmEntityTask;
 	patterns = {
 			"LICENSE_PLATE",
 			"YEAR"			
+	},
+	requiredProperties = {
+			"pkgs.base",
+			"pkgs.model",
+			"pkgs.dao",
+			"pkgs.manager",
+			"pkgs.controller"
 	}
 )
 public interface JsfExamplePlugin {}
