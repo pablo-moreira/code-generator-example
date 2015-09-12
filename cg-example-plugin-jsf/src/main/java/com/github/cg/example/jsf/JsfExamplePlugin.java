@@ -1,13 +1,12 @@
 package com.github.cg.example.jsf;
 
-import br.com.atos.cg.gui.DlgAttributeOneToMany;
-import br.com.atos.cg.gui.DlgFrmEntity;
-
 import com.github.cg.annotation.Plugin;
 import com.github.cg.annotation.Target;
 import com.github.cg.annotation.TargetGroup;
 import com.github.cg.annotation.TargetTask;
 import com.github.cg.annotation.TaskConfig;
+import com.github.cg.gui.DlgAttributeOneToMany;
+import com.github.cg.gui.DlgFrmEntity;
 import com.github.cg.task.FrmAttributeOneToManyTask;
 import com.github.cg.task.FrmEntityTask;
 

@@ -1,16 +1,13 @@
 package com.github.cg.example.jsf.component;
 
-import static br.com.atos.utils.StringUtils.firstToLowerCase;
-
 import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.atos.core.model.BaseEnum;
-import br.com.atos.faces.component.model.FilterDate;
-
 import com.github.cg.annotation.Component;
+import com.github.cg.component.StringUtils;
+import com.github.cg.example.core.model.BaseEnum;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeManyToOne;
 import com.github.cg.model.AttributeOneToMany;
@@ -51,15 +48,15 @@ public class ListXhtmlComponent extends BaseComponent {
 			println(sb, "\t\t\t<atos:filterNumeric operatorDefault=\"=\" attribute=\"{0}\" label=\"{1}\" type=\"{2}\" />", attributePath, attribute.getLabel(), type.getSimpleName());	
 		}
 		else if (BaseEnum.class.isAssignableFrom(type)) {
-			println(sb, "\t\t\t<atos:filterEnum operatorDefault=\"=\" attribute=\"{0}\" label=\"{1}\" options=\"#'{'selectItems.{2}Itens'}'\" />", attributePath, attribute.getLabel(), firstToLowerCase(type.getSimpleName()));
+			println(sb, "\t\t\t<atos:filterEnum operatorDefault=\"=\" attribute=\"{0}\" label=\"{1}\" options=\"#'{'selectItems.{2}Itens'}'\" />", attributePath, attribute.getLabel(), StringUtils.getInstance().firstToLowerCase(type.getSimpleName()));
 		}
 		else if (Date.class.isAssignableFrom(type)) {
 				
 			if (annotation == null || annotation.value() == TemporalType.TIMESTAMP) {
-				println(sb, "\t\t\t<atos:filterDate operatorDefault=\"contains\" attribute=\"{0}\" label=\"{1}\" datePattern=\"{2}\" />", attributePath, attribute.getLabel(), FilterDate.DATE_PATTERN_DATA_HORARIO);
+				println(sb, "\t\t\t<atos:filterDate operatorDefault=\"contains\" attribute=\"{0}\" label=\"{1}\" datePattern=\"{2}\" />", attributePath, attribute.getLabel(), "#{localeCtrl.dateTimePattern}");
 			}
 			else if (annotation.value() == TemporalType.DATE) {
-				println(sb, "\t\t\t<atos:filterDate operatorDefault=\"contains\" attribute=\"{0}\" label=\"{1}\" datePattern=\"{2}\" />", attributePath, attribute.getLabel(), FilterDate.DATE_PATTERN_DATA);
+				println(sb, "\t\t\t<atos:filterDate operatorDefault=\"contains\" attribute=\"{0}\" label=\"{1}\" datePattern=\"{2}\" />", attributePath, attribute.getLabel(), "#{localeCtrl.datePattern}");
 			}
 			else {
 				// Nao faz nada...

@@ -6,7 +6,7 @@ import ${app.pkgs.dao}.${entity.name}DAO;
 import ${app.pkgs.model}.${entity.name};
 
 @Stateless
-public class ${entity.name}Manager extends Manager<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}> {
+public class ${entity.name}Manager extends Manager<${entity.name}DAO,${entity.name},${entity.attributeIdClass}> {
 
 	private static final long serialVersionUID = 1L;
 	

@@ -1,7 +1,5 @@
 package com.github.cg.example.jsf.component;
 
-import static br.com.atos.utils.StringUtils.firstToLowerCase;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -77,7 +75,7 @@ abstract public class BaseComponent extends Component {
 		
 		if (BaseEnum.class.isAssignableFrom(type)) {
 			println(sb, tab + "<p:selectOneMenu id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" effectDuration=\"0\" required=\"{3}\">", id, label, value, required);
-			println(sb, tab + "\t<f:selectItems value=\"#'{'selectItems.{0}Itens'}'\" />", firstToLowerCase(type.getSimpleName()));
+			println(sb, tab + "\t<f:selectItems value=\"#'{'selectItems.{0}Itens'}'\" />", StringUtils.getInstance().firstToLowerCase(type.getSimpleName()));
 			println(sb, tab + "</p:selectOneMenu>");
 		}
 		else if (Date.class.isAssignableFrom(type) || Calendar.class.isAssignableFrom(type)) {
@@ -130,5 +128,9 @@ abstract public class BaseComponent extends Component {
 				println(sb, tab + "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" />", id, label, value, required, entityTab ? "300" : "100");
 			}
 		}
+	}
+
+	private String firstToLowerCase(String str) {
+		return StringUtils.getInstance().firstToLowerCase(str);
 	}
 }

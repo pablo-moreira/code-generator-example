@@ -7,8 +7,10 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import br.com.atos.core.model.IBaseEntity;
-import br.com.atos.utils.StringUtils;
+import com.github.cg.component.StringUtils;
+import com.github.cg.example.core.model.IBaseEntity;
+
+
 
 @FacesConverter(value="simpleEntityConverter")
 public class SimpleEntityConverter implements Converter {
@@ -17,7 +19,7 @@ public class SimpleEntityConverter implements Converter {
 
 	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
 		
-		if (!StringUtils.isNullOrEmpty(value) && !value.equals(VALUE_NULL)) { 
+		if (!StringUtils.getInstance().isNullOrEmpty(value) && !value.equals(VALUE_NULL)) { 
 			Object v = component.getAttributes().get(value); 
 			return v;
 		}

@@ -4,7 +4,7 @@ import java.util.List;
 import com.github.cg.example.core.dao.DAO;
 import ${app.pkgs.model}.${entity.name};
 
-public class ${entity.name}DAO extends DAO<${entity.name}, ${entity.attributeIdClass}> {
+public class ${entity.name}DAO extends DAO<${entity.name},${entity.attributeIdClass}> {
 
 	private static final long serialVersionUID = 1L;
 

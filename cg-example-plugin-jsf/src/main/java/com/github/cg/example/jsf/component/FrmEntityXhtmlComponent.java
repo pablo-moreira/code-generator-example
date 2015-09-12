@@ -3,8 +3,6 @@ package com.github.cg.example.jsf.component;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.atos.utils.StringUtils;
-
 import com.github.cg.annotation.Component;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeFormType;
@@ -99,21 +97,21 @@ public class FrmEntityXhtmlComponent extends BaseComponent {
 					}
 					
 					println(sb, "{0}t\t\t\t<p:column headerText=\"Ação\" styleClass=\"col-acao\">");
-					println(sb, "{0}t\t\t\t\t<p:commandLink action=\"#'{'cc.attrs.winFrm.association{0}.startUpdate'}'\" title=\"Excluir o objeto\" process=\"@this\">", StringUtils.firstToUpperCase(attribute.getName()));
+					println(sb, "{0}t\t\t\t\t<p:commandLink action=\"#'{'cc.attrs.winFrm.association{0}.startUpdate'}'\" title=\"Excluir o objeto\" process=\"@this\">", attribute.getNameFuc());
 					println(sb, "{0}t\t\t\t\t\t<h:graphicImage value=\"/resources/img/s.gif\" styleClass=\"link-icone ui-icon-trash\" />");
-					println(sb, "{0}t\t\t\t\t\t<f:setPropertyActionListener target=\"#'{'cc.attrs.winFrm.association{0}.association}\" value=\"#'{'association'}'\" />", StringUtils.firstToUpperCase(attribute.getName()));
+					println(sb, "{0}t\t\t\t\t\t<f:setPropertyActionListener target=\"#'{'cc.attrs.winFrm.association{0}.association}\" value=\"#'{'association'}'\" />", attribute.getNameFuc());
 					println(sb, "{0}t\t\t\t\t</p:commandLink>");
 					println(sb, "{0}t\t\t\t</p:column>");
 					println(sb, "{0}t\t\t\t");
 					println(sb, "{0}t\t\t\t<f:facet name=\"footer\">");
 					println(sb, "{0}t\t\t\t\t<p:outputPanel styleClass=\"datatable-menu\" layout=\"block\">");
-					println(sb, "{0}t\t\t\t\t\t<p:commandButton value=\"Adicionar\" action=\"#'{'cc.attrs.winFrm.association{0}.startInsert'}'\" title=\"Adiconar um ojbeto\" icon=\"ui-icon-document\" process=\"{1}\" update=\"{1}\" />", StringUtils.firstToUpperCase(attribute.getName()), dataTableId);
+					println(sb, "{0}t\t\t\t\t\t<p:commandButton value=\"Adicionar\" action=\"#'{'cc.attrs.winFrm.association{0}.startInsert'}'\" title=\"Adiconar um ojbeto\" icon=\"ui-icon-document\" process=\"{1}\" update=\"{1}\" />", attribute.getNameFuc(), dataTableId);
 					println(sb, "{0}t\t\t\t\t</p:outputPanel>");
 					println(sb, "{0}t\t\t\t</f:facet>");
 					println(sb, "{0}t\t\t</p:dataTable>");
 					println(sb, "{0}t\t\t");
 					println(sb, "{0}t\t\t<atos:winFrmAssociationDelete");
-					println(sb, "{0}\t\t\tfrmAssociation=\"#'{'cc.attrs.winFrm.association{0}'}'\"", StringUtils.firstToUpperCase(attribute.getName()));
+					println(sb, "{0}\t\t\tfrmAssociation=\"#'{'cc.attrs.winFrm.association{0}'}'\"", attribute.getNameFuc());
 					println(sb, "{0}\t\t\ttitle=\"Exclusão de {0}.\"", attribute.getLabel());
 					println(sb, "{0}\t\t\tmessage=\"Você tem certeza que deseja excluir {0}?\" />", attribute.getLabel());
 				}
