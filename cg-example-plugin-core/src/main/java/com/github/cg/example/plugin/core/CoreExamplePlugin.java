@@ -21,7 +21,7 @@ import com.github.cg.task.FrmEntityTask;
 				description = "Generate class EntityDAO.java",
 				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.dao)}/${entity.name}DAO.java",
 				template = "/templates/com.github.cg.example.plugin.core.EntityDAO.java.vm",
-				allowOverwrite = true,
+				allowOverwrite = false,
 				tasksToExecuteBefore = {
 						@TargetTask(task=FrmEntityTask.class, configs={
 							@TaskConfig(name=DlgFrmEntity.CONFIG_RENDER_ATTRIBUTES, value = "false")

@@ -1,0 +1,64 @@
+<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:cc="http://java.sun.com/jsf/composite"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+	<f:metadata>
+		<f:viewParam name="id" value="#{${entity.nameFlc}ViewCtrl.id}" />
+		<f:event type="preRenderView" listener="#{${entity.nameFlc}ViewCtrl.start}" />
+	</f:metadata>
+   	<ui:param name="pageTitle" value="View ${entity.name}" />
+	<ui:define name="content">		
+		<h:form id="frm">			
+			<p:tabView id="tbView">
+				<p:tab title="${entity.label}">
+					<h:panelGrid columns="2" cellpadding="5">
+#foreach( $attribute in $entity.getAttributesWithoutAttributesOneToMany() )						
+						
+						<h:outputText value="${attribute.label}:" />
+						${jsfComponent.renderOutputText(6, ${entity.nameFlc.concat('ViewCtrl.entity')}, $attribute)}
+#end
+
+					</h:panelGrid>
+				</p:tab>
+#foreach( $attr in $entity.getAttributesOneToMany() )
+				
+				<p:tab title="${attr.label}">
+				
+					<p:dataTable
+						emptyMessage="None ${attr.label} found."
+						value="#{${entity.nameFlc}ViewCtrl.entity.${attr.name}}"
+						var="association">
+#foreach( $assocAttribute in $attr.getAssociationAttributesWithoutAttributeMappedByAndAttributesOneToMany() )
+#if( $assocAttribute.isRenderColumn() )
+				
+						<p:column
+							headerText="${assocAttribute.label}"  
+#if( $assocAttribute.isRenderFilter() ) 
+							filterBy="#{association.${assocAttribute.name}}"
+#end 
+							sortBy="#{association.${assocAttribute.name}}">
+							${jsfComponent.renderOutputText(7, 'association', $assocAttribute)}
+						</p:column>
+#end
+#end
+
+						<p:column headerText="Action" styleClass="col-action">
+							<p:button outcome="/pages/${attr.associationClassNameFlc}/${attr.associationClassNameFlc}View.jsf" title="View ${attr.label}" icon="ui-icon-zoomin">
+								<f:param name="id" value="#{association.id}" />
+							</p:button>
+						</p:column>
+
+					</p:dataTable>
+				</p:tab>
+#end
+			</p:tabView>
+			
+			<p:outputPanel layout="block" styleClass="form-action-border">
+				<p:button value="Back" icon="ui-icon-arrowreturnthick-1-w" outcome="/pages/${entity.nameFlc}/${entity.nameFlc}List.jsf" />
+			</p:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

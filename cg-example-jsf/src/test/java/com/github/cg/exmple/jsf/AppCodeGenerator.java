@@ -1,7 +1,6 @@
 package com.github.cg.exmple.jsf;
 
 import com.github.cg.CodeGenerator;
-import com.github.cg.example.core.model.Model;
 
 public class AppCodeGenerator {
 
@@ -9,7 +8,7 @@ public class AppCodeGenerator {
 		
 		CodeGenerator cg = new CodeGenerator();
 		cg.start();
-//		cg.executeTargetByName("EntityDAO.java", Model.class);
+//		cg.executeTargetByName("entityView.xhtml", Model.class);
 //		System.exit(0);
 	}
 }

@@ -29,10 +29,10 @@ public class WinFrmJavaImportsComponent extends BaseComponent {
 				}
 				else {
 					temTipoFormularioEmbutido = true;
-					println(sb, "import {0}.{1}Manager;", getTargetContext().getCg().getApp().get("pkgs.manager"), atributo.getAssociationClassSimpleName());
+					println(sb, "import {0}.{1}Manager;", getTargetContext().getCg().getApp().get("pkgs.manager"), atributo.getAssociationClassName());
 				}
 
-				println(sb, "import {0}.{1};", getTargetContext().getCg().getApp().get("pkgs.model"), atributo.getAssociationClassSimpleName());
+				println(sb, "import {0}.{1};", getTargetContext().getCg().getApp().get("pkgs.model"), atributo.getAssociationClassName());
 			}
 			
 			if (temTipoFormularioExterno) {

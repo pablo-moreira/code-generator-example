@@ -1,5 +1,4 @@
-<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"    
-    xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"    xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:cc="http://java.sun.com/jsf/composite"
@@ -15,21 +14,21 @@
 			<p:tabView id="tbView">
 				<p:tab title="Car">
 					<h:panelGrid columns="2" cellpadding="5">
-
+						
 						<h:outputText value="Id:" />
 						<h:outputText value="#{carViewCtrl.entity.id}" />
-
+						
 						<h:outputText value="Model:" />
 						<h:outputText value="#{carViewCtrl.entity.model.name}" />
-
+						
 						<h:outputText value="License Plate:" />
 						<h:outputText value="#{carViewCtrl.entity.licensePlate}" />
-
+						
 						<h:outputText value="Fabrication Date:" />
 						<h:outputText value="#{carViewCtrl.entity.fabricationDate}">
 							<f:convertDateTime locale="#{localeCtrl.locale}" type="date" />
 						</h:outputText>
-
+						
 						<h:outputText value="Version:" />
 						<h:outputText value="#{carViewCtrl.entity.version}" />
 

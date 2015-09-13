@@ -1,5 +1,4 @@
-<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"    
-    xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"    xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:cc="http://java.sun.com/jsf/composite"
@@ -30,8 +29,68 @@
 						
 						<h:outputText value="Version:" />
 						<h:outputText value="#{manufacturerViewCtrl.entity.version}" />
-						
+
 					</h:panelGrid>
+				</p:tab>
+				
+				<p:tab title="Models">
+				
+					<p:dataTable
+						emptyMessage="None Models found."
+						value="#{manufacturerViewCtrl.entity.models}"
+						var="association">
+				
+						<p:column
+							headerText="Id"  
+							filterBy="#{association.id}"
+							sortBy="#{association.id}">
+							<h:outputText value="#{association.id}" />
+						</p:column>
+				
+						<p:column
+							headerText="Name"  
+							filterBy="#{association.name}"
+							sortBy="#{association.name}">
+							<h:outputText value="#{association.name}" />
+						</p:column>
+				
+						<p:column
+							headerText="Description"  
+							filterBy="#{association.description}"
+							sortBy="#{association.description}">
+							<h:outputText value="#{association.description}" />
+						</p:column>
+				
+						<p:column
+							headerText="Year"  
+							filterBy="#{association.year}"
+							sortBy="#{association.year}">
+							<h:outputText value="#{association.year}" />
+						</p:column>
+				
+						<p:column
+							headerText="Price"  
+							filterBy="#{association.price}"
+							sortBy="#{association.price}">
+							<h:outputText value="#{association.price}">
+								<f:convertNumber locale="#{localeCtrl.locale}" type="currency" />
+							</h:outputText>
+						</p:column>
+				
+						<p:column
+							headerText="Classification"  
+							filterBy="#{association.classification}"
+							sortBy="#{association.classification}">
+							<h:outputText value="#{association.classification.description}" />
+						</p:column>
+
+						<p:column headerText="Action" styleClass="col-action">
+							<p:button outcome="/pages/model/modelView.jsf" title="View Models" icon="ui-icon-zoomin">
+								<f:param name="id" value="#{association.id}" />
+							</p:button>
+						</p:column>
+
+					</p:dataTable>
 				</p:tab>
 			</p:tabView>
 			

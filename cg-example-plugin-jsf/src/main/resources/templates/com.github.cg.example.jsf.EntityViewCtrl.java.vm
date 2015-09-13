@@ -1,49 +1,50 @@
-package com.github.cg.example.jsf.controller;
+package ${app.pkgs.controller};
+
 import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 
-import com.github.cg.example.core.model.Model;
+import ${app.pkgs.model}.${entity.name};
 import com.github.cg.example.jsf.annotations.HandlesError;
-import com.github.cg.example.jsf.manager.ModelManager;
+import ${app.pkgs.manager}.${entity.name}Manager;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
 
 @Named
 @ConversationScoped
 @HandlesError
-public class ModelViewCtrl extends AppConversationCtrl {
+public class ${entity.name}ViewCtrl extends AppConversationCtrl {
 
 	private static final long serialVersionUID = 1L;
 		
 	@EJB
-	private ModelManager modelManager;
+	private ${entity.name}Manager ${entity.nameFlc}Manager;
 		
-	private Long id;
+	private ${entity.attributeIdClass} id;
 	
-	private Model entity;
+	private ${entity.name} entity;
 	
 	public void start(ComponentSystemEvent evt) {
 		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
 			if (getId() != null) { 
-				entity = this.modelManager.retrieveFullById(getId());			
+				entity = this.${entity.nameFlc}Manager.retrieveFullById(getId());			
 			}			
 			else {
-				FacesMessageUtils.addError("Model not found!");
+				FacesMessageUtils.addError("${entity.name} not found!");
 			}
 		}
 	}
 	
-	public Long getId() {
+	public ${entity.attributeIdClass} getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(${entity.attributeIdClass} id) {
 		this.id = id;
 	}
 
-	public Model getEntity() {
+	public ${entity.name} getEntity() {
 		return entity;
 	}
 }

@@ -53,10 +53,18 @@ abstract public class BaseComponent extends Component {
 			
 			println(sb, "{0}<h:outputText value=\"#'{'{1}'}'\">", renderTabOnFirst ? tab : "", value);
 			println(sb, "{0}\t<f:convertDateTime locale=\"#'{'localeCtrl.locale'}'\" type=\"{1}\" />", tab, temporalType);			
-			println(sb, "{0}</h:outputText>", tab);
+			print(sb, "{0}</h:outputText>", tab);
 		}
 		else {
-			println(sb, "{0}<h:outputText value=\"#'{'{1}'}'\" />", renderTabOnFirst ? tab : "", value);
+			
+			if (Patterns.CURRENCY.equals(attribute.getPattern())) {
+				println(sb, "{0}<h:outputText value=\"#'{'{1}'}'\">", renderTabOnFirst ? tab : "", value);
+				println(sb, "{0}\t<f:convertNumber locale=\"#'{'localeCtrl.locale'}'\" type=\"currency\" />", tab);			
+				print(sb, "{0}</h:outputText>", tab);
+			}
+			else {
+				print(sb, "{0}<h:outputText value=\"#'{'{1}'}'\" />", renderTabOnFirst ? tab : "", value);
+			}
 		}	
 	}
 	

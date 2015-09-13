@@ -1,6 +1,4 @@
 package com.github.cg.example.jsf.controller;
-import java.io.Serializable;
-
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -15,21 +13,18 @@ import com.github.cg.example.jsf.util.FacesMessageUtils;
 @Named
 @ConversationScoped
 @HandlesError
-public class ModelEditCtrl extends AppConversationCtrl implements Serializable {
+public class ModelEditCtrl extends AppConversationCtrl {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-		
+	
 	@Inject
 	private FrmModel frm;
 	
-	private String teste1;
-	private String teste2;
-	
 	public void start(ComponentSystemEvent evt) throws Exception {
 		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
-			reset();
+			reset();			
 		}
 	}
 
@@ -60,21 +55,5 @@ public class ModelEditCtrl extends AppConversationCtrl implements Serializable {
 
 	public FrmModel getFrm() {
 		return frm;
-	}
-
-	public String getTeste1() {
-		return teste1;
-	}
-
-	public void setTeste1(String teste1) {
-		this.teste1 = teste1;
-	}
-
-	public String getTeste2() {
-		return teste2;
-	}
-
-	public void setTeste2(String teste2) {
-		this.teste2 = teste2;
 	}
 }

@@ -13,7 +13,7 @@ public class WinFrmXhtmlAssociationsComponent extends BaseComponent {
 		
 		for (AttributeOneToMany attribute : getTargetContext().getEntity().getAttributesOneToMany()) {
 			if (AttributeFormType.EXTERNAL.equals(attribute.getFormType())) {
-				println(sb, "\t\t<app:winFrm{0} winFrm=\"#'{'cc.attrs.winFrm.association{1}.winFrmAssociation'}'\" saveAction=\"#'{'cc.attrs.winFrm.association{1}.save'}'\" deleteAction=\"#'{'cc.attrs.winFrm.association{1}.delete'}'\" />", attribute.getAssociationClassSimpleName(), attribute.getNameFuc());
+				println(sb, "\t\t<app:winFrm{0} winFrm=\"#'{'cc.attrs.winFrm.association{1}.winFrmAssociation'}'\" saveAction=\"#'{'cc.attrs.winFrm.association{1}.save'}'\" deleteAction=\"#'{'cc.attrs.winFrm.association{1}.delete'}'\" />", attribute.getAssociationClassName(), attribute.getNameFuc());
 			}
 		}
 		

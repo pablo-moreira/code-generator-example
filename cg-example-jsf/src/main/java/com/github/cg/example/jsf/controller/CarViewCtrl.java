@@ -1,13 +1,13 @@
 package com.github.cg.example.jsf.controller;
+import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.github.cg.example.core.model.Car;
 import com.github.cg.example.jsf.annotations.HandlesError;
-import com.github.cg.example.jsf.dao.CarDAO;
+import com.github.cg.example.jsf.manager.CarManager;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
 
 @Named
@@ -17,8 +17,8 @@ public class CarViewCtrl extends AppConversationCtrl {
 
 	private static final long serialVersionUID = 1L;
 		
-	@Inject
-	private CarDAO carDAO;
+	@EJB
+	private CarManager carManager;
 		
 	private Long id;
 	
@@ -27,7 +27,7 @@ public class CarViewCtrl extends AppConversationCtrl {
 	public void start(ComponentSystemEvent evt) {
 		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
 			if (getId() != null) { 
-				entity = this.carDAO.retrieveById(getId());			
+				entity = this.carManager.retrieveFullById(getId());			
 			}			
 			else {
 				FacesMessageUtils.addError("Car not found!");

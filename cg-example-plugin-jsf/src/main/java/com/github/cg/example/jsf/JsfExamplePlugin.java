@@ -35,6 +35,81 @@ import com.github.cg.task.FrmEntityTask;
 	},
 	targets = {
 		@Target(
+				name = "EntityEditCtrl.java",
+				description = "Generate Class EntityEditCtrl.java",
+				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}EditCtrl.java", 
+				template = "/templates/com.github.cg.example.jsf.EntityEditCtrl.java.vm",
+				allowOverwrite = true,
+				tasksToExecuteBefore={
+						@TargetTask(
+								task=FrmEntityTask.class,
+								configs={
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTES, value = "false")
+								}
+						)
+				}
+		),
+		@Target(
+				name = "entityEdit.xhtml",
+				description = "Generate View entityEdit.xhtml",
+				filename = "${app.dirs.base}/${app.dirs.web}/pages/${entity.nameFlc}/${entity.nameFlc}Edit.xhtml", 
+				template = "/templates/com.github.cg.example.jsf.entityEdit.xhtml.vm",
+				allowOverwrite = true,
+				tasksToExecuteBefore={
+						@TargetTask(
+								task=FrmEntityTask.class,
+								configs={
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTES, value = "false")
+								}
+						)
+				}
+		),
+		@Target(
+				name = "EntityViewCtrl.java",
+				description = "Generate Class EntityViewCtrl.java",
+				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}ViewCtrl.java", 
+				template = "/templates/com.github.cg.example.jsf.EntityViewCtrl.java.vm",
+				allowOverwrite = true,
+				tasksToExecuteBefore={
+						@TargetTask(
+								task=FrmEntityTask.class,
+								configs={
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTES, value = "false")
+								}
+						)
+				}
+		),
+		@Target(
+				name = "entityView.xhtml",
+				description = "Generate View entityView.xhtml",
+				filename = "${app.dirs.base}/${app.dirs.web}/pages/${entity.nameFlc}/${entity.nameFlc}View.xhtml", 
+				template = "/templates/com.github.cg.example.jsf.entityView.xhtml.vm",
+				allowOverwrite = true,
+				tasksToExecuteBefore={
+						@TargetTask(
+								task=FrmEntityTask.class,
+								configs={
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "false"),
+									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "true"),
+								}
+						),
+						@TargetTask(
+								task=FrmAttributeOneToManyTask.class,
+								configs={
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_COLUMN, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FILTER, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM, value = "false"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
+									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM_TYPE, value = "false")
+								}
+						)
+				}
+		),
+		@Target(
 				name = "FrmEntity.java",
 				description = "Generate Component FrmEntity.java",				
 				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/frm/Frm${entity.name}.java",
@@ -84,66 +159,7 @@ import com.github.cg.task.FrmEntityTask;
 						)
 				}
 		),
-		@Target(
-				name = "entityEdit.xhtml",
-				description = "Generate View entityEdit.xhtml",
-				filename = "${app.dirs.base}/${app.dirs.web}/pages/${entity.nameFlc}/${entity.nameFlc}Edit.xhtml", 
-				template = "/templates/com.github.cg.example.jsf.edit.xhtml.vm",
-				allowOverwrite = true,
-				tasksToExecuteBefore={
-						@TargetTask(
-								task=FrmEntityTask.class,
-								configs={
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "true"),
-								}
-						),
-						@TargetTask(
-								task=FrmAttributeOneToManyTask.class,
-								configs={
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_COLUMN, value = "true"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FILTER, value = "false"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM, value = "false"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM_TYPE, value = "false")
-								}
-						)
-				}
-		),
-		@Target(
-				name = "EntityEditCtrl.java",
-				description = "Generate Class EntityEditCtrl.java",
-				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}EditCtrl.java", 
-				template = "/templates/com.github.cg.example.jsf.editCtrl.java.vm",
-				allowOverwrite = true,
-				tasksToExecuteBefore={
-						@TargetTask(
-								task=FrmEntityTask.class,
-								configs={
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "true"),
-								}
-						),
-						@TargetTask(
-								task=FrmAttributeOneToManyTask.class,
-								configs={
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_COLUMN, value = "true"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FILTER, value = "false"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM, value = "false"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
-									@TaskConfig(name = DlgAttributeOneToMany.CONFIG_RENDER_FORM_TYPE, value = "false")
-								}
-						)
-				}
-		),
+
 		@Target(
 				name = "entityList.xhtml",
 				description = "Generate View entityList.xhtml",
@@ -169,46 +185,6 @@ import com.github.cg.task.FrmEntityTask;
 				description = "Generate Class EntityListCtrl.java",
 				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}ListCtrl.java", 
 				template = "/templates/com.github.cg.example.jsf.listCtrl.java.vm",
-				allowOverwrite = true,
-				tasksToExecuteBefore={
-						@TargetTask(
-								task=FrmEntityTask.class,
-								configs={
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "false"),
-								}
-						)
-				}
-		),
-		@Target(
-				name = "entityView.xhtml",
-				description = "Generate View entityView.xhtml",
-				filename = "${app.dirs.base}/${app.dirs.web}/pages/${entity.nameFlc}/${entity.nameFlc}View.xhtml", 
-				template = "/templates/com.github.cg.example.jsf.view.xhtml.vm",
-				allowOverwrite = true,
-				tasksToExecuteBefore={
-						@TargetTask(
-								task=FrmEntityTask.class,
-								configs={
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_COLUMN, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FILTER, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_ATTRIBUTE_DESCRIPTION, value = "true"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_RENDER_FORM_TYPE, value = "false"),
-									@TaskConfig(name = DlgFrmEntity.CONFIG_SHOW_ATTRIBUTES_ONE_TO_MANY, value = "false"),
-								}
-						)
-				}
-		),
-		@Target(
-				name = "EntityViewCtrl.java",
-				description = "Generate Class EntityViewCtrl.java",
-				filename = "${app.dirs.base}/${app.dirs.src}/${stringUtils.pkgToDir($app.pkgs.controller)}/${entity.name}ViewCtrl.java", 
-				template = "/templates/com.github.cg.example.jsf.viewCtrl.java.vm",
 				allowOverwrite = true,
 				tasksToExecuteBefore={
 						@TargetTask(
