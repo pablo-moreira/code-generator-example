@@ -16,8 +16,8 @@
 			<app:frmModel id="frmModel" frm="#{modelEditCtrl.frm}" />
 			
 			<p:outputPanel layout="block" styleClass="form-action-border">
-				<p:commandButton value="Save" icon="ui-icon-disk" action="#{modelEditCtrl.save}" process="frm" update="frm" />
-				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{modelEditCtrl.reset}" process="frm" update="frm" />
+				<p:commandButton value="Save" icon="ui-icon-disk" action="#{modelEditCtrl.save}" process="frm" update="@form" />
+				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{modelEditCtrl.reset}" process="@this" update="@form" />
 				<p:button value="Back" icon="ui-icon-arrowreturnthick-1-w" outcome="/pages/model/modelList.jsf" />
 			</p:outputPanel>
 		</h:form>

@@ -44,15 +44,24 @@ public abstract class SubFrmInTable<FE extends Frm<? extends Manager<? extends D
 		return frmEntity;
 	}
 
-	public void startInsert() throws Exception {
-		
+	public void startInsert() throws Exception {		
+		startInsertAction();		
+	}
+	
+	public A startInsertAction() throws Exception {	
+
 		A association = this.associationManager.newInstance();
-		E entity = getFrmEntity().getEntity();
 		
+		E entity = getFrmEntity().getEntity();
+		Collection<A> associations = getAssociations(entity);	
 		connect(association, entity);
+		associations.add(association);
 		
 		getFrmEntity().update(componentToUpdateId);
+		
+		return association;
 	}
+	
 	
 	@Override
 	public String getDialogDeleteId() {

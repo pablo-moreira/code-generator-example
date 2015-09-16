@@ -17,8 +17,8 @@
 			<app:frm${entity.name} id="frm${entity.name}" frm="#{${entity.nameFlc}EditCtrl.frm}" />
 			
 			<p:outputPanel layout="block" styleClass="form-action-border">
-				<p:commandButton value="Save" icon="ui-icon-disk" action="#{${entity.nameFlc}EditCtrl.save}" process="frm" update="frm" />
-				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{${entity.nameFlc}EditCtrl.reset}" process="frm" update="frm" />
+				<p:commandButton value="Save" icon="ui-icon-disk" action="#{${entity.nameFlc}EditCtrl.save}" process="frm" update="@form" />
+				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{${entity.nameFlc}EditCtrl.reset}" process="@this" update="@form" />
 				<p:button value="Back" icon="ui-icon-arrowreturnthick-1-w" outcome="/pages/${entity.nameFlc}/${entity.nameFlc}List.jsf" />
 			</p:outputPanel>
 		</h:form>

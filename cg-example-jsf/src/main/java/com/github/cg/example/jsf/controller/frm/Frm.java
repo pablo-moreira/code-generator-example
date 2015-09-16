@@ -53,11 +53,11 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 		
 		beforeSave();
 		
-		E retorno = saving();
+		this.entity = saving();
 		
 		afterSave();
 		
-		return retorno;
+		return this.entity;
 	}
 	
 	protected void starting() throws Exception {}
