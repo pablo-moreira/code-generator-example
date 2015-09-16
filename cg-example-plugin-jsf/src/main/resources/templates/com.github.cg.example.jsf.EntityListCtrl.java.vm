@@ -1,12 +1,12 @@
 package ${app.pkgs.controller};
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ${app.pkgs.model}.${entity.name};
 import com.github.cg.example.jsf.annotations.HandlesError;
-import ${app.pkgs.dao}.${entity.name}DAO;
 import com.github.cg.example.jsf.datamodel.LazyDataModelDefault;
 import ${app.pkgs.manager}.${entity.name}Manager;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
@@ -23,11 +23,11 @@ public class ${entity.name}ListCtrl extends AppConversationCtrl {
 	
 	private ${entity.name} ${entity.nameFlc}Selected;
 		
-	private LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}> dm${entity.pluralFvm}; 
+	private LazyDataModelDefault<${entity.name}Manager,${entity.name},${entity.attributeIdClass}> dm${entity.pluralFvm}; 
 
-	@Inject
-    public void init(${entity.name}DAO ${entity.nameFlc}DAO) {
-		dm${entity.pluralFvm} = new LazyDataModelDefault<${entity.name}DAO, ${entity.name}, ${entity.attributeIdClass}>(${entity.nameFlc}DAO);
+	@PostConstruct
+    public void init() {
+		dm${entity.pluralFvm} = new LazyDataModelDefault<${entity.name}Manager,${entity.name},${entity.attributeIdClass}>(${entity.nameFlc}Manager);
     }
     
 	public void delete() throws Exception {
@@ -45,7 +45,7 @@ public class ${entity.name}ListCtrl extends AppConversationCtrl {
 		this.${entity.nameFlc}Selected = ${entity.nameFlc}Selected;
 	}
 
-	public LazyDataModelDefault<${entity.name}DAO,${entity.name},${entity.attributeIdClass}> getDm${entity.pluralFvm}() {
+	public LazyDataModelDefault<${entity.name}Manager,${entity.name},${entity.attributeIdClass}> getDm${entity.pluralFvm}() {
 		return dm${entity.pluralFvm};
 	}
 }

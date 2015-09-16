@@ -26,7 +26,7 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 	private FrmState state;
 	protected E entity;
 	private IBaseEntity<?> entityAssociated;
-	private List<FrmAssociationOneToMany<?,E,?,?>> frmAssociationsOneToMany = new ArrayList<FrmAssociationOneToMany<?,E,?,?>>();
+	private List<SubFrmInside<?,E,?,?>> frmAssociationsOneToMany = new ArrayList<SubFrmInside<?,E,?,?>>();
 	private String frmClientId; 
 
 	protected E newInstance() {
@@ -78,7 +78,7 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 		
 		startingInsert();
 		
-		for (FrmAssociationOneToMany<?,?,?,?> frmAssociationOneToMany : frmAssociationsOneToMany) {
+		for (SubFrmInside<?,?,?,?> frmAssociationOneToMany : frmAssociationsOneToMany) {
 			frmAssociationOneToMany.startInsert();
 		}
 		
@@ -104,7 +104,7 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 		
 		startingUpdate();
 		
-		for (FrmAssociationOneToMany<?,?,?,?> frmAssociationOneToMany : frmAssociationsOneToMany) {
+		for (SubFrmInside<?,?,?,?> frmAssociationOneToMany : frmAssociationsOneToMany) {
 			frmAssociationOneToMany.startInsert();
 		}
 		
@@ -204,7 +204,7 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 		return getEntityAssociated() != null && getEntityAssociated().equals(object);
 	}
 	
-	public void addFrmAssociationOneToMany(FrmAssociationOneToMany<?,E,?,?> frm) {
+	public void addFrmAssociationOneToMany(SubFrmInside<?,E,?,?> frm) {
 		this.frmAssociationsOneToMany.add(frm);
 	}
 }

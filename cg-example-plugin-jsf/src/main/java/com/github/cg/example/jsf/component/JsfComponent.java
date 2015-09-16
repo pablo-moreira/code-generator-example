@@ -15,4 +15,14 @@ public class JsfComponent extends BaseComponent {
 		
 		return sb.toString();
 	}
+	
+	public String renderInput(int tabs, String path, Attribute attribute) {
+		
+		StringBuilder sb = new StringBuilder();
+		String tab = tab(tabs);		
+		
+		printin(sb, tab, path, attribute);
+		
+		return sb.toString();
+	}
 }

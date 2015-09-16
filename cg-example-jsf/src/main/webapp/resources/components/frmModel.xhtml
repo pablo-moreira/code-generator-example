@@ -1,119 +1,126 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:composite="http://java.sun.com/jsf/composite"
+    xmlns:cc="http://java.sun.com/jsf/composite"
     xmlns:app="http://java.sun.com/jsf/composite/components"
     xmlns:p="http://primefaces.org/ui">
    
-	<composite:interface>
-		<composite:attribute name="frm" required="true" type="com.github.cg.example.jsf.controller.frm.FrmModel" />
-	</composite:interface>
+	<cc:interface>
+		<cc:attribute name="frm" required="true" type="com.github.cg.example.jsf.controller.frm.FrmModel" />
+	</cc:interface>
 
-	<composite:implementation>
+	<cc:implementation>
 		<app:frm id="frm" frm="#{cc.attrs.frm}">
 			<p:tabView id="tbView">
 				<p:tab id="tabModel" title="Model">
 					<h:panelGrid columns="3" cellpadding="5" style="width: 100%">
-						<h:outputLabel value="Id:" for="id" />
-						<p:inputText id="id" label="Id." value="#{cc.attrs.frm.entity.id}" disabled="true" />
-						<p:message for="id" display="icon" />
+						<p:outputLabel value="Id" for="id" />
+						<p:inputText id="id" label="Id" value="#{cc.attrs.frm.entity.id}" disabled="true" />
+						<p:message for="id" display="icon" />		
 						
-						<h:outputLabel value="Version:" for="version" />
+						<p:outputLabel value="Version" for="version" />
 						<p:inputText id="version" label="Version" value="#{cc.attrs.frm.entity.version}" disabled="true" />
 						<p:message for="version" display="icon" />
-						
-						<h:outputLabel value="Manufacturer:" for="manufacturer" />
+
+						<p:outputLabel value="Manufacturer:" for="manufacturer" />
 						<p:autoComplete id="manufacturer" label="Manufacturer" value="#{cc.attrs.frm.entity.manufacturer}" required="true" forceSelection="true"
-							completeMethod="#{autoCompleteCtrl.onCompleteManufacturer}" dropdown="true" converter="lazyEntityConverter"
+							disabled="#{cc.attrs.frm.verifyEntityAssociated(cc.attrs.frm.entity.manufacturer)}"
+							completeMethod="#{cc.attrs.frm.onCompleteManufacturer}" dropdown="true" converter="lazyEntityConverter"
 							var="manufacturer" itemValue="#{manufacturer}" itemLabel="#{manufacturer.name}"
-							size="40" scrollHeight="200">
-							<p:column><h:outputText value="#{manufacturer.Id}" /></p:column>
+							size="35" scrollHeight="200">
+							<p:column><h:outputText value="#{manufacturer.id}" /></p:column>
 							<p:column><h:outputText value="#{manufacturer.name}" /></p:column>
 							<p:ajax event="query" global="false" />
 						</p:autoComplete>
 						<p:message for="manufacturer" display="icon" />
-						
-						<h:outputLabel value="Name:" for="name" />
-						<p:inputText id="name" label="Name" value="#{cc.attrs.frm.entity.name}" required="true" style="width: 300px" />
+
+						<p:outputLabel value="Name:" for="name" />
+						<p:inputText id="name" label="Name" value="#{cc.attrs.frm.entity.name}" required="true" style="width: 100px" />
 						<p:message for="name" display="icon" />
-						
-						<h:outputLabel value="Description:" for="description" />
-						<p:inputText id="description" label="Description" value="#{cc.attrs.frm.entity.description}" required="true" style="width: 300px" />
+
+						<p:outputLabel value="Description:" for="description" />
+						<p:inputText id="description" label="Description" value="#{cc.attrs.frm.entity.description}" required="true" style="width: 100px" />
 						<p:message for="description" display="icon" />
-						
-						<h:outputLabel value="Year:" for="year" />
-						<p:inputText id="year" label="Year" value="#{cc.attrs.frm.entity.year}" required="true" style="width: 300px" />
+
+						<p:outputLabel value="Year:" for="year" />
+						<p:inputMask id="year" label="Year" value="#{cc.attrs.frm.entity.year}" required="true" style="width: 100px" mask="#{maskCtrl.year}" />
 						<p:message for="year" display="icon" />
-						
-						<h:outputLabel value="Price:" for="price" />
-						<p:inputMask id="price" label="Price" value="#{cc.attrs.frm.entity.price}" required="true" style="width: 300px">
+
+						<p:outputLabel value="Price:" for="price" />
+						<p:inputText id="price" label="Price" value="#{cc.attrs.frm.entity.price}" required="true" style="width: 100px">
 							<f:convertNumber type="currency" locale="#{localeCtrl.locale}" />
-						</p:inputMask>
+						</p:inputText>
 						<p:message for="price" display="icon" />
-						
-						<h:outputLabel value="Classification:" for="classification" />
+
+						<p:outputLabel value="Classification:" for="classification" />
 						<p:selectOneMenu id="classification" label="Classification" value="#{cc.attrs.frm.entity.classification}" effectDuration="0" required="true">
 							<f:selectItems value="#{selectItemsCtrl.classificationItems}" />
 						</p:selectOneMenu>
 						<p:message for="classification" display="icon" />
 					</h:panelGrid>
 				</p:tab>
+
 				<p:tab id="tabCars" title="Cars">
-				
-					<app:frmCar id="frmCar" frm="#{cc.attrs.frm.associationCars.frmAssociation}" />
-						
-					<p:outputPanel layout="block" styleClass="form-action-border">
-						<p:commandButton value="Save" icon="ui-icon-disk" action="#{cc.attrs.frm.associationCars.save}" process="frmCar,@this" />
-						<p:commandButton value="Cancel" icon="ui-icon-cancel" action="#{cc.attrs.frm.associationCars.cancel}" process="@this" />
-					</p:outputPanel>
-					
+									
 					<p:dataTable
 						id="dtCars"
-						emptyMessage="None Model found."
+						emptyMessage="None Car found."
 						value="#{cc.attrs.frm.entity.cars}"
 						var="association">
 						
 						<p:column headerText="Id" sortBy="#{association.id}" filterBy="#{association.id}">
 							<h:outputText value="#{association.id}" />
 						</p:column>
-						
+
 						<p:column headerText="License Plate" sortBy="#{association.licensePlate}" filterBy="#{association.licensePlate}">
-							<h:outputText value="#{association.licensePlate}" />
+							<h:panelGrid columns="2" styleClass="noborder">
+								<p:inputMask id="licensePlate" label="License Plate" value="#{association.licensePlate}" required="true" style="width: 300px" mask="#{maskCtrl.licensePlate}" />
+								<p:message for="licensePlate" display="icon" />
+							</h:panelGrid>
 						</p:column>
-						
+
 						<p:column headerText="Fabrication Date" sortBy="#{association.fabricationDate}" filterBy="#{association.fabricationDate}">
-							<h:outputText value="#{association.fabricationDate}">
-								<f:convertDateTime locale="#{localeCtrl.locale}" type="date" />
-							</h:outputText>
-						</p:column>		
-						
+							<h:panelGrid columns="2" styleClass="noborder">
+								<p:calendar id="fabricationDate" label="Fabrication Date" value="#{association.fabricationDate}" showOn="button" locale="#{localeCtrl.locale}" pattern="#{localeCtrl.datePattern}" required="true" mask="true" />
+								<p:message for="fabricationDate" display="icon" />
+							</h:panelGrid>
+						</p:column>
+
 						<p:column styleClass="col-action">
-							<p:button outcome="/pages/car/carView.jsf" title="View car" icon="ui-icon-zoomin">
+							<p:button 
+								outcome="/pages/car/carView.jsf" 
+								disabled="#{association.id == null}"
+								title="View Car" icon="ui-icon-zoomin">
 								<f:param name="id" value="#{association.id}" />
 							</p:button>
-							
-							<p:commandButton 
-								action="#{cc.attrs.frm.associationCars.frmAssociation.startUpdate(association)}"
-								process="@this"
-								title="Edit car." 
-								icon="ui-icon-pencil" />
-											        	
+																		        	
  							<p:commandButton 
- 								action="#{cc.attrs.frm.associationCars.startDelete(association)}" 
+ 								action="#{cc.attrs.frm.subFrmCars.startDelete(association)}" 
  								process="@this" 
- 								title="Delete car" 
+ 								title="Delete Car" 
  								icon="ui-icon-trash" />
 						</p:column>
-					</p:dataTable>
+						
+						<f:facet name="footer">
+				        	<p:outputPanel layout="block" styleClass="action-left">
+				        		<p:commandButton 
+				        			icon="ui-icon-document" 
+				        			value="New car"
+				        			process="@this"
+				        			update="dtCars"
+				        			action="#{cc.attrs.frm.subFrmCars.startInsert}"
+				        			title="New Car" />
+							</p:outputPanel>
+				        </f:facet>
+					</p:dataTable>					
 					
-					<app:dlgAssociationDelete 
-						frmAssociation="#{cc.attrs.frm.associationCars}"
+					<app:dlgSubFrmDelete 
+						subFrm="#{cc.attrs.frm.subFrmCars}"
 						title="Delete Car?" 
-						message="Are you sure to delete this car?" />
+						message="Are you sure to delete this Cars?" />
 				</p:tab>
-			</p:tabView>		
+			</p:tabView>
 		</app:frm>
-	</composite:implementation>
+	</cc:implementation>
 </html>

@@ -1,6 +1,7 @@
 package com.github.cg.example.jsf.controller.frm;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.collection.internal.PersistentBag;
@@ -12,8 +13,8 @@ import com.github.cg.example.core.util.AssociationOneToManyUtils;
 import com.github.cg.example.jsf.primefaces.util.PrimeFacesUtil;
 
 
-public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<? extends DAO<E,?>,E,?>,E,?>, E extends IBaseEntity<?>, 
-											  FA extends Frm<? extends Manager<? extends DAO<A,?>,A,?>,A,?>, A extends IBaseEntity<?>> {
+public abstract class SubFrmInside<FE extends Frm<? extends Manager<? extends DAO<E,?>,E,?>,E,?>, E extends IBaseEntity<?>, 
+											  FA extends Frm<? extends Manager<? extends DAO<A,?>,A,?>,A,?>, A extends IBaseEntity<?>> implements SubFrm {
 	
 	private FE frmEntity;	
 	private FA frmAssociation;	
@@ -21,11 +22,11 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 	private String dialogDeleteId;
 	private A associationSelected;
 			
-	public FrmAssociationOneToMany(FE frmEntity, FA frmAssociation, String componentToUpdateId) {
+	public SubFrmInside(FE frmEntity, FA frmAssociation, String componentToUpdateId) {
 		
 		String id = Integer.valueOf((int) (Math.random() * 10000)).toString();
 		
-		this.dialogDeleteId = "DlgAomDelete_" + id;
+		this.dialogDeleteId = "DlgSubFrmDelete_" + id;
 		
 		this.frmEntity = frmEntity;
 		this.frmAssociation = frmAssociation;
@@ -33,64 +34,14 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 		this.frmEntity.addFrmAssociationOneToMany(this);
 	}
 	
-	protected void afterDelete(A association) throws Exception {}
+	protected void afterDelete() {}
+
+	protected void beforeDelete() {}
 	
-	protected void beforeDelete(A association) throws Exception {}
-	
-	/**
-	 * TODO - Refatorar para utilizar o atributo association e realizar a conexao atraves de reflections
-	 * @param association
-	 * @param entity
-	 */
 	abstract public void connect(A association, E entity);
 		
-	public void delete(A association) throws Exception {
-		
-		beforeDelete(association);
+	abstract public Collection<A> getAssociations(E entity);
 
-		E entity = getFrmEntity().getEntity();
-		
-		getFrmAssociation().getManager().delete(association);
-		
-		List<A> associations = getAssociations(entity);
-		
-		if (associations.contains(association)) {
-			associations.remove(association);
-		}
-		
-		/* Workaround */
-		try {
-			if (associations instanceof PersistentBag) {
-					
-				PersistentBag bag = (PersistentBag) associations;
-	
-				Serializable storedSnapshot = bag.getStoredSnapshot();
-				
-				if (storedSnapshot instanceof List) {
-					
-					@SuppressWarnings("unchecked")
-					List<A> ss = (List<A>) storedSnapshot;
-					
-					if (ss.contains(association)) {
-						ss.remove(association);
-					}
-				}			
-			}
-		}
-		catch (Exception e) {}
-				
-		getFrmEntity().update(componentToUpdateId);
-		
-		afterDelete(association);
-	}
-	
-	abstract public List<A> getAssociations(E entity);
-
-	/**
-	 * TODO - Refatorar para utilizar o atributo association e realizar a conexao atraves de reflections
-	 * 
-	 * @return
-	 */
 	public FA getFrmAssociation() {
 		return frmAssociation;
 	}
@@ -103,7 +54,7 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 
 		A association = getFrmAssociation().getEntity();
 		E entity = getFrmEntity().getEntity();
-		List<A> associations = getAssociations(entity);
+		Collection<A> associations = getAssociations(entity);
 		
 		if (association.getId() == null) {
 			connect(association, entity);
@@ -163,6 +114,7 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 		getFrmAssociation().setEntityAssociated(getFrmEntity().getEntity());
 	}
 
+	@Override
 	public String getDialogDeleteId() {
 		return dialogDeleteId;
 	}
@@ -179,11 +131,13 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 		getFrmAssociation().refresh();
 	}
 	
+	@Override
 	public void cancelDelete() {
 		this.associationSelected = null;
 		PrimeFacesUtil.hideDialog(getDialogDeleteId());
 	}
 	
+	@Override
 	public void delete() throws Exception {
 		
 		beforeDelete();
@@ -194,7 +148,7 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 			getFrmAssociation().getManager().delete(this.associationSelected);
 		}
 		
-		List<A> associations = getAssociations(entity);
+		Collection<A> associations = getAssociations(entity);
 				
 		if (associations.contains(this.associationSelected)) {
 			associations.remove(this.associationSelected);
@@ -227,8 +181,4 @@ public abstract class FrmAssociationOneToMany<FE extends Frm<? extends Manager<?
 		
 		afterDelete();
 	}
-
-	protected void afterDelete() {}
-
-	protected void beforeDelete() {}
 }

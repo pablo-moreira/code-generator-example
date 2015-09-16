@@ -4,7 +4,6 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:cc="http://java.sun.com/jsf/composite"
-    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:app="http://java.sun.com/jsf/composite/components"
     xmlns:p="http://primefaces.org/ui">
    
@@ -14,7 +13,83 @@
 
 	<cc:implementation>
 		<app:frm id="frm" frm="#{cc.attrs.frm}">
-			${frmEntityXhtmlComponent.render(3)}
+			<p:tabView id="tbView">
+				<p:tab id="tab${entity.name}" title="${entity.label}">
+					<h:panelGrid columns="3" cellpadding="5" style="width: 100%">
+						<p:outputLabel value="${entity.attributeId.label}" for="${entity.attributeId.name}" />
+						<p:inputText id="${entity.attributeId.name}" label="${entity.attributeId.label}" value="#{cc.attrs.frm.entity.${entity.attributeId.name}}" disabled="true" />
+						<p:message for="${entity.attributeId.name}" display="icon" />		
+#if( $entity.isDeclaredAttributeVersion() and $entity.getAttributeVersion().isRenderForm() )
+						
+						<p:outputLabel value="${entity.attributeVersion.label}" for="${entity.attributeVersion.name}" />
+						<p:inputText id="${entity.attributeVersion.name}" label="${entity.attributeVersion.label}" value="#{cc.attrs.frm.entity.${entity.attributeVersion.name}}" disabled="true" />
+						<p:message for="${entity.attributeVersion.name}" display="icon" />
+#end
+#foreach( $attr in $entity.getAttributesWithoutAttributesOneToManyAndIdAndVersion() )
+#if( $attr.isRenderForm() )
+
+						<p:outputLabel value="${attr.label}:" for="${attr.name}" />
+						${jsfComponent.renderInput(6, 'cc.attrs.frm.entity', $attr)}
+						<p:message for="${attr.name}" display="icon" />
+#end
+#end
+					</h:panelGrid>
+				</p:tab>
+#foreach( $attr in $entity.getAttributesOneToMany() )
+#if( $attr.isRenderForm() )
+
+				<p:tab id="tab${attr.nameFuc}" title="${attr.label}">
+				
+					<app:frm${attr.associationEntity.name} id="frm${attr.nameFuc}" frm="#{cc.attrs.frm.association${attr.nameFuc}.frmAssociation}" />
+						
+					<p:outputPanel layout="block" styleClass="form-action-border">
+						<p:commandButton value="Save" icon="ui-icon-disk" action="#{cc.attrs.frm.association${attr.nameFuc}.save}" process="frm${attr.nameFuc},@this" />
+						<p:commandButton value="Cancel" icon="ui-icon-cancel" action="#{cc.attrs.frm.association${attr.nameFuc}.cancel}" process="@this" />
+					</p:outputPanel>
+					
+					<p:dataTable
+						id="dt${attr.nameFuc}"
+						emptyMessage="None ${attr.associationEntity.label} found."
+						value="#{cc.attrs.frm.entity.${attr.name}}"
+						var="association">
+						
+#foreach( $assocAttribute in $attr.getAssociationAttributesWithoutAttributeMappedByAndAttributesOneToMany() )
+#if( $assocAttribute.isRenderColumn() )
+						<p:column headerText="${assocAttribute.label}" sortBy="#{association.${assocAttribute.name}}" filterBy="#{association.${assocAttribute.name}}">
+							${jsfComponent.renderOutputText(7, 'association', $assocAttribute)}
+						</p:column>
+
+#end
+#end					
+						<p:column styleClass="col-action">
+							<p:button 
+								outcome="/pages/${attr.associationClassNameFlc}/${attr.associationClassNameFlc}View.jsf" 
+								title="View ${attr.associationEntity.label}" icon="ui-icon-zoomin">
+								<f:param name="id" value="#{association.id}" />
+							</p:button>
+							
+							<p:commandButton 
+								action="#{cc.attrs.frm.association${attr.nameFuc}.frmAssociation.startUpdate(association)}"
+								process="@this"
+								title="Edit ${attr.associationEntity.label}." 
+								icon="ui-icon-pencil" />
+											        	
+ 							<p:commandButton 
+ 								action="#{cc.attrs.frm.association${attr.nameFuc}.startDelete(association)}" 
+ 								process="@this" 
+ 								title="Delete ${attr.associationEntity.label}" 
+ 								icon="ui-icon-trash" />
+						</p:column>
+					</p:dataTable>
+					
+					<app:dlgAssociationDelete 
+						frmAssociation="#{cc.attrs.frm.association${attr.nameFuc}}"
+						title="Delete ${attr.associationEntity.label}?" 
+						message="Are you sure to delete this ${attr.label}?" />
+				</p:tab>
+#end
+#end
+			</p:tabView>
 		</app:frm>
 	</cc:implementation>
 </html>

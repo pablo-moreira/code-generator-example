@@ -1,11 +1,11 @@
 package com.github.cg.example.jsf.controller;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.github.cg.example.core.model.Manufacturer;
 import com.github.cg.example.jsf.annotations.HandlesError;
-import com.github.cg.example.jsf.dao.ManufacturerDAO;
 import com.github.cg.example.jsf.datamodel.LazyDataModelDefault;
 import com.github.cg.example.jsf.manager.ManufacturerManager;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
@@ -22,11 +22,11 @@ public class ManufacturerListCtrl extends AppConversationCtrl {
 	
 	private Manufacturer manufacturerSelected;
 		
-	private LazyDataModelDefault<ManufacturerDAO, Manufacturer, Long> dmManufacturers; 
+	private LazyDataModelDefault<ManufacturerManager,Manufacturer,Long> dmManufacturers; 
 
-	@Inject
-    public void init(ManufacturerDAO manufacturerDAO) {
-		dmManufacturers = new LazyDataModelDefault<ManufacturerDAO, Manufacturer, Long>(manufacturerDAO);
+	@PostConstruct
+    public void init() {
+		dmManufacturers = new LazyDataModelDefault<ManufacturerManager,Manufacturer,Long>(manufacturerManager);
     }
     
 	public void delete() throws Exception {
@@ -44,7 +44,7 @@ public class ManufacturerListCtrl extends AppConversationCtrl {
 		this.manufacturerSelected = manufacturerSelected;
 	}
 
-	public LazyDataModelDefault<ManufacturerDAO,Manufacturer,Long> getDmManufacturers() {
+	public LazyDataModelDefault<ManufacturerManager,Manufacturer,Long> getDmManufacturers() {
 		return dmManufacturers;
 	}
 }

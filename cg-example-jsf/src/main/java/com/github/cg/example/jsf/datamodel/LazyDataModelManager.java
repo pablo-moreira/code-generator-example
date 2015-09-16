@@ -7,22 +7,22 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.github.cg.example.core.dao.DAO;
 import com.github.cg.example.core.dao.query.PagedQueryResult;
+import com.github.cg.example.core.manager.Manager;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
 
-abstract public class LazyDataModelDAO<D extends DAO<?,?>,E> extends LazyDataModel<E> {
+abstract public class LazyDataModelManager<M extends Manager<?,?,?>,E> extends LazyDataModel<E> {
 
 	private static final long serialVersionUID = 1L;
 
-	private D dao;
+	private M manager;
 	
-	public LazyDataModelDAO(D dao) {
-		this.dao = dao;
+	public LazyDataModelManager(M manager) {
+		this.manager = manager;
 	}
 	
-	public D getDAO() {
-		return dao;
+	public M getManager() {
+		return manager;
 	}
 
 	abstract protected PagedQueryResult<E> getPagedQueryResult(int first, int pageSize, String sort, SortOrder sortOrder, Map<String, Object> filters);

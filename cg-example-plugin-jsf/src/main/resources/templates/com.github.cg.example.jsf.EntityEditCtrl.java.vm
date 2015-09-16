@@ -54,7 +54,7 @@ public class ${entity.name}EditCtrl extends AppConversationCtrl {
 		this.id = id;
 	}
 
-	public FrmModel getFrm() {
+	public Frm${entity.name} getFrm() {
 		return frm;
 	}
 }

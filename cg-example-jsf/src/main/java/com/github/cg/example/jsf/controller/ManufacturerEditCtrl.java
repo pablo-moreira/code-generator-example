@@ -1,38 +1,28 @@
 package com.github.cg.example.jsf.controller;
-import java.io.Serializable;
-
-
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.github.cg.example.jsf.annotations.HandlesError;
 import com.github.cg.example.core.model.Manufacturer;
-import com.github.cg.example.jsf.dao.ManufacturerDAO;
-import com.github.cg.example.jsf.manager.ManufacturerManager;
+import com.github.cg.example.jsf.annotations.HandlesError;
+import com.github.cg.example.jsf.controller.frm.FrmManufacturer;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
-
 
 @Named
 @ConversationScoped
 @HandlesError
-public class ManufacturerEditCtrl extends AppConversationCtrl implements Serializable {
+public class ManufacturerEditCtrl extends AppConversationCtrl {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	
-	private Manufacturer entity;
-	
 	@Inject
-	private ManufacturerManager manufacturerManager;
+	private FrmManufacturer frm;
 	
-	@Inject
-	private ManufacturerDAO manufacturerDAO;
-	
-	public void start(ComponentSystemEvent evt) {
+	public void start(ComponentSystemEvent evt) throws Exception {
 		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
 			reset();			
 		}
@@ -40,18 +30,18 @@ public class ManufacturerEditCtrl extends AppConversationCtrl implements Seriali
 
 	public void save() throws Exception {
 		
-		this.entity = this.manufacturerManager.save(getEntity());
-		this.id = getEntity().getId();
+		Manufacturer entity = getFrm().save();
+		this.id = entity.getId();
 		
 		FacesMessageUtils.addInfo("The Manufacturer was save successfully!");
 	}
 	
-	public void reset() {		
-		if (getId() != null) { 
-			entity = this.manufacturerDAO.retrieveFullById(getId());			
+	public void reset() throws Exception {		
+		if (getId() != null) {
+			getFrm().startUpdateById(getId());			
 		}
 		else {
-			entity = new Manufacturer();
+			getFrm().startInsert();
 		}
 	}
 	
@@ -63,7 +53,7 @@ public class ManufacturerEditCtrl extends AppConversationCtrl implements Seriali
 		this.id = id;
 	}
 
-	public Manufacturer getEntity() {
-		return entity;
+	public FrmManufacturer getFrm() {
+		return frm;
 	}
 }

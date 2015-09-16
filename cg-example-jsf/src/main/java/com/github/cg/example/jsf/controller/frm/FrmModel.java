@@ -1,20 +1,17 @@
 package com.github.cg.example.jsf.controller.frm;
 import java.util.List;
+
 import javax.ejb.EJB;
-
 import javax.inject.Inject;
-
 import javax.inject.Named;
 
-import com.github.cg.example.jsf.annotations.HandlesError;
-import com.github.cg.example.core.model.Model;
-import com.github.cg.example.jsf.manager.ModelManager;
-
-import com.github.cg.example.core.model.Manufacturer;
-import com.github.cg.example.jsf.manager.ManufacturerManager;
-
 import com.github.cg.example.core.model.Car;
-import com.github.cg.example.jsf.controller.frm.FrmCar;
+import com.github.cg.example.core.model.Manufacturer;
+import com.github.cg.example.core.model.Model;
+import com.github.cg.example.jsf.annotations.HandlesError;
+import com.github.cg.example.jsf.manager.ManufacturerManager;
+import com.github.cg.example.jsf.manager.ModelManager;
+import com.github.cg.example.jsf.manager.CarManager;
 
 @Named
 @HandlesError
@@ -24,16 +21,16 @@ public class FrmModel extends Frm<ModelManager,Model,Long> {
 
 	@EJB
 	private ManufacturerManager manufacturerManager;
-	private FrmAssociationOneToMany<FrmModel,Model,FrmCar,Car> associationCars;
+	private SubFrmInTable<FrmModel,Model,CarManager,Car> subFrmCars;
 
 	public List<Manufacturer> onCompleteManufacturer(String suggest) {
 		return this.manufacturerManager.retrieveBySuggestOrderByDescription(suggest);
 	}
 
 	@Inject
-	public void initAssociations(FrmCar frmCar) throws Exception {
+	public void initAssociations(CarManager carManager) throws Exception {
 		
-		this.associationCars = new FrmAssociationOneToMany<FrmModel,Model,FrmCar,Car>(this, frmCar, "tbView:dtCars") {
+		this.subFrmCars = new SubFrmInTable<FrmModel,Model,CarManager,Car>(this, carManager, "tbView:dtCars") {
 
 			@Override
 			public void connect(Car association, Model entity) {
@@ -47,7 +44,7 @@ public class FrmModel extends Frm<ModelManager,Model,Long> {
 		};
 	}
 	
-	public FrmAssociationOneToMany<FrmModel,Model,FrmCar,Car> getAssociationCars() {
-		return associationCars;
+	public SubFrmInTable<FrmModel,Model,CarManager,Car> getSubFrmCars() {
+		return subFrmCars;
 	}
 }

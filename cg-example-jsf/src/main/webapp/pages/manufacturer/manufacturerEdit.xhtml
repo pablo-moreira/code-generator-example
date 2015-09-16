@@ -1,78 +1,20 @@
-<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"    
-    xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="/templates/default.xhtml"	xmlns="http://www.w3.org/1999/xhtml"        xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:cc="http://java.sun.com/jsf/composite"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:app="http://java.sun.com/jsf/composite/components"
     xmlns:p="http://primefaces.org/ui">
-	<f:metadata>
+	<f:metadata>		
 		<f:viewParam name="id" value="#{manufacturerEditCtrl.id}" />
 		<f:event type="preRenderView" listener="#{manufacturerEditCtrl.start}" />
 	</f:metadata>
    	<ui:param name="pageTitle" value="Edit Manufacturer" />
 	<ui:define name="content">		
 		<h:form id="frm">
-			<p:tabView id="tbView">
-				<p:tab title="Manufacturer">
-					<h:panelGrid columns="3" cellpadding="5" style="width: 100%">
-						<h:outputLabel value="Id:" for="id" />
-						<p:inputText id="id" label="Id." value="#{manufacturerEditCtrl.entity.id}" disabled="true" />
-						<p:message for="id" display="icon" />
-						
-						<h:outputLabel value="Version:" for="Version" />
-						<p:inputText id="version" label="Version" value="#{manufacturerEditCtrl.entity.version}" disabled="true" />
-						<p:message for="version" display="icon" />
-						
-						<h:outputLabel value="Name:" for="name" />
-						<p:inputText id="name" label="Name" value="#{manufacturerEditCtrl.entity.name}" required="true" style="width: 300px" />
-						<p:message for="name" display="icon" />
-						
-						<h:outputLabel value="E-Mail:" for="email" />
-						<p:inputText id="email" label="E-Mail" value="#{manufacturerEditCtrl.entity.email}" required="true" style="width: 300px" />
-						<p:message for="email" display="icon" />
-						
-						<h:outputLabel value="Phone:" for="phone" />
-						<p:inputText id="phone" label="Phone" value="#{manufacturerEditCtrl.entity.phone}" required="true" style="width: 300px" />
-						<p:message for="phone" display="icon" />
-					</h:panelGrid>
-				</p:tab>
-				<p:tab title="Models">
-					<p:dataTable
-						id="dtModels"
-						emptyMessage="None Manufacturer found."
-						value="#{manufacturerEditCtrl.entity.models}"
-						var="association">
-						
-						<p:column headerText="Id" sortBy="#{association.id}" filterBy="#{association.id}">
-							<h:outputText value="#{association.id}" />
-						</p:column>
-						
-						<p:column headerText="Name" sortBy="#{association.name}" filterBy="#{association.name}">
-							<h:outputText value="#{association.name}" />
-						</p:column>
-						
-						<p:column headerText="Description" sortBy="#{association.description}" filterBy="#{association.description}">
-							<h:outputText value="#{association.description}" />
-						</p:column>
-						
-						<p:column headerText="Year" sortBy="#{association.year}" filterBy="#{association.year}">
-							<h:outputText value="#{association.year}" />
-						</p:column>
-						
-						<p:column headerText="Price" sortBy="#{association.price}" filterBy="#{association.price}">
-							<h:outputText value="#{association.price}" />
-						</p:column>
-						
-						<p:column headerText="Classification" sortBy="#{association.classification}" filterBy="#{association.classification}">
-							<h:outputText value="#{association.classification.description}" />						</p:column>
-						
-						<p:column headerText="Version" sortBy="#{association.version}" filterBy="#{association.version}">
-							<h:outputText value="#{association.version}" />
-						</p:column>
-						
-					</p:dataTable>
-				</p:tab>
-			</p:tabView>
+		
+			<app:frmManufacturer id="frmManufacturer" frm="#{manufacturerEditCtrl.frm}" />
+			
 			<p:outputPanel layout="block" styleClass="form-action-border">
 				<p:commandButton value="Save" icon="ui-icon-disk" action="#{manufacturerEditCtrl.save}" process="frm" update="frm" />
 				<p:commandButton value="Reset" icon="ui-icon-cancel" action="#{manufacturerEditCtrl.reset}" process="frm" update="frm" />

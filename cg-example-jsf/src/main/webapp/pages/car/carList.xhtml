@@ -19,13 +19,13 @@
 				currentPageReportTemplate="[ Showing {startRecord} - {endRecord} of {totalRecords} - Page: {currentPage}/{totalPages} ]"
 				rows="10"
 		        rowsPerPageTemplate="5,10,15,20,25,50">
-								
+				
 				<p:column sortBy="#{entity.id}">
 					<f:facet name="header"><h:outputText value="Id" /></f:facet>
 					<h:outputText value="#{entity.id}" />
 				</p:column>
 				
-				<p:column sortBy="#{entity.model.name}">
+				<p:column sortBy="#{entity.model}">
 					<f:facet name="header"><h:outputText value="Model" /></f:facet>
 					<h:outputText value="#{entity.model.name}" />
 				</p:column>
@@ -38,23 +38,22 @@
 				<p:column sortBy="#{entity.fabricationDate}">
 					<f:facet name="header"><h:outputText value="Fabrication Date" /></f:facet>
 					<h:outputText value="#{entity.fabricationDate}">
-						<f:convertDateTime locale="pt_BR" type="date" />
+						<f:convertDateTime locale="#{localeCtrl.locale}" type="date" />
 					</h:outputText>
 				</p:column>
-
 				
 				<p:column exportable="false" styleClass="col-action">
 					<f:facet name="header"><h:outputText value="Action" /></f:facet>
 					
-					<p:button outcome="/pages/car/carView.jsf" title="View car" icon="ui-icon-zoomin">
+					<p:button outcome="/pages/car/carView.jsf" title="View Car" icon="ui-icon-zoomin">
 						<f:param name="id" value="#{entity.id}" />
 					</p:button>
 					
-					<p:button outcome="/pages/car/carEdit.jsf" title="Edit car" icon="ui-icon-pencil">
+					<p:button outcome="/pages/car/carEdit.jsf" title="Edit Car" icon="ui-icon-pencil">
 						<f:param name="id" value="#{entity.id}" />
 					</p:button>
 		        	
-					<p:commandButton process="@this" oncomplete="PF('dlgCarDelete').show()" title="Delete car" icon="ui-icon-trash">
+					<p:commandButton process="@this" oncomplete="PF('dlgCarDelete').show()" title="Delete Car" icon="ui-icon-trash">
 						<f:setPropertyActionListener target="#{carListCtrl.carSelected}" value="#{entity}" />
 		    		</p:commandButton>
 		        </p:column>
@@ -70,7 +69,7 @@
 		<p:confirmDialog				
 			appendTo="@(body)"
 			modal="true"				
-			message="Are you sure about delete the car?"
+			message="Are you sure about delete the Car?"
 			header="Are you sure?" 
 			severity="alert"
 			widgetVar="dlgCarDelete">

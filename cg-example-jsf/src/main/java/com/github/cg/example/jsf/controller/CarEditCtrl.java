@@ -1,6 +1,4 @@
 package com.github.cg.example.jsf.controller;
-import java.io.Serializable;
-
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -15,7 +13,7 @@ import com.github.cg.example.jsf.util.FacesMessageUtils;
 @Named
 @ConversationScoped
 @HandlesError
-public class CarEditCtrl extends AppConversationCtrl implements Serializable {
+public class CarEditCtrl extends AppConversationCtrl {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,11 +30,8 @@ public class CarEditCtrl extends AppConversationCtrl implements Serializable {
 
 	public void save() throws Exception {
 		
-		Car car = getFrm().save();
-		
-		if (car != null) {
-			this.id = car.getId();
-		}
+		Car entity = getFrm().save();
+		this.id = entity.getId();
 		
 		FacesMessageUtils.addInfo("The Car was save successfully!");
 	}

@@ -1,8 +1,5 @@
 package com.github.cg.example.jsf.component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.github.cg.annotation.Component;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeFormType;
@@ -13,16 +10,12 @@ import com.github.cg.model.AttributeOneToMany;
 public class FrmEntityXhtmlComponent extends BaseComponent {
 
 	public String render(int tabs) {
-		
+
 		StringBuilder sb = new StringBuilder();
-				
+
 		String path = "cc.attrs.frm.entity";
 		String tab = tab(tabs);
-		
-		println(sb, "<p:tabView id=\"tbView\">");	
-		
-		renderTabEntity(sb, path, tab);
-		
+				
 		for (AttributeOneToMany attribute : getTargetContext().getEntity().getAttributesOneToMany()) {
 			
 			if (attribute.isRenderForm()) {						
@@ -110,6 +103,14 @@ public class FrmEntityXhtmlComponent extends BaseComponent {
 					println(sb, "{0}t\t\t\t</f:facet>");
 					println(sb, "{0}t\t\t</p:dataTable>");
 					println(sb, "{0}t\t\t");
+					
+					/**
+					 * 					<app:dlgAssociationDelete 
+						frmAssociation="#{cc.attrs.frm.associationCars}"
+						title="Delete Car?" 
+						message="Are you sure to delete this car?" />
+					 */
+					
 					println(sb, "{0}t\t\t<atos:winFrmAssociationDelete");
 					println(sb, "{0}\t\t\tfrmAssociation=\"#'{'cc.attrs.winFrm.association{0}'}'\"", attribute.getNameFuc());
 					println(sb, "{0}\t\t\ttitle=\"Exclusão de {0}.\"", attribute.getLabel());
@@ -119,49 +120,7 @@ public class FrmEntityXhtmlComponent extends BaseComponent {
 				println(sb, "\t\t\t\t</p:tab>");
 			}
 		}
-
-		print(sb, "\t\t\t</p:tabView>");
 		
 		return sb.toString();
-	}
-
-	private void renderTabEntity(StringBuilder sb, String path, String tab) {
-		
-		tab += "\t";
-		
-		println(sb, "{0}<p:tab id=\"tab{1}\" title=\"{2}\">", tab, getTargetContext().getEntity().getName(), getTargetContext().getEntity().getLabel());
-		println(sb, "{0}\t<h:panelGrid columns=\"3\" cellpadding=\"5\" style=\"width: 100%\">", tab);
-		println(sb, "{0}\t\t<h:outputLabel value=\"Id:\" for=\"id\" />", tab);
-		println(sb, "{0}\t\t<p:inputText id=\"id\" label=\"Id.\" value=\"#'{'{1}.id'}'\" disabled=\"true\" />", tab, path);
-		println(sb, "{0}\t\t<p:message for=\"id\" display=\"icon\" />", tab);
-		
-		List<Attribute> attributes = new ArrayList<Attribute>();
-		
-		for (Attribute attribute : getTargetContext().getEntity().getAttributes()) {
-			
-			if (attribute.isRenderForm() && !AttributeId.class.isInstance(attribute) && !AttributeOneToMany.class.isInstance(attribute)) {
-					
-				// Verifica se o atributo e anotado com @Version
-				if (attribute.isAnnotedWithVersion()) {
-					println(sb, "{0}\t\t", tab);
-					println(sb, "{0}\t\t<h:outputLabel value=\"{1}:\" for=\"{2}\" />", tab, attribute.getLabel(), attribute.getName());
-					println(sb, "{0}\t\t<p:inputText id=\"{1}\" label=\"{2}\" value=\"#'{'{3}.{1}'}'\" disabled=\"true\" />", tab, attribute.getName(), attribute.getLabel(), path);
-					println(sb, "{0}\t\t<p:message for=\"{1}\" display=\"icon\" />", tab, attribute.getName());
-				}
-				else {
-					attributes.add(attribute);
-				}
-			}
-		}
-
-		for (Attribute attribute : attributes) {
-			println(sb, "{0}\t\t", tab);
-			println(sb, "{0}\t\t<h:outputLabel value=\"{1}:\" for=\"{2}\" />", tab, attribute.getLabel(), attribute.getName());			
-			printin(sb, tab + "\t\t", path, attribute, true);
-			println(sb, "{0}\t\t<p:message for=\"{1}\" display=\"icon\" />", tab, attribute.getName());
-		}
-
-		println(sb, "{0}\t</h:panelGrid>", tab);
-		println(sb, "{0}</p:tab>", tab);
 	}
 }

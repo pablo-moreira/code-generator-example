@@ -19,24 +19,31 @@
 				currentPageReportTemplate="[ Showing {startRecord} - {endRecord} of {totalRecords} - Page: {currentPage}/{totalPages} ]"
 				rows="10"
 		        rowsPerPageTemplate="5,10,15,20,25,50">
-								
+				
 				<p:column sortBy="#{entity.id}">
 					<f:facet name="header"><h:outputText value="Id" /></f:facet>
 					<h:outputText value="#{entity.id}" />
-					</p:column>
+				</p:column>
 				
 				<p:column sortBy="#{entity.name}">
 					<f:facet name="header"><h:outputText value="Name" /></f:facet>
-					<h:outputText value="#{entity.name}" />				</p:column>
+					<h:outputText value="#{entity.name}" />
+				</p:column>
 				
 				<p:column sortBy="#{entity.email}">
 					<f:facet name="header"><h:outputText value="E-Mail" /></f:facet>
-					<h:outputText value="#{entity.email}" />				</p:column>
+					<h:outputText value="#{entity.email}" />
+				</p:column>
 				
 				<p:column sortBy="#{entity.phone}">
 					<f:facet name="header"><h:outputText value="Phone" /></f:facet>
-					<h:outputText value="#{entity.phone}" />				</p:column>
-
+					<h:outputText value="#{entity.phone}" />
+				</p:column>
+				
+				<p:column sortBy="#{entity.version}">
+					<f:facet name="header"><h:outputText value="Version" /></f:facet>
+					<h:outputText value="#{entity.version}" />
+				</p:column>
 				
 				<p:column exportable="false" styleClass="col-action">
 					<f:facet name="header"><h:outputText value="Action" /></f:facet>
@@ -65,7 +72,7 @@
 		<p:confirmDialog				
 			appendTo="@(body)"
 			modal="true"				
-			message="Are you sure about delete the manufacturer?"
+			message="Are you sure about delete the Manufacturer?"
 			header="Are you sure?" 
 			severity="alert"
 			widgetVar="dlgManufacturerDelete">

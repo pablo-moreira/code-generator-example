@@ -1,11 +1,11 @@
 package com.github.cg.example.jsf.controller;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.github.cg.example.core.model.Model;
 import com.github.cg.example.jsf.annotations.HandlesError;
-import com.github.cg.example.jsf.dao.ModelDAO;
 import com.github.cg.example.jsf.datamodel.LazyDataModelDefault;
 import com.github.cg.example.jsf.manager.ModelManager;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
@@ -22,11 +22,11 @@ public class ModelListCtrl extends AppConversationCtrl {
 	
 	private Model modelSelected;
 		
-	private LazyDataModelDefault<ModelDAO, Model, Long> dmModels; 
+	private LazyDataModelDefault<ModelManager,Model,Long> dmModels; 
 
-	@Inject
-    public void init(ModelDAO modelDAO) {
-		dmModels = new LazyDataModelDefault<ModelDAO, Model, Long>(modelDAO);
+	@PostConstruct
+    public void init() {
+		dmModels = new LazyDataModelDefault<ModelManager,Model,Long>(modelManager);
     }
     
 	public void delete() throws Exception {
@@ -44,7 +44,7 @@ public class ModelListCtrl extends AppConversationCtrl {
 		this.modelSelected = modelSelected;
 	}
 
-	public LazyDataModelDefault<ModelDAO,Model,Long> getDmModels() {
+	public LazyDataModelDefault<ModelManager,Model,Long> getDmModels() {
 		return dmModels;
 	}
 }

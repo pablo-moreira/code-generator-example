@@ -6,7 +6,7 @@
     xmlns:cc="http://java.sun.com/jsf/composite"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui"> 
-   	<ui:param name="pageTitle" value="List of ${entity.pluralFvm}" />
+   	<ui:param name="pageTitle" value="List of ${entity.plural}" />
 	<ui:define name="content">
 		<h:form id="frm">			
 			<p:dataTable
@@ -20,8 +20,15 @@
 				currentPageReportTemplate="[ Showing {startRecord} - {endRecord} of {totalRecords} - Page: {currentPage}/{totalPages} ]"
 				rows="10"
 		        rowsPerPageTemplate="5,10,15,20,25,50">
-
-				${listXhtmlComponent.renderColumns(4)}
+#foreach( $attr in $entity.getAttributesWithoutAttributesOneToMany() )
+#if( $attr.isRenderColumn() )
+				
+				<p:column sortBy="#{entity.${attr.name}}">
+					<f:facet name="header"><h:outputText value="${attr.label}" /></f:facet>
+					${jsfComponent.renderOutputText(5, 'entity', $attr)}
+				</p:column>
+#end
+#end
 				
 				<p:column exportable="false" styleClass="col-action">
 					<f:facet name="header"><h:outputText value="Action" /></f:facet>
@@ -50,7 +57,7 @@
 		<p:confirmDialog				
 			appendTo="@(body)"
 			modal="true"				
-			message="Are you sure about delete the ${entity.nameFlc}?"
+			message="Are you sure about delete the ${entity.label}?"
 			header="Are you sure?" 
 			severity="alert"
 			widgetVar="dlg${entity.name}Delete">

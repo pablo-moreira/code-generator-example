@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 #end
 
 #if( $entity.getAttributesOneToMany().size() > 0 )
+import java.util.Collection;
 import javax.inject.Inject;
 #end
 
@@ -21,8 +22,8 @@ import ${app.pkgs.manager}.${attr.typeName}Manager;
 #end
 
 #foreach( $attr in $entity.getAttributesOneToMany() )
-import ${app.pkgs.model}.${attr.associationClassSimpleName};
-import ${app.pkgs.controller}.frm.Frm${attr.associationClassSimpleName};
+import ${app.pkgs.model}.${attr.associationClassName};
+import ${app.pkgs.controller}.frm.Frm${attr.associationClassName};
 #end
 
 @Named
@@ -36,7 +37,7 @@ public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},
 	private ${attr.typeName}Manager ${attr.typeNameFlc}Manager;
 #end
 #foreach( $attr in $entity.getAttributesOneToMany() )
-	private FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassSimpleName},${attr.associationClassSimpleName}> association${attr.nameFuc};
+	private FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}> association${attr.nameFuc};
 #end	
 #foreach( $attr in $entity.getAttributesManyToOne() )
 
@@ -47,18 +48,18 @@ public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},
 #if( $entity.getAttributesOneToMany().size() > 0 )
 
 	@Inject
-	public void initAssociations(#foreach( $attr in $entity.getAttributesOneToMany() )Frm${attr.associationClassSimpleName} frm${attr.associationClassSimpleName}#if( $foreach.hasNext ), #end#end) throws Exception {
+	public void initAssociations(#foreach( $attr in $entity.getAttributesOneToMany() )Frm${attr.associationClassName} frm${attr.associationClassName}#if( $foreach.hasNext ), #end#end) throws Exception {
 #foreach( $attr in $entity.getAttributesOneToMany() )
 		
-		this.association${attr.nameFuc} = new FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassSimpleName},${attr.associationClassSimpleName}>(this, frm${attr.associationClassSimpleName}, "tbView:dt${attr.nameFuc}") {
+		this.association${attr.nameFuc} = new FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}>(this, frm${attr.associationClassName}, "tbView:dt${attr.nameFuc}") {
 
 			@Override
-			public void connect(${attr.associationClassSimpleName} association, ${entity.name} entity) {
+			public void connect(${attr.associationClassName} association, ${entity.name} entity) {
 				association.set${attr.associationMappedByFuc}(entity);
 			}
 
 			@Override
-			public List<${attr.associationClassSimpleName}> getAssociations(${entity.name} entity) {
+			public Collection<${attr.associationClassName}> getAssociations(${entity.name} entity) {
 				return entity.get${attr.nameFuc}();
 			}
 		};
@@ -67,7 +68,7 @@ public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},
 #end
 #foreach( $attr in $entity.getAttributesOneToMany() )
 	
-	public FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassSimpleName},${attr.associationClassSimpleName}> getAssociation${attr.nameFuc}() {
+	public FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}> getAssociation${attr.nameFuc}() {
 		return association${attr.nameFuc};
 	}
 #end

@@ -10,4 +10,8 @@ public class MaskCtrl {
 	public String getLicensePlate() {
 		return "aaa-9999";
 	}
+	
+	public String getYear() {
+		return "9999";
+	}
 }

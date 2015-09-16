@@ -3,7 +3,6 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:cc="http://java.sun.com/jsf/composite"
-    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:app="http://java.sun.com/jsf/composite/components"
     xmlns:p="http://primefaces.org/ui">
    
@@ -16,27 +15,27 @@
 			<p:tabView id="tbView">
 				<p:tab id="tabCar" title="Car">
 					<h:panelGrid columns="3" cellpadding="5" style="width: 100%">
-						<h:outputLabel value="Id:" for="id" />
-						<p:inputText id="id" label="Id." value="#{cc.attrs.frm.entity.id}" disabled="true" />
-						<p:message for="id" display="icon" />
-						
-						<h:outputLabel value="Model:" for="model" />
+						<p:outputLabel value="Id" for="id" />
+						<p:inputText id="id" label="Id" value="#{cc.attrs.frm.entity.id}" disabled="true" />
+						<p:message for="id" display="icon" />		
+
+						<p:outputLabel value="Model:" for="model" />
 						<p:autoComplete id="model" label="Model" value="#{cc.attrs.frm.entity.model}" required="true" forceSelection="true"
 							disabled="#{cc.attrs.frm.verifyEntityAssociated(cc.attrs.frm.entity.model)}"
 							completeMethod="#{cc.attrs.frm.onCompleteModel}" dropdown="true" converter="lazyEntityConverter"
 							var="model" itemValue="#{model}" itemLabel="#{model.name}"
-							size="40" scrollHeight="200">
+							size="35" scrollHeight="200">
 							<p:column><h:outputText value="#{model.id}" /></p:column>
 							<p:column><h:outputText value="#{model.name}" /></p:column>
 							<p:ajax event="query" global="false" />
 						</p:autoComplete>
 						<p:message for="model" display="icon" />
-						
-						<h:outputLabel value="License Plate:" for="licensePlate" />
-						<p:inputMask id="licensePlate" label="License Plate" value="#{cc.attrs.frm.entity.licensePlate}" required="true" style="width: 300px" mask="#{maskCtrl.licensePlate}" />
+
+						<p:outputLabel value="License Plate:" for="licensePlate" />
+						<p:inputMask id="licensePlate" label="License Plate" value="#{cc.attrs.frm.entity.licensePlate}" required="true" style="width: 100px" mask="#{maskCtrl.licensePlate}" />
 						<p:message for="licensePlate" display="icon" />
-						
-						<h:outputLabel value="Fabrication Date:" for="fabricationDate" />
+
+						<p:outputLabel value="Fabrication Date:" for="fabricationDate" />
 						<p:calendar id="fabricationDate" label="Fabrication Date" value="#{cc.attrs.frm.entity.fabricationDate}" showOn="button" locale="#{localeCtrl.locale}" pattern="#{localeCtrl.datePattern}" required="true" mask="true" />
 						<p:message for="fabricationDate" display="icon" />
 					</h:panelGrid>
