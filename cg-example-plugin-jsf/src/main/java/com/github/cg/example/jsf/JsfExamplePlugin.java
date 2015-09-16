@@ -5,6 +5,8 @@ import com.github.cg.annotation.Target;
 import com.github.cg.annotation.TargetGroup;
 import com.github.cg.annotation.TargetTask;
 import com.github.cg.annotation.TaskConfig;
+import com.github.cg.example.jsf.model.PluginFormTypes;
+import com.github.cg.example.jsf.model.PluginPatterns;
 import com.github.cg.gui.DlgAttributeOneToMany;
 import com.github.cg.gui.DlgFrmEntity;
 import com.github.cg.task.FrmAttributeOneToManyTask;
@@ -200,8 +202,8 @@ import com.github.cg.task.FrmEntityTask;
 		)
 	},
 	patterns = {
-			JsfPluginPatterns.LICENSE_PLATE,
-			JsfPluginPatterns.YEAR			
+			PluginPatterns.LICENSE_PLATE,
+			PluginPatterns.YEAR		
 	},
 	requiredProperties = {
 			"pkgs.base",
@@ -209,6 +211,11 @@ import com.github.cg.task.FrmEntityTask;
 			"pkgs.dao",
 			"pkgs.manager",
 			"pkgs.controller"
+	},
+	formTypes = {
+			PluginFormTypes.SUB_FRM_EXTERNAL_PAGE,
+			PluginFormTypes.SUB_FRM_IN_TABLE,
+			PluginFormTypes.SUB_FRM_INSIDE
 	}
 )
 public interface JsfExamplePlugin {}

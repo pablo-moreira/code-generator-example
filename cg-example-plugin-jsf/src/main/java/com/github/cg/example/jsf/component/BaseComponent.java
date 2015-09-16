@@ -10,7 +10,7 @@ import com.github.cg.component.Component;
 import com.github.cg.component.StringUtils;
 import com.github.cg.example.core.model.BaseEnum;
 import com.github.cg.example.core.model.IBaseEntity;
-import com.github.cg.example.jsf.JsfPluginPatterns;
+import com.github.cg.example.jsf.model.PluginPatterns;
 import com.github.cg.model.Attribute;
 import com.github.cg.model.AttributeManyToOne;
 import com.github.cg.model.Patterns;
@@ -131,10 +131,10 @@ abstract public class BaseComponent extends Component {
 				println(sb, tab + "\t<f:convertNumber type=\"currency\" locale=\"#{localeCtrl.locale}\" />");
 				print(sb, tab + "</p:inputText>");
 			}
-			else if (JsfPluginPatterns.LICENSE_PLATE.equals(pattern)) {
+			else if (PluginPatterns.LICENSE_PLATE.equals(pattern)) {
 				print(sb, "<p:inputMask id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" mask=\"{5}\" />", id, label, value, required, entityTab ? "300" : "100", "#{maskCtrl.licensePlate}");
 			}
-			else if (JsfPluginPatterns.YEAR.equals(pattern)) {
+			else if (PluginPatterns.YEAR.equals(pattern)) {
 				print(sb, "<p:inputMask id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" mask=\"{5}\" />", id, label, value, required, entityTab ? "300" : "100", "#{maskCtrl.year}");
 			}
 			else {
