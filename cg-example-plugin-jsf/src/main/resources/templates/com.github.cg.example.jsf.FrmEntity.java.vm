@@ -1,12 +1,22 @@
 package ${app.pkgs.controller}.frm;
 
+#if( $entity.getAttributesManyToOne().size() > 0 
+	or $jsfComponent.hasAttributeWithFormTypeSubFrmInTable( $entity )
+	or $jsfComponent.hasAttributeWithFormTypeSubFrmExternalPage( $entity ) ) 
+   )
+import javax.ejb.EJB;
+#end
+
 #if( $entity.getAttributesManyToOne().size() > 0 )
 import java.util.List;
-import javax.ejb.EJB;
 #end
 
 #if( $entity.getAttributesOneToMany().size() > 0 )
 import java.util.Collection;
+import javax.annotation.PostConstruct;
+#end
+
+#if( $entity.getAttributesOneToMany().size() > 0 and $jsfComponent.hasAttributeWithFormTypeSubFrmInside( $entity.getAttributesOneToMany() ) )
 import javax.inject.Inject;
 #end
 
@@ -23,7 +33,11 @@ import ${app.pkgs.manager}.${attr.typeName}Manager;
 
 #foreach( $attr in $entity.getAttributesOneToMany() )
 import ${app.pkgs.model}.${attr.associationClassName};
+#if( $jsfComponent.isFormTypeSubFrmInTable($attr.formType) or $jsfComponent.isFormTypeSubFrmExternalPage($attr.formType) )
+import ${app.pkgs.manager}.${attr.associationClassName}Manager;
+#elseif( $jsfComponent.isFormTypeSubFrmInside($attr.formType) )
 import ${app.pkgs.controller}.frm.Frm${attr.associationClassName};
+#end
 #end
 
 @Named
@@ -37,8 +51,21 @@ public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},
 	private ${attr.typeName}Manager ${attr.typeNameFlc}Manager;
 #end
 #foreach( $attr in $entity.getAttributesOneToMany() )
-	private FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}> association${attr.nameFuc};
-#end	
+
+#if( $jsfComponent.isFormTypeSubFrmInTable($attr.formType) )
+	@EJB
+	private ${attr.associationClassName}Manager ${attr.associationClassNameFlc}Manager;
+	private SubFrmInTable<Frm${entity.name},${entity.name},${attr.associationClassName}Manager,${attr.associationClassName}> subFrm${attr.nameFuc};
+#elseif( $jsfComponent.isFormTypeSubFrmExternalPage($attr.formType) )
+	@EJB
+	private ${attr.associationClassName}Manager ${attr.associationClassNameFlc}Manager;
+	private SubFrmExternalPage<Frm${entity.name},${entity.name},${attr.associationClassName}Manager,${attr.associationClassName}> subFrm${attr.nameFuc};
+#elseif( $jsfComponent.isFormTypeSubFrmInside($attr.formType) )
+	@Inject
+	private Frm${attr.associationClassName} frm${attr.associationClassName};
+	private SubFrmInside<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}> subFrm${attr.nameFuc};
+#end
+#end
 #foreach( $attr in $entity.getAttributesManyToOne() )
 
 	public List<${attr.typeName}> onComplete${attr.typeName}(String suggest) {
@@ -47,11 +74,17 @@ public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},
 #end
 #if( $entity.getAttributesOneToMany().size() > 0 )
 
-	@Inject
-	public void initAssociations(#foreach( $attr in $entity.getAttributesOneToMany() )Frm${attr.associationClassName} frm${attr.associationClassName}#if( $foreach.hasNext ), #end#end) throws Exception {
+	@PostConstruct
+	public void init() {
 #foreach( $attr in $entity.getAttributesOneToMany() )
-		
-		this.association${attr.nameFuc} = new FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}>(this, frm${attr.associationClassName}, "tbView:dt${attr.nameFuc}") {
+
+#if( $jsfComponent.isFormTypeSubFrmInTable($attr.formType) )
+		this.subFrm${attr.nameFuc} = new SubFrmInTable<Frm${entity.name},${entity.name},${attr.associationClassName}Manager,${attr.associationClassName}>(this, this.${attr.associationClassNameFlc}Manager, "tbView:dt${attr.nameFuc}") {
+#elseif( $jsfComponent.isFormTypeSubFrmExternalPage($attr.formType) )
+		this.subFrm${attr.nameFuc} = new SubFrmExternalPage<Frm${entity.name},${entity.name},${attr.associationClassName}Manager,${attr.associationClassName}>(this, this.${attr.associationClassNameFlc}Manager, "tbView:dt${attr.nameFuc}") {
+#elseif( $jsfComponent.isFormTypeSubFrmInside($attr.formType) )		
+		this.subFrm${attr.nameFuc} = new SubFrmInside<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}>(this, this.frm${attr.associationClassName}, "tbView:dt${attr.nameFuc}") {
+#end
 
 			@Override
 			public void connect(${attr.associationClassName} association, ${entity.name} entity) {
@@ -67,9 +100,15 @@ public class Frm${entity.name} extends Frm<${entity.name}Manager,${entity.name},
 	}
 #end
 #foreach( $attr in $entity.getAttributesOneToMany() )
-	
-	public FrmAssociationOneToMany<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}> getAssociation${attr.nameFuc}() {
-		return association${attr.nameFuc};
+
+#if( $jsfComponent.isFormTypeSubFrmInTable($attr.formType) )
+	public SubFrmInTable<Frm${entity.name},${entity.name},${attr.associationClassName}Manager,${attr.associationClassName}> getSubFrm${attr.nameFuc}() {
+#elseif( $jsfComponent.isFormTypeSubFrmExternalPage($attr.formType) )
+	public SubFrmExternalPage<Frm${entity.name},${entity.name},${attr.associationClassName}Manager,${attr.associationClassName}> getSubFrm${attr.nameFuc}() {	
+#elseif( $jsfComponent.isFormTypeSubFrmInside($attr.formType) )		
+	public SubFrmInside<Frm${entity.name},${entity.name},Frm${attr.associationClassName},${attr.associationClassName}> getSubFrm${attr.nameFuc}() {
+#end
+		return this.subFrm${attr.nameFuc};
 	}
 #end
 }

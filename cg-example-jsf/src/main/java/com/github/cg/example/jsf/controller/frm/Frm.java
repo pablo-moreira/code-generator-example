@@ -25,9 +25,9 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 	private M manager;	
 	private FrmState state;
 	protected E entity;
-	private IBaseEntity<?> entityAssociated;
+	private Frm<?,?,?> frmAssociated;
 	private List<SubFrmInside<?,E,?,?>> frmAssociationsOneToMany = new ArrayList<SubFrmInside<?,E,?,?>>();
-	private String frmClientId; 
+	private String frmClientId;
 
 	protected E newInstance() {
 		return getManager().newInstance();
@@ -54,8 +54,12 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 		beforeSave();
 		
 		this.entity = saving();
-		
+						
 		afterSave();
+		
+		if (isInserting()) {
+			this.state = FrmState.UPDATING;
+		}
 		
 		return this.entity;
 	}
@@ -165,13 +169,9 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 			this.frmClientId = component.getClientId();
 		}
 	}
-
-	public IBaseEntity<?> getEntityAssociated() {
-		return entityAssociated;
-	}
-
-	public void setEntityAssociated(IBaseEntity<?> entityAssociated) {
-		this.entityAssociated = entityAssociated;
+	
+	public void setFrmAssociated(Frm<?,?,?> frmAssociated) {
+		this.frmAssociated = frmAssociated;		
 	}
 
 	public String getFrmClientId() {
@@ -201,10 +201,22 @@ abstract public class Frm<M extends Manager<? extends DAO<E,I>,E,I>,E extends IB
 	}
 	
 	public boolean verifyEntityAssociated(Object object) {
-		return getEntityAssociated() != null && getEntityAssociated().equals(object);
+		return this.frmAssociated != null 
+				&& this.frmAssociated.getEntity() != null
+				&& this.frmAssociated.getEntity().equals(object);
 	}
 	
 	public void addFrmAssociationOneToMany(SubFrmInside<?,E,?,?> frm) {
 		this.frmAssociationsOneToMany.add(frm);
+	}
+	
+	public void reset() throws Exception {
+
+		if (isInserting()) {
+			startInsert();
+		}
+		else {
+			startUpdateById(getEntity().getId());
+		}
 	}
 }

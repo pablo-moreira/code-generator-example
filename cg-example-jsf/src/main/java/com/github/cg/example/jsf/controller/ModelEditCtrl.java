@@ -1,11 +1,9 @@
 package com.github.cg.example.jsf.controller;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.github.cg.example.core.model.Model;
 import com.github.cg.example.jsf.annotations.HandlesError;
 import com.github.cg.example.jsf.controller.frm.FrmModel;
 import com.github.cg.example.jsf.util.FacesMessageUtils;
@@ -23,26 +21,25 @@ public class ModelEditCtrl extends AppConversationCtrl {
 	private FrmModel frm;
 	
 	public void start(ComponentSystemEvent evt) throws Exception {
-		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
-			reset();			
+		if (!getFrm().isInsertingOrUpdating()) {
+			if (getId() != null) {
+				getFrm().startUpdateById(getId());			
+			}
+			else {
+				getFrm().startInsert();
+			}
 		}
 	}
 
 	public void save() throws Exception {
 		
-		Model entity = getFrm().save();
-		this.id = entity.getId();
-		
+		getFrm().save();
+				
 		FacesMessageUtils.addInfo("The Model was save successfully!");
 	}
 	
-	public void reset() throws Exception {		
-		if (getId() != null) {
-			getFrm().startUpdateById(getId());			
-		}
-		else {
-			getFrm().startInsert();
-		}
+	public void reset() throws Exception {
+		getFrm().reset();
 	}
 	
 	public Long getId() {

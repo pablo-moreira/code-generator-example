@@ -24,26 +24,25 @@ public class ${entity.name}EditCtrl extends AppConversationCtrl {
 	private Frm${entity.name} frm;
 	
 	public void start(ComponentSystemEvent evt) throws Exception {
-		if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().isValidationFailed()) {
-			reset();			
+		if (!getFrm().isInsertingOrUpdating()) {
+			if (getId() != null) {
+				getFrm().startUpdateById(getId());			
+			}
+			else {
+				getFrm().startInsert();
+			}
 		}
 	}
 
 	public void save() throws Exception {
 		
-		${entity.name} entity = getFrm().save();
-		this.id = entity.getId();
+		getFrm().save();		
 		
 		FacesMessageUtils.addInfo("The ${entity.label} was save successfully!");
 	}
 	
 	public void reset() throws Exception {		
-		if (getId() != null) {
-			getFrm().startUpdateById(getId());			
-		}
-		else {
-			getFrm().startInsert();
-		}
+		getFrm().reset();
 	}
 	
 	public ${entity.attributeIdClass} getId() {

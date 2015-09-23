@@ -95,23 +95,21 @@ public abstract class SubFrmInside<FE extends Frm<? extends Manager<? extends DA
 		
 		getFrmAssociation().startInsert(association);
 		
-		getFrmAssociation().setEntityAssociated(entity);
+		getFrmAssociation().setFrmAssociated(getFrmEntity());
 	}
 	
 	public void startInsertByCopy(A association) throws Exception {
-		
-		E entity = getFrmEntity().getEntity();
-		
+			
 		getFrmAssociation().startInsertByCopy(association);
 		
-		getFrmAssociation().setEntityAssociated(entity);
+		getFrmAssociation().setFrmAssociated(getFrmEntity());
 	}
 
 	public void startUpdate(A association) throws Exception {
 		
 		getFrmAssociation().startUpdate(association);
 		
-		getFrmAssociation().setEntityAssociated(getFrmEntity().getEntity());
+		getFrmAssociation().setFrmAssociated(getFrmEntity());
 	}
 
 	@Override

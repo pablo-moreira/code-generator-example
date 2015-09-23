@@ -38,14 +38,6 @@
 				</p:tab>
 
 				<p:tab id="tabModels" title="Models">
-				
-					<app:frmModel id="frmModels" frm="#{cc.attrs.frm.associationModels.frmAssociation}" />
-						
-					<p:outputPanel layout="block" styleClass="form-action-border">
-						<p:commandButton value="Save" icon="ui-icon-disk" action="#{cc.attrs.frm.associationModels.save}" process="frmModels,@this" />
-						<p:commandButton value="Cancel" icon="ui-icon-cancel" action="#{cc.attrs.frm.associationModels.cancel}" process="@this" />
-					</p:outputPanel>
-					
 					<p:dataTable
 						id="dtModels"
 						emptyMessage="None Model found."
@@ -81,26 +73,42 @@
 						<p:column styleClass="col-action">
 							<p:button 
 								outcome="/pages/model/modelView.jsf" 
-								title="View Model" icon="ui-icon-zoomin">
+								title="View Model" 
+								icon="ui-icon-zoomin">
 								<f:param name="id" value="#{association.id}" />
 							</p:button>
 							
-							<p:commandButton 
-								action="#{cc.attrs.frm.associationModels.frmAssociation.startUpdate(association)}"
-								process="@this"
+							<p:button 
+								outcome="/pages/model/modelEdit.jsf" 
 								title="Edit Model." 
-								icon="ui-icon-pencil" />
+								icon="ui-icon-pencil"
+								target="_blank">
+								<f:param name="id" value="#{association.id}" />
+							</p:button>
 											        	
  							<p:commandButton 
- 								action="#{cc.attrs.frm.associationModels.startDelete(association)}" 
+ 								action="#{cc.attrs.frm.subFrmModels.startDelete(association)}" 
  								process="@this" 
  								title="Delete Model" 
  								icon="ui-icon-trash" />
 						</p:column>
+						
+						<f:facet name="footer">
+				        	<p:outputPanel layout="block" styleClass="action-left">				        		
+				        		<p:button
+				        			outcome="/pages/model/modelEdit.jsf"
+				        			disabled="#{cc.attrs.frm.inserting}"	 
+				        			title="New model"
+				        			icon="ui-icon-document"
+				        			target="_blank"
+				        			value="New model">
+				        		</p:button>
+							</p:outputPanel>
+				        </f:facet>
 					</p:dataTable>
 					
-					<app:dlgAssociationDelete 
-						frmAssociation="#{cc.attrs.frm.associationModels}"
+					<app:dlgSubFrmDelete 
+						subFrm="#{cc.attrs.frm.subFrmModels}"
 						title="Delete Model?" 
 						message="Are you sure to delete this Models?" />
 				</p:tab>
