@@ -1,16 +1,19 @@
 package com.github.cg.example.jsf.controller.frm;
+import javax.ejb.EJB;
 
 
 import java.util.Collection;
-
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
+
+
 import javax.inject.Named;
 
-import com.github.cg.example.core.model.Manufacturer;
-import com.github.cg.example.core.model.Model;
 import com.github.cg.example.jsf.annotations.HandlesError;
+import com.github.cg.example.core.model.Manufacturer;
 import com.github.cg.example.jsf.manager.ManufacturerManager;
+
+
+import com.github.cg.example.core.model.Model;
 import com.github.cg.example.jsf.manager.ModelManager;
 
 @Named
@@ -40,7 +43,7 @@ public class FrmManufacturer extends Frm<ManufacturerManager,Manufacturer,Long> 
 		};
 	}
 
-	public SubFrmExternalPage<FrmManufacturer,Manufacturer,ModelManager,Model> getSubFrmModels() {
+	public SubFrmExternalPage<FrmManufacturer,Manufacturer,ModelManager,Model> getSubFrmModels() {	
 		return this.subFrmModels;
 	}
 }

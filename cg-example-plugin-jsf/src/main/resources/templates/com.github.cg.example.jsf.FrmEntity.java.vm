@@ -2,7 +2,7 @@ package ${app.pkgs.controller}.frm;
 
 #if( $entity.getAttributesManyToOne().size() > 0 
 	or $jsfComponent.hasAttributeWithFormTypeSubFrmInTable( $entity )
-	or $jsfComponent.hasAttributeWithFormTypeSubFrmExternalPage( $entity ) ) 
+	or $jsfComponent.hasAttributeWithFormTypeSubFrmExternalPage( $entity )  
    )
 import javax.ejb.EJB;
 #end
@@ -16,7 +16,7 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 #end
 
-#if( $entity.getAttributesOneToMany().size() > 0 and $jsfComponent.hasAttributeWithFormTypeSubFrmInside( $entity.getAttributesOneToMany() ) )
+#if( $entity.getAttributesOneToMany().size() > 0 and $jsfComponent.hasAttributeWithFormTypeSubFrmInside( $entity ) )
 import javax.inject.Inject;
 #end
 

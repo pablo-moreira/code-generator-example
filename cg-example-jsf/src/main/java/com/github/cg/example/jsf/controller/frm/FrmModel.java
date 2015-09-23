@@ -2,18 +2,23 @@ package com.github.cg.example.jsf.controller.frm;
 import javax.ejb.EJB;
 
 import java.util.List;
-import java.util.Collection;
 
+import java.util.Collection;
 import javax.annotation.PostConstruct;
+
+import javax.inject.Inject;
+
 import javax.inject.Named;
 
 import com.github.cg.example.jsf.annotations.HandlesError;
 import com.github.cg.example.core.model.Model;
 import com.github.cg.example.jsf.manager.ModelManager;
+
 import com.github.cg.example.core.model.Manufacturer;
 import com.github.cg.example.jsf.manager.ManufacturerManager;
+
 import com.github.cg.example.core.model.Car;
-import com.github.cg.example.jsf.manager.CarManager;
+import com.github.cg.example.jsf.controller.frm.FrmCar;
 
 @Named
 @HandlesError
@@ -24,9 +29,9 @@ public class FrmModel extends Frm<ModelManager,Model,Long> {
 	@EJB
 	private ManufacturerManager manufacturerManager;
 
-	@EJB
-	private CarManager carManager;
-	private SubFrmInTable<FrmModel,Model,CarManager,Car> subFrmCars;
+	@Inject
+	private FrmCar frmCar;
+	private SubFrmInside<FrmModel,Model,FrmCar,Car> subFrmCars;
 
 	public List<Manufacturer> onCompleteManufacturer(String suggest) {
 		return this.manufacturerManager.retrieveBySuggestOrderByDescription(suggest);
@@ -35,7 +40,7 @@ public class FrmModel extends Frm<ModelManager,Model,Long> {
 	@PostConstruct
 	public void init() {
 
-		this.subFrmCars = new SubFrmInTable<FrmModel,Model,CarManager,Car>(this, this.carManager, "tbView:dtCars") {
+		this.subFrmCars = new SubFrmInside<FrmModel,Model,FrmCar,Car>(this, this.frmCar, "tbView:dtCars") {
 
 			@Override
 			public void connect(Car association, Model entity) {
@@ -49,7 +54,7 @@ public class FrmModel extends Frm<ModelManager,Model,Long> {
 		};
 	}
 
-	public SubFrmInTable<FrmModel,Model,CarManager,Car> getSubFrmCars() {
+	public SubFrmInside<FrmModel,Model,FrmCar,Car> getSubFrmCars() {
 		return this.subFrmCars;
 	}
 }
