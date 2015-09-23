@@ -15,7 +15,7 @@ import com.github.cg.example.jsf.primefaces.util.PrimeFacesUtil;
 public abstract class SubFrmBase<FE extends Frm<? extends Manager<? extends DAO<E,?>,E,?>,E,?>, E extends IBaseEntity<?>, 
 											  MA extends Manager<? extends DAO<A,?>,A,?>, A extends IBaseEntity<?>> implements SubFrm {
 	
-	private FE frmEntity;	
+	private FE frmEntity;
 	private MA associationManager;	
 	private String componentToUpdateId;
 	private String dialogDeleteId;
@@ -104,4 +104,16 @@ public abstract class SubFrmBase<FE extends Frm<? extends Manager<? extends DAO<
 		
 		afterDelete();
 	}
+
+	public String getComponentToUpdateId() {
+		return componentToUpdateId;
+	}
+
+	public A getAssociationSelected() {
+		return associationSelected;
+	}
+
+	protected MA getAssociationManager() {
+		return associationManager;
+	}	
 }
