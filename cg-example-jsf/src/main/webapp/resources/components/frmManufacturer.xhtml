@@ -76,8 +76,8 @@
 								title="View Model" 
 								icon="ui-icon-zoomin">
 								<f:param name="id" value="#{association.id}" />
-							</p:button>
-							
+							</p:button>					
+
 							<p:button 
 								outcome="/pages/model/modelEdit.jsf" 
 								title="Edit Model." 
@@ -85,23 +85,23 @@
 								target="_blank">
 								<f:param name="id" value="#{association.id}" />
 							</p:button>
-											        	
+						
  							<p:commandButton 
  								action="#{cc.attrs.frm.subFrmModels.startDelete(association)}" 
  								process="@this" 
  								title="Delete Model" 
  								icon="ui-icon-trash" />
-						</p:column>
-						
+						</p:column>						
+
 						<f:facet name="footer">
 				        	<p:outputPanel layout="block" styleClass="action-left">				        		
 				        		<p:button
 				        			outcome="/pages/model/modelEdit.jsf"
 				        			disabled="#{cc.attrs.frm.inserting}"	 
-				        			title="New model"
+				        			title="New Model"
 				        			icon="ui-icon-document"
 				        			target="_blank"
-				        			value="New model">
+				        			value="New Model">
 				        		</p:button>
 							</p:outputPanel>
 				        </f:facet>
@@ -110,7 +110,7 @@
 					<app:dlgSubFrmDelete 
 						subFrm="#{cc.attrs.frm.subFrmModels}"
 						title="Delete Model?" 
-						message="Are you sure to delete this Models?" />
+						message="Are you sure to delete this Model?" />
 				</p:tab>
 			</p:tabView>
 		</app:frm>

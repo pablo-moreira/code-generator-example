@@ -9,7 +9,7 @@ public class AppCodeGenerator {
 		
 		CodeGenerator cg = new CodeGenerator();
 //		cg.start();
-		cg.executeTargetByName("FrmEntity.java", Model.class);
+		cg.executeTargetByName("frmEntity.xhtml", Model.class);
 		System.exit(0);
 	}
 }

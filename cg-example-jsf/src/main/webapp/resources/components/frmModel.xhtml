@@ -28,7 +28,7 @@
 							disabled="#{cc.attrs.frm.verifyEntityAssociated(cc.attrs.frm.entity.manufacturer)}"
 							completeMethod="#{cc.attrs.frm.onCompleteManufacturer}" dropdown="true" converter="lazyEntityConverter"
 							var="manufacturer" itemValue="#{manufacturer}" itemLabel="#{manufacturer.name}"
-							size="35" scrollHeight="200">
+							size="40" scrollHeight="200">
 							<p:column><h:outputText value="#{manufacturer.id}" /></p:column>
 							<p:column><h:outputText value="#{manufacturer.name}" /></p:column>
 							<p:ajax event="query" global="false" />
@@ -36,19 +36,19 @@
 						<p:message for="manufacturer" display="icon" />
 
 						<p:outputLabel value="Name:" for="name" />
-						<p:inputText id="name" label="Name" value="#{cc.attrs.frm.entity.name}" required="true" style="width: 100px" />
+						<p:inputText id="name" label="Name" value="#{cc.attrs.frm.entity.name}" required="true" style="width: 300px" />
 						<p:message for="name" display="icon" />
 
 						<p:outputLabel value="Description:" for="description" />
-						<p:inputText id="description" label="Description" value="#{cc.attrs.frm.entity.description}" required="true" style="width: 100px" />
+						<p:inputText id="description" label="Description" value="#{cc.attrs.frm.entity.description}" required="true" style="width: 300px" />
 						<p:message for="description" display="icon" />
 
 						<p:outputLabel value="Year:" for="year" />
-						<p:inputMask id="year" label="Year" value="#{cc.attrs.frm.entity.year}" required="true" style="width: 100px" mask="#{maskCtrl.year}" />
+						<p:inputMask id="year" label="Year" value="#{cc.attrs.frm.entity.year}" required="true" style="width: 300px" mask="#{maskCtrl.year}" />
 						<p:message for="year" display="icon" />
 
 						<p:outputLabel value="Price:" for="price" />
-						<p:inputText id="price" label="Price" value="#{cc.attrs.frm.entity.price}" required="true" style="width: 100px">
+						<p:inputText id="price" label="Price" value="#{cc.attrs.frm.entity.price}" required="true" style="width: 300px">
 							<f:convertNumber type="currency" locale="#{localeCtrl.locale}" />
 						</p:inputText>
 						<p:message for="price" display="icon" />
@@ -62,24 +62,23 @@
 				</p:tab>
 
 				<p:tab id="tabCars" title="Cars">
-									
 					<p:dataTable
 						id="dtCars"
 						emptyMessage="None Car found."
 						value="#{cc.attrs.frm.entity.cars}"
 						var="association">
-						
+
 						<p:column headerText="Id" sortBy="#{association.id}" filterBy="#{association.id}">
 							<h:outputText value="#{association.id}" />
 						</p:column>
-
+						
 						<p:column headerText="License Plate" sortBy="#{association.licensePlate}" filterBy="#{association.licensePlate}">
 							<h:panelGrid columns="2" styleClass="noborder">
-								<p:inputMask id="licensePlate" label="License Plate" value="#{association.licensePlate}" required="true" style="width: 300px" mask="#{maskCtrl.licensePlate}" />
+								<p:inputMask id="licensePlate" label="License Plate" value="#{association.licensePlate}" required="true" style="width: 100px" mask="#{maskCtrl.licensePlate}" />
 								<p:message for="licensePlate" display="icon" />
 							</h:panelGrid>
 						</p:column>
-
+						
 						<p:column headerText="Fabrication Date" sortBy="#{association.fabricationDate}" filterBy="#{association.fabricationDate}">
 							<h:panelGrid columns="2" styleClass="noborder">
 								<p:calendar id="fabricationDate" label="Fabrication Date" value="#{association.fabricationDate}" showOn="button" locale="#{localeCtrl.locale}" pattern="#{localeCtrl.datePattern}" required="true" mask="true" />
@@ -89,36 +88,38 @@
 
 						<p:column styleClass="col-action">
 							<p:button 
-								outcome="/pages/car/carView.jsf" 
+								outcome="/pages/car/carView.jsf"
 								disabled="#{association.id == null}"
-								title="View Car" icon="ui-icon-zoomin">
+								title="View Car" 
+								icon="ui-icon-zoomin">
 								<f:param name="id" value="#{association.id}" />
-							</p:button>
-																		        	
+							</p:button>					
+						
  							<p:commandButton 
  								action="#{cc.attrs.frm.subFrmCars.startDelete(association)}" 
  								process="@this" 
  								title="Delete Car" 
  								icon="ui-icon-trash" />
-						</p:column>
-						
+						</p:column>						
+
 						<f:facet name="footer">
-				        	<p:outputPanel layout="block" styleClass="action-left">
+				        	<p:outputPanel layout="block" styleClass="action-left">				        		
 				        		<p:button 
 				        			icon="ui-icon-document" 
-				        			value="New car"
+				        			title="New Car"
+				        			value="New Car"
 				        			process="@this"
 				        			update="dtCars"
-				        			action="#{cc.attrs.frm.subFrmCars.startInsert}"
-				        			title="New Car" />
+				        			action="#{cc.attrs.frm.subFrmCars.startInsert}" />
+				        		</p:button>
 							</p:outputPanel>
 				        </f:facet>
-					</p:dataTable>					
+					</p:dataTable>
 					
 					<app:dlgSubFrmDelete 
 						subFrm="#{cc.attrs.frm.subFrmCars}"
 						title="Delete Car?" 
-						message="Are you sure to delete this Cars?" />
+						message="Are you sure to delete this Car?" />
 				</p:tab>
 			</p:tabView>
 		</app:frm>

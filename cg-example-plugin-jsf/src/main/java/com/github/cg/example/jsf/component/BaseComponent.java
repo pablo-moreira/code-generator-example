@@ -68,12 +68,8 @@ abstract public class BaseComponent extends Component {
 			}
 		}	
 	}
-	
-	protected void printin(StringBuilder sb, String tab, String path, Attribute attribute) {
-		printin(sb, tab, path, attribute, false);
-	}
-	
-	protected void printin(StringBuilder sb, String tab, String path, Attribute attribute, boolean entityTab) {
+		
+	protected void printin(StringBuilder sb, String tab, String path, Attribute attribute, boolean tabEntity) {
 			
 		String id = attribute.getName();
 		String label = attribute.getLabel();
@@ -116,7 +112,7 @@ abstract public class BaseComponent extends Component {
 			println(sb, tab + "\tdisabled=\"#'{'cc.attrs.frm.verifyEntityAssociated({0})'}'\"", value);					
 			println(sb, tab + "\tcompleteMethod=\"#'{'cc.attrs.frm.onComplete{1}'}'\" dropdown=\"true\" converter=\"lazyEntityConverter\"", path, type.getSimpleName());
 			println(sb, tab + "\tvar=\"{0}\" itemValue=\"#'{'{0}'}'\" itemLabel=\"#'{'{0}.{1}'}'\"", flc(type.getSimpleName()), atributoManyToOne.getDescriptionAttributeOfAssociation());
-			println(sb, tab + "\tsize=\"{0}\" scrollHeight=\"200\">", entityTab ? "40" : "35");
+			println(sb, tab + "\tsize=\"{0}\" scrollHeight=\"200\">", tabEntity ? "40" : "35");
 			println(sb, tab + "\t<p:column><h:outputText value=\"#'{'{0}.{1}'}'\" /></p:column>", flc(type.getSimpleName()), atributoManyToOne.getEntity().getAttributeId().getName());
 			println(sb, tab + "\t<p:column><h:outputText value=\"#'{'{0}.{1}'}'\" /></p:column>", flc(type.getSimpleName()), atributoManyToOne.getDescriptionAttributeOfAssociation());
 			println(sb, tab + "\t<p:ajax event=\"query\" global=\"false\" />");
@@ -127,18 +123,18 @@ abstract public class BaseComponent extends Component {
 			String pattern = attribute.getPattern();
 			
 			if (Patterns.CURRENCY.equals(pattern)) {
-				println(sb, "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\">", id, label, value, required, entityTab ? "300" : "100");
+				println(sb, "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\">", id, label, value, required, tabEntity ? "300" : "100");
 				println(sb, tab + "\t<f:convertNumber type=\"currency\" locale=\"#{localeCtrl.locale}\" />");
 				print(sb, tab + "</p:inputText>");
 			}
 			else if (PluginPatterns.LICENSE_PLATE.equals(pattern)) {
-				print(sb, "<p:inputMask id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" mask=\"{5}\" />", id, label, value, required, entityTab ? "300" : "100", "#{maskCtrl.licensePlate}");
+				print(sb, "<p:inputMask id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" mask=\"{5}\" />", id, label, value, required, tabEntity ? "300" : "100", "#{maskCtrl.licensePlate}");
 			}
 			else if (PluginPatterns.YEAR.equals(pattern)) {
-				print(sb, "<p:inputMask id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" mask=\"{5}\" />", id, label, value, required, entityTab ? "300" : "100", "#{maskCtrl.year}");
+				print(sb, "<p:inputMask id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" mask=\"{5}\" />", id, label, value, required, tabEntity ? "300" : "100", "#{maskCtrl.year}");
 			}
 			else {
-				print(sb, "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" />", id, label, value, required, entityTab ? "300" : "100");
+				print(sb, "<p:inputText id=\"{0}\" label=\"{1}\" value=\"#'{'{2}'}'\" required=\"{3}\" style=\"width: {4}px\" />", id, label, value, required, tabEntity ? "300" : "100");
 			}
 		}
 	}

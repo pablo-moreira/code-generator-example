@@ -29,7 +29,7 @@
 #if( $attr.isRenderForm() )
 
 						<p:outputLabel value="${attr.label}:" for="${attr.name}" />
-						${jsfComponent.renderInput(6, 'cc.attrs.frm.entity', $attr)}
+						${jsfComponent.renderInput(6, 'cc.attrs.frm.entity', $attr, true)}
 						<p:message for="${attr.name}" display="icon" />
 #end
 #end
@@ -39,53 +39,116 @@
 #if( $attr.isRenderForm() )
 
 				<p:tab id="tab${attr.nameFuc}" title="${attr.label}">
-				
-					<app:frm${attr.associationEntity.name} id="frm${attr.nameFuc}" frm="#{cc.attrs.frm.association${attr.nameFuc}.frmAssociation}" />
-						
+#if( $jsfComponent.isFormTypeSubFrmInside($attr.formType) )				
+
+					<app:frm${attr.associationEntity.name} id="frm${attr.nameFuc}" frm="#{cc.attrs.frm.subFrm${attr.nameFuc}.frmAssociation}" />
+
 					<p:outputPanel layout="block" styleClass="form-action-border">
-						<p:commandButton value="Save" icon="ui-icon-disk" action="#{cc.attrs.frm.association${attr.nameFuc}.save}" process="frm${attr.nameFuc},@this" />
-						<p:commandButton value="Cancel" icon="ui-icon-cancel" action="#{cc.attrs.frm.association${attr.nameFuc}.cancel}" process="@this" />
+						<p:commandButton value="Save" icon="ui-icon-disk" action="#{cc.attrs.frm.subFrm${attr.nameFuc}.save}" process="frm${attr.nameFuc},@this" />
+						<p:commandButton value="Cancel" icon="ui-icon-cancel" action="#{cc.attrs.frm.subFrm${attr.nameFuc}.cancel}" process="@this" />
 					</p:outputPanel>
 					
+#end					
 					<p:dataTable
 						id="dt${attr.nameFuc}"
 						emptyMessage="None ${attr.associationEntity.label} found."
 						value="#{cc.attrs.frm.entity.${attr.name}}"
 						var="association">
-						
+#if( $jsfComponent.isFormTypeSubFrmInside($attr.formType) 
+		or $jsfComponent.isFormTypeSubFrmExternalPage($attr.formType)
+   )    
 #foreach( $assocAttribute in $attr.getAssociationAttributesWithoutAttributeMappedByAndAttributesOneToMany() )
 #if( $assocAttribute.isRenderColumn() )
+	
 						<p:column headerText="${assocAttribute.label}" sortBy="#{association.${assocAttribute.name}}" filterBy="#{association.${assocAttribute.name}}">
 							${jsfComponent.renderOutputText(7, 'association', $assocAttribute)}
 						</p:column>
-
 #end
-#end					
+#end
+#else
+
+						<p:column headerText="Id" sortBy="#{association.id}" filterBy="#{association.id}">
+							<h:outputText value="#{association.id}" />
+						</p:column>
+#foreach( $assocAttribute in $attr.getAssociationAttributesWithoutAttributeMappedByAndAttributesOneToManyAndIdAndVersion() )
+						
+						<p:column headerText="${assocAttribute.label}" sortBy="#{association.${assocAttribute.name}}" filterBy="#{association.${assocAttribute.name}}">
+							<h:panelGrid columns="2" styleClass="noborder">
+								${jsfComponent.renderInput(8, 'association', $assocAttribute, false)}
+								<p:message for="${assocAttribute.name}" display="icon" />
+							</h:panelGrid>
+						</p:column>
+#end
+#end
+
 						<p:column styleClass="col-action">
 							<p:button 
-								outcome="/pages/${attr.associationClassNameFlc}/${attr.associationClassNameFlc}View.jsf" 
-								title="View ${attr.associationEntity.label}" icon="ui-icon-zoomin">
+								outcome="/pages/${attr.associationClassNameFlc}/${attr.associationClassNameFlc}View.jsf"
+#if( $jsfComponent.isFormTypeSubFrmInTable($attr.formType) )
+								disabled="#{association.id == null}"
+#end
+								title="View ${attr.associationEntity.label}" 
+								icon="ui-icon-zoomin">
 								<f:param name="id" value="#{association.id}" />
-							</p:button>
-							
+							</p:button>					
+#if( $jsfComponent.isFormTypeSubFrmInside($attr.formType) )
+
 							<p:commandButton 
-								action="#{cc.attrs.frm.association${attr.nameFuc}.frmAssociation.startUpdate(association)}"
+								action="#{cc.attrs.frm.subFrm${attr.nameFuc}.frmAssociation.startUpdate(association)}"
 								process="@this"
 								title="Edit ${attr.associationEntity.label}." 
 								icon="ui-icon-pencil" />
-											        	
+#elseif( $jsfComponent.isFormTypeSubFrmExternalPage($attr.formType) )
+
+							<p:button 
+								outcome="/pages/model/modelEdit.jsf" 
+								title="Edit Model." 
+								icon="ui-icon-pencil"
+								target="_blank">
+								<f:param name="id" value="#{association.id}" />
+							</p:button>
+#end
+						
  							<p:commandButton 
- 								action="#{cc.attrs.frm.association${attr.nameFuc}.startDelete(association)}" 
+ 								action="#{cc.attrs.frm.subFrm${attr.nameFuc}.startDelete(association)}" 
  								process="@this" 
  								title="Delete ${attr.associationEntity.label}" 
  								icon="ui-icon-trash" />
-						</p:column>
+						</p:column>						
+
+#if( $jsfComponent.isFormTypeSubFrmInTable($attr.formType) )						
+						<f:facet name="footer">
+				        	<p:outputPanel layout="block" styleClass="action-left">				        		
+				        		<p:button 
+				        			icon="ui-icon-document" 
+				        			title="New ${attr.associationEntity.label}"
+				        			value="New ${attr.associationEntity.label}"
+				        			process="@this"
+				        			update="dt${attr.nameFuc}"
+				        			action="#{cc.attrs.frm.subFrm${attr.nameFuc}.startInsert}" />
+				        		</p:button>
+							</p:outputPanel>
+				        </f:facet>
+#elseif( $jsfComponent.isFormTypeSubFrmExternalPage($attr.formType) )
+						<f:facet name="footer">
+				        	<p:outputPanel layout="block" styleClass="action-left">				        		
+				        		<p:button
+				        			icon="ui-icon-document"
+				        			title="New ${attr.associationEntity.label}"
+				        			value="New ${attr.associationEntity.label}"
+				        			outcome="/pages/${attr.associationClassNameFlc}/${attr.associationClassNameFlc}Edit.jsf"
+				        			target="_blank"
+				        			disabled="#{cc.attrs.frm.inserting}">
+				        		</p:button>
+							</p:outputPanel>
+				        </f:facet>
+#end
 					</p:dataTable>
 					
-					<app:dlgAssociationDelete 
-						frmAssociation="#{cc.attrs.frm.association${attr.nameFuc}}"
+					<app:dlgSubFrmDelete 
+						subFrm="#{cc.attrs.frm.subFrm${attr.nameFuc}}"
 						title="Delete ${attr.associationEntity.label}?" 
-						message="Are you sure to delete this ${attr.label}?" />
+						message="Are you sure to delete this ${attr.associationEntity.label}?" />
 				</p:tab>
 #end
 #end

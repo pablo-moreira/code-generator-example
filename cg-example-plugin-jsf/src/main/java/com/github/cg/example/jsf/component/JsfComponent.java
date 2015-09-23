@@ -63,12 +63,12 @@ public class JsfComponent extends BaseComponent {
 		return sb.toString();
 	}
 	
-	public String renderInput(int tabs, String path, Attribute attribute) {
+	public String renderInput(int tabs, String path, Attribute attribute, boolean tabEntity) {
 		
 		StringBuilder sb = new StringBuilder();
 		String tab = tab(tabs);		
 		
-		printin(sb, tab, path, attribute);
+		printin(sb, tab, path, attribute, tabEntity);
 		
 		return sb.toString();
 	}
