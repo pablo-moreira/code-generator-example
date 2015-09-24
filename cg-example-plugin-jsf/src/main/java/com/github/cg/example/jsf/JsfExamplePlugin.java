@@ -36,7 +36,7 @@ import com.github.cg.task.FrmEntityTask;
 		),
 		@TargetGroup(
 				name="All",
-				targets={"EntityDAO.java", "EntityManager.java", "frmEntity.xhtml", "FrmEntity.xhtml", "entityEdit.xhtml","EntityEditCtrl.java", "entityView.xhtml","EntityViewCtrl.java", "entityList.xhtml","EntityListCtrl.java"}				
+				targets={"EntityDAO.java", "EntityManager.java", "frmEntity.xhtml","FrmEntity.java", "entityEdit.xhtml","EntityEditCtrl.java", "entityView.xhtml","EntityViewCtrl.java", "entityList.xhtml","EntityListCtrl.java"}				
 		)
 	},
 	targets = {
